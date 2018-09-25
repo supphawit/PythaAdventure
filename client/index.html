@@ -1,71 +1,70 @@
-<canvas id="ctx" width="500" height="500" style="border: 1px solid black">
+<html>
 
-  
-</canvas>
+<head>
+  <title>Game</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+</head>
 
+<body>
 
-<button onclick="happy()">HAPPY</button>
+  <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Pytha</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+      aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script> -->
-<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
 
-<script>
-  var ctx = document.getElementById('ctx').getContext('2d')
-  ctx.font = '30px Arial'
+  <div class="container-fluid" style="margin-top: 10px;margin-bottom: 10px">
+    <div class="row">
+      <div class="col-sm-2" style="background-color: gray">
+      </div>
+      <div class="col-sm-8" style="border: 1px solid blue">
+       <canvas style="height: 60%;">
 
-  var socket = io()
+       </canvas>
+       <img src="images/character.png">
+      </div>
+      <div class="col-sm-2" style="background-color: gray"></div>
+    </div>
+  </div>
 
-  socket.on('newPosition', function (data) {
-    ctx.clearRect(0, 0, 500, 500)
-    for (var i = 0; i < data.length; i++) {
-      ctx.fillText(data[i].number, data[i].x, data[i].y)
-    }
+  <div class="container">
+    <div class="row container-fluid">
+      <div class="col-sm-12">
+        
+        <form action="/write">
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Write your code here</label>
+            <textarea class="form-control" name="python" rows="3"></textarea>
+            <input type="text" name="namefile" value="printname" hidden>
+          </div>
+          <input type="submit" class="btn btn-primary">
+        </form>
 
-  })
+      </div>
+    </div>
+  </div>
 
-  document.onkeydown = function (e) {
-    if (e.keyCode === 68) // d
-      socket.emit('keyPress', {
-        inputId: 'right',
-        state: true
-      })
-    else if (e.keyCode === 83) // s
-      socket.emit('keyPress', {
-        inputId: 'down',
-        state: true
-      })
-    else if (e.keyCode === 65) // a
-      socket.emit('keyPress', {
-        inputId: 'left',
-        state: true
-      })
-    else if (e.keyCode === 87) // w
-      socket.emit('keyPress', {
-        inputId: 'up',
-        state: true
-      })
-  }
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+  crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+  crossorigin="anonymous"></script>
 
-  document.onkeyup = function (e) {
-    if (e.keyCode === 68) // d
-      socket.emit('keyPress', {
-        inputId: 'right',
-        state: false
-      })
-    else if (e.keyCode === 83) // s
-      socket.emit('keyPress', {
-        inputId: 'down',
-        state: false
-      })
-    else if (e.keyCode === 65) // a
-      socket.emit('keyPress', {
-        inputId: 'left',
-        state: false
-      })
-    else if (e.keyCode === 87) // w
-      socket.emit('keyPress', {
-        inputId: 'up',
-        state: false
-      })
-  }
-</script>
+</html>
