@@ -1,6 +1,5 @@
-var express = require('express')
-var app = express()
-var serv = require('http').Server(app)
+const express = require('express')
+const app = express()
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/client/index.html')
@@ -9,7 +8,9 @@ app.get('/', function (req, res) {
 
 app.use('/client', express.static(__dirname + '/client'))
 
-serv.listen(2000)
+app.listen(2000, () => {
+  console.log('Start server at port 2000.')
+})
 
 app.get('/write', (req, res) => {
   var fs = require('fs')

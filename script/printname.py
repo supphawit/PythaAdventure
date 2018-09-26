@@ -1,1 +1,1 @@
-asfsadfjsdafs
+print ("hello")
