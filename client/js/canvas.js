@@ -10,12 +10,12 @@ var dialog = new Image()
 var wizardPic = new Image()
 
 playerPic.onload = function () {
-  c.drawImage(playerPic, 50, 450, 200, 200);
+  c.drawImage(playerPic, 50, 520, 200, 200);
 };
 playerPic.src = 'client/images/character.png';
 
 wizardPic.onload = function () {
-  c.drawImage(wizardPic, 600, 450, 200, 200);
+  c.drawImage(wizardPic, 600, 520, 200, 200);
 };
 wizardPic.src = 'client/images/wizard.png';
 
