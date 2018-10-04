@@ -74,7 +74,6 @@
 
 </body>
 
-<script src="client/js/canvas.js"></script>
 <script src="client/js/main.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -84,6 +83,36 @@
 
 
 <script>
+  var canvas = document.querySelector('canvas')
+
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+
+  var c = canvas.getContext('2d')
+
+  var playerPic = new Image();
+  var dialog = new Image()
+  var wizardPic = new Image()
+
+  playerPic.onload = function () {
+    c.drawImage(playerPic, 50, 450, 200, 200);
+  };
+  playerPic.src = 'client/images/character.png';
+
+  wizardPic.onload = function () {
+    c.drawImage(wizardPic, 600, 450, 200, 200);
+  };
+  wizardPic.src = 'client/images/wizard.png';
+
+  var ui = new Image()
+  ui.onload = function () {
+    c.drawImage(ui, 100, 150, 1200, 200);
+    var txt = "สมศรี"
+    c.font = '30px sans-serif'
+    c.fillText("How old are you?", 150, 200);
+
+  }
+  ui.src = 'client/images/ui-textbox.png'
   $(document).ready(function () {
     $("#compile").click(async (e) => {
       // No redirect
@@ -128,7 +157,8 @@
           }
           ui.src = 'client/images/ui-textbox.png'
 
-          document.getElementById("nextEp").innerHTML = "<a href='/ep2'><input id='next' type='submit' class='btn btn-success' value='Next'> </a>"
+          document.getElementById("nextEp").innerHTML =
+            "<a href='/ep2'><input id='next' type='submit' class='btn btn-success' value='Next'> </a>"
         }
       }
 

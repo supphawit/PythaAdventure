@@ -10,6 +10,10 @@ app.get('/', function (req, res) {
 
 });
 
+app.get('/ep2', function (req, res) {
+  res.sendFile(__dirname + '/client/ep2.html')
+
+});
 app.use('/client', express.static(__dirname + '/client'))
 
 app.listen(2000, () => {
