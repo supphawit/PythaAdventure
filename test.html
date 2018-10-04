@@ -1,0 +1,37 @@
+<html>
+
+<head>
+  <script src="client/js/phaser.js"></script>
+  <!-- <script type="text/javascript" src="client/js/main.js"></script> -->
+</head>
+
+<body>
+
+  ashfksalf
+  asdfasf <div id="gameDiv">
+    <canvas width="400" height="200"></canvas>
+  </div>
+  <h1>asdf</h1>
+</body>
+
+<script>
+  var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameDiv')
+
+  var mainState = {
+    preload: function () {
+      game.load.image('background', 'client/images/back.gif')
+
+    },
+    create: function () {
+      ss = game.add.tileSprite(0, 0, 800, 600, 'background')
+    },
+    update: function () {
+
+    }
+  }
+  // game.scale.setGameSize(400, 200)
+  game.state.add('mainState', mainState)
+  game.state.start('mainState')
+</script>
+
+</html>

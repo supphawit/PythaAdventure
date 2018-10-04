@@ -5,19 +5,26 @@ canvas.height = window.innerHeight
 
 var c = canvas.getContext('2d')
 
-var imageObj = new Image();
-var ui = new Image()
+var playerPic = new Image();
+var dialog = new Image()
+var wizardPic = new Image()
 
-imageObj.onload = function () {
-  c.drawImage(imageObj, 50, 450);
+playerPic.onload = function () {
+  c.drawImage(playerPic, 50, 450, 200, 200);
 };
-imageObj.src = 'client/images/character.png';
+playerPic.src = 'client/images/character.png';
 
+wizardPic.onload = function () {
+  c.drawImage(wizardPic, 600, 450, 200, 200);
+};
+wizardPic.src = 'client/images/wizard.png';
+
+var ui = new Image()
 ui.onload = function () {
   c.drawImage(ui, 100, 150, 1200, 200);
   var txt = "สมศรี"
-  c.font = '50px sans-serif'
-  c.fillText("สวัสดี" + txt + " ตอนนี้นายอยู่ในโลกของเกม", 200, 250);
+  c.font = '30px sans-serif'
+  c.fillText("What is your name?", 150, 200);
 
 }
 ui.src = 'client/images/ui-textbox.png'
