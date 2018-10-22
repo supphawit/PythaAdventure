@@ -3,82 +3,87 @@ var canvas = document.querySelector('canvas')
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
-var c = canvas.getContext('2d')
+var ctx = canvas.getContext('2d')
 
-var playerPic = new Image();
-var dialog = new Image()
-var wizardPic = new Image()
+var backgroundImg = new Image()
+backgroundImg.src = 'client/images/map.png'
 
-playerPic.onload = function () {
-  c.drawImage(playerPic, 50, 520, 200, 200);
-};
-playerPic.src = 'client/images/character.png';
+var textBox = new Image()
+textBox.src = 'client/images/text-box-right.png'
 
-wizardPic.onload = function () {
-  c.drawImage(wizardPic, 600, 520, 200, 200);
-};
-wizardPic.src = 'client/images/wizard.png';
+var playerImg = new Image()
+playerImg.src = 'client/images/player.png'
 
-var ui = new Image()
-ui.onload = function () {
-  c.drawImage(ui, 100, 150, 1200, 200);
-  var txt = "สมศรี"
-  c.font = '30px sans-serif'
-  c.fillText("What is your name?", 150, 200);
+var wizardImg = new Image()
+wizardImg.src = 'client/images/npc-wizard.png'
 
+
+playerImg.onload = function () {
+  init()
 }
-ui.src = 'client/images/ui-textbox.png'
 
-// function Circle(x, y, dx, dy, radius) {
-//   this.x = x;
-//   this.y = y;
-//   this.dx = dx;
-//   this.dy = dy
-//   this.radius = radius
+function drawFrame(img, frameX, frameY, canvasX, canvasY, width, height) {
+  ctx.drawImage(img, frameX * 128, frameY * 128, 128, 128, canvasX, canvasY, width, width)
+}
 
-//   this.draw = function () {
-//     c.lineWidth = 5
-//     c.beginPath()
-//     c.arc(this.x, this.y, 40, Math.PI * 2, false)
-//     c.strokeStyle = "Red"
-//     c.fill()
-//     c.stroke()
+const cycleLoop = [0, 1, 2, 3]
+let currentIndex = 0
+let frameCount = 0
+let currentPlayerPosition = -30
+let walk = 0
+const walk_point_1 = 150
+
+
+function step() {
+  frameCount++
+  if (frameCount < 15) {
+    window.requestAnimationFrame(step)
+    return
+  }
+  frameCount = 0
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.drawImage(backgroundImg, 0, 0)
+
+  if (currentPlayerPosition < walk_point_1) {
+    drawFrame(playerImg, cycleLoop[currentIndex], 0, currentPlayerPosition, 420, 128)
+    currentPlayerPosition += 5
+  } else {
+    drawFrame(playerImg, cycleLoop[currentIndex], 0, 150, 420, 128)
+    ctx.drawImage(textBox, 200, 200, 800, 100)
+    ctx.font = '25px sans-serif'
+    ctx.fillText(conversation_npc[0], 240, 240)
+    document.getElementById("nextConver").innerHTML = "<button id='nextTxt' type='button' class='btn btn-primary' value='Next' style='position: absolute;z-index: 99; left: 680; top: 180'><i class='fa fa-chevron-circle-right'></i></button>"
+  }
+  // drawFrame(playerImg, cycleLoop[currentIndex], 0, 150 , 420, 128)
+  drawFrame(wizardImg, cycleLoop[currentIndex], 0, 500, 420, 128)
+  currentIndex++
+  // walk+= 15
+
+  if (currentIndex >= cycleLoop.length - 1) {
+    currentIndex = 0
+  }
+  window.requestAnimationFrame(step)
+}
+
+function init() {
+  window.requestAnimationFrame(step)
+}
+
+var conversation_npc = ["สวัสดี เจ้าอยู่ในโลกของ Pythonโลกของภาษาคอมพิวเตอร์",
+  "ที่ทุกๆอย่างคือการใช้คำสั่งในภาษาไพทอน",
+  "เอาล่ะ ข้าจะสอนการแสดงผลทางหน้าจอโดยใช้คำสั่ง print ",
+  "หากข้าต้องการแสดงผลเป็นคำว่า HELLO WORLD",
+  "ข้าก็จะเขียนแบบนี้ print(\"HELLO WORLD\")",
+  "ทีนี้ข้าต้องการจะรู้ชื่อของเจ้า",
+  "ลองใช้คำสั่ง print แสดงผลชื่อของเจ้ามา",
+
+]
+
+//   var i = 0
+//   var ui = new Image()
+//   ui.onload = function () {
+//     ctx.drawImage(ui, 100, 150, 1200, 200)
+//     ctx.font = '30px sans-serif'
+//     ctx.fillText(conversation_npc[i], 150, 200)
 //   }
-
-//   this.update = function () {
-//     if (this.x + this.radius + 5 > innerWidth || this.x - this.radius - 5 < 0) {
-//       this.dx = -this.dx
-//     }
-//     if (this.y + this.radius + 5 > innerHeight || this.y - this.radius - 5 < 0) {
-//       this.dy = -this.dy
-//     }
-//     this.x += this.dx
-//     this.y += this.dy
-//     this.draw()
-//   }
-// }
-
-// var circleArray = []
-
-// for (var i = 0; i < 100; i++) {
-//   var radius = 30
-//   var x = Math.random() * (innerWidth + radius * 2) + radius
-//   var y = Math.random() * (innerHeight + radius * 2) + radius
-//   var dx = (Math.random() - 0.5) *8
-//   var dy = (Math.random() - 0.5) *8
-//   circleArray.push(new Circle(x, y, dx, dy, radius))
-
-// }
-
-// function animate() {
-//   requestAnimationFrame(animate)
-
-//   c.clearRect(0, 0, innerWidth, innerHeight)
-
-//   for (var i = 0; i < circleArray.length; i++) {
-//     circleArray[i].update()
-//   }
-
-// }
-
-// animate()
+//   ui.src = 'client/images/ui-textbox.png'

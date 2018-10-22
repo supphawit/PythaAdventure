@@ -1,28 +1,47 @@
-
-.right-left {
-  margin-top: 10px
+ิ.body-background {
+  background-color: black;
 }
-.right-side {
+
+/* .right-left {
+  margin-top: 10px
+} */
+/* .right-side {
   height: 90%;
   border: 1px solid black;
   padding-top: 10px
-}
+} */
 
 .canvas-animation {
   width: 100%;
-  /* height: 100%; */
+  height: 80%;
   border: 1px solid black;
   margin-bottom: 15px;
   /* background-color: rgba(0, 255, 0, 0.4) */
-  background: url('../images/1.jpg');
+  /* background: url('../images/map.png'); */
   background-size: cover;
   opacity: 0.9;
 
 }
-
+/* 
 .lesson {
   padding: 10;
   width: 100%;
   height: 23%;
   border: 1px solid black
+} */
+
+#editor { 
+  /* position: absolute; */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 350px;
+  height: 500px;
+  z-index: 999;
+}
+
+.popover {
+  font-size: 20px;
+  max-width: 30%;
 }
