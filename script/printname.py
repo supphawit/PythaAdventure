@@ -1,3 +1,3 @@
 # Write your code
-print ()
-          
+age = 18
+print ("Pang na son teen")

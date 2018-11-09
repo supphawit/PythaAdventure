@@ -1,34 +1,59 @@
 <html>
 
 <head>
-  <script src="client/js/phaser.js"></script>
-  <!-- <script type="text/javascript" src="client/js/main.js"></script> -->
+
 </head>
 
-<body>
-  <div id="gameDiv">
+<body style="background-color: darkslategrey">
+  <button type="button" onclick="cancel_animation()">stop</button>
+  <canvas id="ctx">
+  </canvas>
 
-  </div>
 </body>
 
 <script>
-  var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameDiv')
+  var canvas = document.querySelector('canvas')
+  var ctx = canvas.getContext('2d')
 
-  var mainState = {
-    preload: function () {
-      game.load.image('background', 'client/images/back.gif')
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
 
-    },
-    create: function () {
-      ss = game.add.tileSprite(0, 0, 800, 600, 'background')
-    },
-    update: function () {
+  var playerImg = new Image()
+  playerImg.src = 'client/images/player.png'
 
-    }
+  function drawFrame(img, frameX, frameY, canvasX, canvasY, width, height) {
+    ctx.drawImage(img, frameX * 128, frameY * 128, 128, 128, canvasX, canvasY, width, width)
   }
-  // game.scale.setGameSize(400, 200)
-  game.state.add('mainState', mainState)
-  game.state.start('mainState')
+
+  const cycleLoop = [0, 1, 2]
+  let currentIndex = 0
+
+  function step_intro() {
+
+    setTimeout(function () {
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      drawFrame(playerImg, cycleLoop[currentIndex], 0, 150, 420, 128)
+      currentIndex++
+      console.log(currentIndex)
+
+      if (currentIndex >= cycleLoop.length - 1) {
+        currentIndex = 0
+      }
+      window.requestAnimationFrame(step_intro)
+    }, 250);
+  }
+
+  var id = null;
+
+  function start_animation() {
+    id = requestAnimationFrame(step_intro);
+  }
+
+  function cancel_animation() {
+    cancelAnimationFrame(id);
+  }
+  start_animation()
 </script>
 
 </html>

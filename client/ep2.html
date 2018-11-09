@@ -4,81 +4,41 @@
   <title>Pytha's Adventure</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
     crossorigin="anonymous">
+  <meta name="google-signin-client_id" content="849024154553-g7fcnjmp2rgfrl6aprbhkehc65blq65q.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <link rel="stylesheet" type="text/css" href="client/css/style.css">
-  <style>
-      #editor { 
-              /* position: absolute; */
-              top: 0;
-              right: 0;
-              bottom: 0;
-              left: 0;
-              width: 400px;
-              height: 500px;
-              z-index: 999;
-          }
-  </style>
 </head>
 
 <body>
 
-  <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Pytha's Adventure</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-      aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active">
-          <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
-  </nav>
-
-  <div class="container-fluid right-left">
-    <div class="row">
-
-      <div class="col-sm-4" style="background-color: gray;">
-        <!-- <form action="/write"> -->
-        <div class="form-group">
-          <label>Write your code here</label>
-          <div id="editor"># Write your code
-            print ()</div>
-        </div>
-        <input id="compile" type="submit" class="btn btn-primary" value="Compile">
-        <span id="nextEp"></span>
-        <!-- </form> -->
+  <div class="container">
+    <div class="col" align="center">
+      <div class="g-signin2" data-onsuccess="onSignIn">
       </div>
-
-      <div class="col-sm-8 right-side">
-
-        <div id="gameDiv"></div>
-        <canvas id="ctx" class="canvas-animation">
-        </canvas>
-
-        <div class="lesson">
-          <div>
-            พ่อมด: อายุถึงรึยัง ?
-          </div>
-          <div>
-            พ่อมด: ไหนลองใช้คำสั่ง print เป็น Integer มาหน่อยซิ?
-          </div>
-          <div>
-            <span id="resTxt">Unknow: ...</span>
-          </div>
-        </div>
-
+      <div class="col">
+        <a href="#" onclick="signOut();">Sign out</a>
       </div>
     </div>
-  </div>
 
+    <span id="test"></span>
 </body>
+<script>
+  function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    document.getElementById("test").innerHTML = profile.getName()
+  }
+
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      document.getElementById("test").innerHTML = null
+    });
+  }
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -86,96 +46,5 @@
   crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
   crossorigin="anonymous"></script>
-
-
-<script>
-  var editor = ace.edit("editor");
-  editor.setTheme("ace/theme/monokai");
-  editor.getSession().setMode("ace/mode/python");
-
-  var canvas = document.querySelector('canvas')
-
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
-
-  var c = canvas.getContext('2d')
-
-  var playerPic = new Image();
-  var dialog = new Image()
-  var wizardPic = new Image()
-
-  playerPic.onload = function () {
-    c.drawImage(playerPic, 50, 520, 200, 200);
-  };
-  playerPic.src = 'client/images/character.png';
-
-  wizardPic.onload = function () {
-    c.drawImage(wizardPic, 600, 520, 200, 200);
-  };
-  wizardPic.src = 'client/images/wizard.png';
-
-  var ui = new Image()
-  ui.onload = function () {
-    c.drawImage(ui, 100, 150, 1200, 200);
-    var txt = "สมศรี"
-    c.font = '30px sans-serif'
-    c.fillText("How old are you?", 150, 200);
-
-  }
-  ui.src = 'client/images/ui-textbox.png'
-  $(document).ready(function () {
-    $("#compile").click(async (e) => {
-      // No redirect
-      e.preventDefault();
-      // const code = $("#codemirror-textarea").val();
-      var code = editor.getValue();
-
-      if (code != '') {
-        console.log(code)
-
-        // var numberCheck = $.ajax({
-        //   url: '/write?python=' + code + '&namefile=printname',
-        //   type: "GET"
-        // });
-
-        var write = $.ajax({
-          type: "POST",
-          url: '/write-post',
-          data: {
-            python: code,
-            namefile: 'printname'
-          }
-
-        })
-
-        // console.log("from post" + write)
-
-        var back = $.ajax({
-          url: '/run?file=printname',
-          type: "GET",
-          async: false,
-        }).responseText;
-        console.log("from get" + back)
-
-        if (back.length < 50) {
-          document.getElementById("resTxt").innerHTML = "Somsri" + ": อายุ " + back + "ครับ"
-          var ui = new Image()
-          ui.onload = function () {
-            c.drawImage(ui, 100, 150, 1200, 200);
-            c.font = '30px sans-serif'
-            c.fillText("So you are " + back + "year old?", 150, 200);
-
-          }
-          ui.src = 'client/images/ui-textbox.png'
-
-          document.getElementById("nextEp").innerHTML =
-            "<a href='/ep3'><input id='next' type='submit' class='btn btn-success' value='Next'> </a>"
-        }
-      }
-
-
-    })
-  })
-</script>
 
 </html>
