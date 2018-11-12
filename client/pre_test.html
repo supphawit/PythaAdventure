@@ -1,0 +1,313 @@
+<html>
+
+<head>
+  <title>แบบทดสอบก่อนการเล่นเกม</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <!-- <script type="text/javascript" src="client/js/phaser.js"></script>
+  <script type="text/javascript" src="client/js/main.js"></script> -->
+</head>
+
+<body>
+
+  <span id="navBar"></span>
+
+  <div style="padding: 25px;">
+    <div class="container border border-primary rounded">
+      <div style="margin: 40px">
+        <h2 style="text-align: center">แบบทดสอบก่อนการเล่นเกม</h2>
+
+        <br>
+        <form name="quiz" method="post" name="buttons" id="quiz" onsubmit="return false">
+
+          <h4>1. ภาษา Python ใช้ฟังก์ชั่นใดในการแสดงผลเนื้อหาลงบน Console</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group1" value="wrong">
+            <label class="form-check-label">
+              echo
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group1" value="wrong">
+            <label class="form-check-label">
+              output
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group1" value="correct">
+            <label class="form-check-label">
+              print
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group1" value="wrong">
+            <label class="form-check-label">
+              console.log
+            </label>
+          </div>
+
+          <br>
+          <h4>2. สัญลักษณ์ใดที่สามารถใช้ในการ Comment คำสั่ง 1 แถว ได้ในภาษา Python</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group2" value="wrong">
+            <label class="form-check-label">
+              *
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group2" value="wrong">
+            <label class="form-check-label">
+              (comment)
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group2" value="wrong">
+            <label class="form-check-label">
+              //
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group2" value="correct">
+            <label class="form-check-label">
+              #
+            </label>
+          </div>
+
+          <br>
+          <h4>3. สัญลักษณ์ใดที่สามารถใส่ไว้ก่อนและหลังคำสั่ง 1 ส่วนเพื่อ Comment ได้ในภาษา Python</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group3" value="correct">
+            <label class="form-check-label">
+              ""
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group3" value="wrong">
+            <label class="form-check-label">
+              ///
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group3" value="wrong">
+            <label class="form-check-label">
+              ###
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group3" value="wrong">
+            <label class="form-check-label">
+              (comment)
+            </label>
+          </div>
+
+          <br>
+          <h4>4. เราสามารถสร้างตัวแปร "a" ที่มีค่าเท่ากับ 2 ได้อย่างไรในภาษา Pythons</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group4" value="wrong">
+            <label class="form-check-label">
+              var a = 2
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group4" value="wrong">
+            <label class="form-check-label">
+              int a = 2
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group4" value="correct">
+            <label class="form-check-label">
+              a = 2
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group4" value="wrong">
+            <label class="form-check-label">
+              variable a = 2
+            </label>
+          </div>
+
+          <br>
+          <h4>5. Operator ใดต่อไปนี้ไม่ถูกต้องในภาษา Python</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group5" value="wrong">
+            <label class="form-check-label">
+              +=
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group5" value="wrong">
+            <label class="form-check-label">
+              -=
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group5" value="wrong">
+            <label class="form-check-label">
+              *=
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group5" value="correct">
+            <label class="form-check-label">
+              X=
+            </label>
+          </div>
+
+          <br>
+          <h4>6. ข้อใดคือการเขียน if statement ที่ถูกต้องในภาษา Python</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group6" value="correct">
+            <label class="form-check-label">
+              if a >= 22:
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group6" value="wrong">
+            <label class="form-check-label">
+              if (a >= 22)
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group6" value="wrong">
+            <label class="form-check-label">
+              if (a => 22)
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group6" value="wrong">
+            <label class="form-check-label">
+              if a >= 22
+            </label>
+          </div>
+
+          <br>
+          <h4>7. เราสามารถเพิ่มเงื่อนไขเพิ่มเติมลงใน if statement ด้วยคำใด</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group7" value="wrong">
+            <label class="form-check-label">
+              else if
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group7" value="wrong">
+            <label class="form-check-label">
+              elseif
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group7" value="correct">
+            <label class="form-check-label">
+              elif
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group7" value="wrong">
+            <label class="form-check-label">
+              ไม่มีข้อใดถูก
+            </label>
+          </div>
+
+          <br>
+          <h4>8. เราสามารถสร้างฟังก์ชั่นในภาษา Python ได้อย่างไร</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group8" value="correct">
+            <label class="form-check-label">
+              def someFunction():
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group8" value="wrong">
+            <label class="form-check-label">
+              function someFunction()
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group8" value="wrong">
+            <label class="form-check-label">
+              def someFunction()
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group8" value="wrong">
+            <label class="form-check-label">
+              function someFunction():
+            </label>
+          </div>
+
+          <br>
+          <h4>9. ข้อใดคือการสร้าง For loop ที่ถูกต้องในภาษา Python</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group9" value="wrong">
+            <label class="form-check-label">
+              for(a = 0; a < 3; a++) </label> </div> <div class="form-check">
+                <input class="form-check-input" type="radio" name="group9" value="wrong">
+                <label class="form-check-label">
+                  for a in range(3)
+                </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group9" value="wrong">
+            <label class="form-check-label">
+              for a loop 3:
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group9" value="correct">
+            <label class="form-check-label">
+              for a in range(1,3):
+            </label>
+          </div>
+
+          <br>
+          <h4>10. ข้อใดคือการสร้าง While loop ที่ถูกต้องในภาษา Python</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="group10" value="wrong">
+            <label class="form-check-label">
+              while loop a < 10 </label> </div> <div class="form-check">
+                <input class="form-check-input" type="radio" name="group10" value="correct">
+                <label class="form-check-label">
+                  while a < 10: </label> </div> <div class="form-check">
+                    <input class="form-check-input" type="radio" name="group10" value="wrong">
+                    <label class="form-check-label">
+                      while(a < 10) </label> </div> <div class="form-check">
+                        <input class="form-check-input" type="radio" name="group10" value="wrong">
+                        <label class="form-check-label">
+                          while loop a < 10: </label> </div> <br>
+                            <div class="alert alert-success" role="alert" id="result_Exam" style="display: none;text-align: center;font-size: 30px">
+                            </div>
+                            <button id="send_ex" class="btn btn-primary" type="submit">Submit</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+
+      $("#navBar").load("client/navbar.html");
+
+      $("#send_ex").click(async (e) => {
+        // e.preventDefault();
+
+        var amountCorrect = 0;
+        for (var i = 1; i <= 45; i++) {
+          var radios = document.getElementsByName('group' + i);
+          for (var j = 0; j < radios.length; j++) {
+            var radio = radios[j];
+            if (radio.value == "correct" && radio.checked) {
+              amountCorrect++;
+            }
+          }
+        }
+
+        $("#result_Exam").show()
+        $("#result_Exam").text("You got " + amountCorrect + " score")
+
+      })
+    })
+  </script>
+</body>
+
+</html>

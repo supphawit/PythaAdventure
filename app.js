@@ -10,13 +10,13 @@ app.get('/', function (req, res) {
 
 });
 
-app.get('/ep2', function (req, res) {
+app.get('/login', function (req, res) {
   res.sendFile(__dirname + '/client/ep2.html')
 
 });
 
-app.get('/ace', function (req, res) {
-  res.sendFile(__dirname + '/client/ace.html')
+app.get('/pre_test', function (req, res) {
+  res.sendFile(__dirname + '/client/pre_test.html')
 
 });
 
