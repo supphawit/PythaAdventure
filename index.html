@@ -3,52 +3,96 @@
 <head>
   <title>Pytha's Adventure</title>
   <meta charset="utf-8">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
     crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="client/css/style.css">
-  <script type="text/javascript" src="client/js/phaser.js"></script>
-  <script type="text/javascript" src="client/js/main.js"></script>
+
+
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="849024154553-g7fcnjmp2rgfrl6aprbhkehc65blq65q.apps.googleusercontent.com">
+
+  <!-- <script src="/client/js/login_google.js"></script> -->
 </head>
 
-<body style="background-color:darkslategrey ">
+<body>
 
   <span id="navBar"></span>
 
-  <div class="container-fluid " style="margin: 10px">
-    <div class="row">
-
-      <div class="col">
-        <div class="form-group">
-          <div id="editor"># Write your code
-age = 18
-print ()
-          </div>
+  <div style="margin: 50;text-align: center">
+    <div class="container">
+      <div class="col" align="center">
+        <div id="LoginGoogle" class="g-signin2" data-onsuccess="onSignIn">
         </div>
-        <input id="compile" type="submit" class="btn btn-primary" value="Compile">
-        <input id="aaa" type="submit" class="btn btn-primary" value="Compile">
-        <span id="nextEp"></span>
-        <a href="#"><img src="client/images/scroll.png" style="width: 75px;font-size: 30" align="right" id="hint-popover"></a>
+        <div class="col">
+          <a href="#" onclick="signOut();">
+            <h1>Sign out</h1>
+          </a>
+        </div>
 
+        <h1 id="checkLogin" style="display: none;">Welcome</h1>
       </div>
-      <div class="col-9">
-        <div id="gameTest"></div>
 
-      </div>
+      <span id="test"></span>
     </div>
-  </div>
 
+
+    <script>
+      var userObj
+
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        userObj = {
+          id: profile.getId(),
+          name: profile.getName(),
+          email: profile.getEmail(),
+          imageURL: profile.getImageUrl(),
+        }
+        document.getElementById("checkLogin").style = "display: visible"
+      }
+
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          console.log("log out")
+          alert("log out")
+          window.location.href = "/logout"
+        });
+      }
+
+      $(document).ready(function () {
+        $("#navBar").load("client/navbar.html");
+
+        var once_sign_up = 0
+        setInterval(function () {
+          if ($('#checkLogin').is(':visible')) {
+            if (once_sign_up == 0) {
+              once_sign_up++
+              // console.log("click Sign up")
+              // console.log(userObj.name)
+              var create_newUser = $.ajax({
+                type: "POST",
+                url: '/createUser',
+                data: {
+                  id: userObj.id,
+                  name: userObj.name,
+                  email: userObj.email,
+                  imageURL: userObj.imageURL,
+                }
+              })
+              window.location.replace("/checkTest")
+            }
+          }
+        }, 1500);
+      })
+    </script>
 
 </body>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
   crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-  crossorigin="anonymous"></script>
 
-<!-- <script src="client/js/canvas_2.js"></script> -->
-<script src="client/js/load.js"></script>
 
 </html>
