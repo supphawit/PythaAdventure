@@ -35,12 +35,20 @@ function resultCompile(txt) {
   self.textInBox.destroy()
 
   if (txt.length < 50) {
-    self.textInBox = game.add.text(130, 220, "ผมชื่อว่า " + txt, {
-      fontSize: '15px',
-    })
+    if (check_conver == 0) {
+      self.textInBox = game.add.text(130, 220, "ผมชื่อว่า " + txt.trim(), {
+        fontSize: '15px',
+      })
+    } else if (check_conver == 1) {
+      console.log(txt)
+      self.textInBox = game.add.text(130, 220, "ตอนนี้ผมอายุ " + txt.trim() + " ปี", {
+        fontSize: '15px',
+      })
+    }
+
     if (check_conver == 0) {
       check_conver = 1
-    } else if (check_conver = 1){
+    } else if (check_conver = 1) {
       check_conver = 2
     }
     current_conver = 0
@@ -67,7 +75,7 @@ function deleteErrorButton() {
 
   console.log(current_conver)
   self.textBox = game.add.image(100, 200, 'textBox')
-  self.textInBox = game.add.text(130, 220, conver[current_conver], {
+  self.textInBox = game.add.text(130, 220, conver_1[current_conver], {
     fontSize: '15px',
   })
   self.button = game.add.button(440, 230, 'button', actionOnClick, this)
@@ -94,10 +102,10 @@ function actionOnClick() {
       fontSize: '15px',
     })
     current_conver++
-    if (current_conver == 5){
+    if (current_conver == 5) {
       playerState = 1
     }
-  }else{
+  } else {
     current_conver--
   }
 }
@@ -167,11 +175,20 @@ var mainState = {
       this.textBox.destroy()
       this.textInBox.destroy()
       this.button.destroy()
+      this.player.destroy()
 
+      this.player = game.add.sprite(this.player.x, 320, 'playerWalkRight')
+      this.player.animations.add('right', [0, 1, 2, 3], 5, true)
+      this.player.frame = 0
+      this.player.animations.play('right')
+
+      playerState = 2
+
+    } else if (playerState == 2) {
       this.player.x += speedCharacter
-
+      
       if (this.player.x >= 820) {
-        playerState = 2
+        playerState = 3
       }
 
       if (this.wizard.x == 820) {
@@ -182,15 +199,15 @@ var mainState = {
       } else {
         this.wizard.x += speedCharacter
       }
-    } else if (playerState == 2) {
-      playerState = 3
+    } else if (playerState == 3) {
+      playerState = 4
       this.player.destroy()
 
       this.player = game.add.sprite(this.player.x, 320, 'playerWalkingDown')
       this.player.animations.add('right', [0, 1, 2, 3], 5, true)
       this.player.frame = 0
       this.player.animations.play('right')
-    } else if (playerState == 3) {
+    } else if (playerState == 4) {
       this.player.y += speedCharacter
       this.wizard.y += speedCharacter
     }
@@ -201,10 +218,10 @@ var mainState = {
       this.wizard.animations.add('right', [0, 1, 2, 3], 5, true)
       this.wizard.animations.play('right')
       wizardState = 2
-    } 
+    }
 
 
-    if (this.player.y == 850){
+    if (this.player.y == 850) {
       window.location.href = "/lesson_2"
       console.log("DONE")
     }

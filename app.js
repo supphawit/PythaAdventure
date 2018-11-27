@@ -34,11 +34,6 @@ var chapter_schema = new mongoose.Schema({
 });
 
 var user_Schema = new mongoose.Schema({
-  id: {
-    type: String,
-    unique: true,
-    required: true,
-  },
   email: {
     type: String,
     unique: true,
@@ -171,7 +166,6 @@ app.post('/createUser', function (req, res) {
       }]
 
       var userData = {
-        id: req.body.id,
         name: req.body.name,
         email: req.body.email,
         imageURL: req.body.imageURL,
@@ -247,5 +241,10 @@ app.post('/write-post', function (req, res) {
 
 app.get('/lesson_1', function (req, res) {
   res.sendFile(__dirname + '/client/lesson_1.html')
+
+})
+
+app.get('/lesson_2', function (req, res) {
+  res.sendFile(__dirname + '/client/lesson_2.html')
 
 })

@@ -46,7 +46,6 @@
       function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
         userObj = {
-          id: profile.getId(),
           name: profile.getName(),
           email: profile.getEmail(),
           imageURL: profile.getImageUrl(),
@@ -77,7 +76,6 @@
                 type: "POST",
                 url: '/createUser',
                 data: {
-                  id: userObj.id,
                   name: userObj.name,
                   email: userObj.email,
                   imageURL: userObj.imageURL,
@@ -86,7 +84,7 @@
               window.location.replace("/checkTest")
             }
           }
-        }, 1500);
+        }, 0);
       })
     </script>
 
