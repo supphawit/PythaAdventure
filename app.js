@@ -31,6 +31,7 @@ mongoose.connect('mongodb://localhost:27017/pythaAdventure')
 var chapter_schema = new mongoose.Schema({
   lesson: String,
   point: String,
+  pass: Boolean,
 });
 
 var user_Schema = new mongoose.Schema({
@@ -156,13 +157,16 @@ app.post('/createUser', function (req, res) {
 
       var chapterData = [{
         lesson: "1",
-        point: "0"
+        point: "0",
+        pass: false,
       }, {
         lesson: "2",
-        point: "0"
+        point: "0",
+        pass: false,
       }, {
         lesson: "3",
-        point: "0"
+        point: "0",
+        pass: false,
       }]
 
       var userData = {
@@ -213,6 +217,33 @@ app.post('/updateDB', function (req, res) {
     // res.send(raw);
     console.log("UPDATE Success")
   });
+
+})
+
+app.post('/updateLesson', function (req, res) {
+
+  var userData = localStorage.getItem('userData')
+  var userJSON = JSON.parse(userData);
+
+  console.log(userJSON.email)
+
+  var new_data = req.body.chapter
+  console.log(new_data)
+  user_model.findOneAndUpdate({
+      "email": userJSON.email,
+      "chapter.lesson": new_data.lesson
+    }, {
+      "$set": {
+        "chapter.$.point": new_data.point,
+        "chapter.$.pass": new_data.pass
+      }
+    },
+    function (err, doc) {
+      if (err) return
+
+      console.log("update lesson")
+    }
+  );
 
 })
 

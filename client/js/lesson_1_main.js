@@ -1,3 +1,10 @@
+var current_conver = 0
+var self
+var check_conver = 0
+var speedCharacter = 2
+var playerState = 0
+var wizardState = 0
+
 var conver_1 = ["สวัสดี เจ้าอยู่ในโลกของ Python",
   "โลกของภาษาคอมพิวเตอร์",
   "ที่ทุกๆอย่างคือการใช้คำสั่งในภาษาไพทอน",
@@ -24,26 +31,28 @@ var conver_3 = ["เอาล่ะ พอจะเข้าใจบ้าง�
   "ยังมีอะไรอีกเยอะ",
   "ให้เจ้าเรียนรู้เกี่ยวกับ Python",
 ]
-var current_conver = 0
-var self
-var check_conver = 0
-var speedCharacter = 2
-var playerState = 0
-var wizardState = 0
 
 function resultCompile(txt) {
   self.textInBox.destroy()
 
   if (txt.length < 50) {
     if (check_conver == 0) {
+      self.button.destroy()
+      self.dialogBox.destroy()
+      self.dialogBox = game.add.image(100, 200, 'dialogBoxLeft')
       self.textInBox = game.add.text(130, 220, "ผมชื่อว่า " + txt.trim(), {
         fontSize: '15px',
       })
+      self.button = game.add.button(440, 230, 'button', actionOnClick, this)
     } else if (check_conver == 1) {
       console.log(txt)
+      self.dialogBox.destroy()
+      self.button.destroy()
+      self.dialogBox = game.add.image(100, 200, 'dialogBoxLeft')
       self.textInBox = game.add.text(130, 220, "ตอนนี้ผมอายุ " + txt.trim() + " ปี", {
         fontSize: '15px',
       })
+      self.button = game.add.button(440, 230, 'button', actionOnClick, this)
     }
 
     if (check_conver == 0) {
@@ -54,7 +63,7 @@ function resultCompile(txt) {
     current_conver = 0
   } else {
 
-    self.textBox.destroy()
+    self.dialogBox.destroy()
     self.button.destroy()
     self.errorTextBox = game.add.image(250, 50, 'errorText');
     self.errorTextBox.scale.setTo(5, 5)
@@ -74,7 +83,7 @@ function deleteErrorButton() {
   self.textErrorInBox.destroy()
 
   console.log(current_conver)
-  self.textBox = game.add.image(100, 200, 'textBox')
+  self.dialogBox = game.add.image(100, 200, 'dialogBoxRight')
   self.textInBox = game.add.text(130, 220, conver_1[current_conver], {
     fontSize: '15px',
   })
@@ -85,6 +94,11 @@ function actionOnClick() {
 
   if (conver_1[current_conver] != undefined && check_conver == 0) {
     self.textInBox.destroy()
+    self.dialogBox.destroy()
+    self.button.destroy()
+
+    self.dialogBox = game.add.image(100, 200, 'dialogBoxRight')
+    self.button = game.add.button(440, 230, 'button', actionOnClick, this)
     self.textInBox = game.add.text(130, 220, conver_1[current_conver], {
       fontSize: '15px',
     })
@@ -92,12 +106,22 @@ function actionOnClick() {
     console.log(current_conver)
   } else if (conver_2[current_conver] != undefined && check_conver == 1) {
     self.textInBox.destroy()
+    self.dialogBox.destroy()
+    self.button.destroy()
+
+    self.dialogBox = game.add.image(100, 200, 'dialogBoxRight')
+    self.button = game.add.button(440, 230, 'button', actionOnClick, this)
     self.textInBox = game.add.text(130, 220, conver_2[current_conver], {
       fontSize: '15px',
     })
     current_conver++
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
     self.textInBox.destroy()
+    self.dialogBox.destroy()
+    self.button.destroy()
+
+    self.dialogBox = game.add.image(100, 200, 'dialogBoxRight')
+    self.button = game.add.button(440, 230, 'button', actionOnClick, this)
     self.textInBox = game.add.text(130, 220, conver_3[current_conver], {
       fontSize: '15px',
     })
@@ -121,7 +145,8 @@ var mainState = {
     game.load.spritesheet('playerWalkingDown', 'client/images/player-walk-down.png', 128, 128)
     game.load.spritesheet('wizardLeft', 'client/images/npc-wizard-left.png', 128, 128)
     game.load.spritesheet('wizardRight', 'client/images/npc-wizard-right.png', 128, 128)
-    game.load.image('textBox', 'client/images/text-box-right.png')
+    game.load.image('dialogBoxRight', 'client/images/text-box-right.png')
+    game.load.image('dialogBoxLeft', 'client/images/text-box-left.png')
     game.load.image('errorText', 'client/images/error.png')
     game.load.spritesheet('button', 'client/images/button.png')
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
@@ -162,7 +187,7 @@ var mainState = {
       this.player.frame = 0
       this.player.animations.play('right')
 
-      this.textBox = game.add.image(100, 200, 'textBox')
+      this.dialogBox = game.add.image(100, 200, 'dialogBoxRight')
 
       // this.textInBox
       this.textInBox = game.add.text(130, 220, conver_1[current_conver], {
@@ -172,7 +197,7 @@ var mainState = {
       this.button = game.add.button(440, 230, 'button', actionOnClick, this)
       this.player.x += speedCharacter
     } else if (playerState == 1) {
-      this.textBox.destroy()
+      this.dialogBox.destroy()
       this.textInBox.destroy()
       this.button.destroy()
       this.player.destroy()
@@ -186,7 +211,7 @@ var mainState = {
 
     } else if (playerState == 2) {
       this.player.x += speedCharacter
-      
+
       if (this.player.x >= 820) {
         playerState = 3
       }
@@ -222,11 +247,28 @@ var mainState = {
 
 
     if (this.player.y == 850) {
-      window.location.href = "/lesson_2"
-      console.log("DONE")
+      // updateLesson()
+      // window.location.href = "/lesson_2"
+
+      $(document).ready(function () {
+
+        var userUpdate = $.ajax({
+          type: "POST",
+          url: '/updateLesson',
+          data: {
+            chapter: {
+              lesson: "1",
+              point: "50",
+              pass: true,
+            }
+          }
+        })
+        console.log("pass")
+      })
     }
   },
 };
+
 
 game.state.add('main', mainState);
 game.state.start('main');
