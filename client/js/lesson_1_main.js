@@ -4,6 +4,7 @@ var check_conver = 0
 var speedCharacter = 2
 var playerState = 0
 var wizardState = 0
+var tmpResponse
 
 var conver_1 = ["สวัสดี เจ้าอยู่ในโลกของ Python",
   "โลกของภาษาคอมพิวเตอร์",
@@ -32,24 +33,26 @@ var conver_3 = ["เอาล่ะ พอจะเข้าใจบ้าง�
   "ให้เจ้าเรียนรู้เกี่ยวกับ Python",
 ]
 
-function resultCompile(txt) {
-  self.textInBox.destroy()
+function resultCompile(responseTxt) {
+  tmpResponse = responseTxt
 
-  if (txt.length < 50) {
+  if (responseTxt.length < 50) {
     if (check_conver == 0) {
+      self.textInBox.destroy()
       self.button.destroy()
       self.dialogBox.destroy()
       self.dialogBox = game.add.image(100, 200, 'dialogBoxLeft')
-      self.textInBox = game.add.text(130, 220, "ผมชื่อว่า " + txt.trim(), {
+      self.textInBox = game.add.text(130, 220, "ผมชื่อว่า " + responseTxt.trim(), {
         fontSize: '15px',
       })
       self.button = game.add.button(440, 230, 'button', actionOnClick, this)
     } else if (check_conver == 1) {
-      console.log(txt)
+      console.log(responseTxt)
+      self.textInBox.destroy()
       self.dialogBox.destroy()
       self.button.destroy()
       self.dialogBox = game.add.image(100, 200, 'dialogBoxLeft')
-      self.textInBox = game.add.text(130, 220, "ตอนนี้ผมอายุ " + txt.trim() + " ปี", {
+      self.textInBox = game.add.text(130, 220, "ตอนนี้ผมอายุ " + responseTxt.trim() + " ปี", {
         fontSize: '15px',
       })
       self.button = game.add.button(440, 230, 'button', actionOnClick, this)
@@ -65,29 +68,37 @@ function resultCompile(txt) {
 
     self.dialogBox.destroy()
     self.button.destroy()
-    self.errorTextBox = game.add.image(250, 50, 'errorText');
-    self.errorTextBox.scale.setTo(5, 5)
+    self.errorTextDialog = game.add.image(250, 50, 'errorText');
+    self.errorTextDialog.scale.setTo(5, 5)
 
-    self.textErrorInBox = game.add.text(280, 80, txt, {
-      fontSize: '15px',
+    self.textErrorInBox = game.add.text(280, 80, "มีข้อผิดพลาดในโค้ดของคุณ\nตรวจสอบและทำการแก้ไข\nและคอมไพล์ใหม่อีกครั้ง", {
+      fontSize: '30px',
     })
 
     self.errorButton = game.add.button(750, 140, 'errorButton', deleteErrorButton, this)
-
+    self.more = game.add.button(700, 140, 'more', viewMore, this)
   }
 }
 
 function deleteErrorButton() {
   self.errorButton.destroy()
-  self.errorTextBox.destroy()
+  self.errorTextDialog.destroy()
   self.textErrorInBox.destroy()
+  self.more.destroy()
+  
+  actionOnClick()
+  // self.dialogBox = game.add.image(350, 100, 'dialogBoxLeft')
+  // self.button = game.add.button(690, 130, 'button', actionOnClick, this)
+  // self.textInBox = game.add.text(380, 120, conver_1[current_conver], {
+  //   fontSize: '15px',
+  // })
+}
 
-  console.log(current_conver)
-  self.dialogBox = game.add.image(100, 200, 'dialogBoxRight')
-  self.textInBox = game.add.text(130, 220, conver_1[current_conver], {
+function viewMore(){
+  self.textErrorInBox.destroy()
+  self.textErrorInBox = game.add.text(280, 80, tmpResponse, {
     fontSize: '15px',
   })
-  self.button = game.add.button(440, 230, 'button', actionOnClick, this)
 }
 
 function actionOnClick() {
@@ -138,7 +149,7 @@ var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne');
 
 var mainState = {
   preload: function () {
-    game.load.image('background', 'client/images/map.png');
+    game.load.image('background', 'client/images/map_lesson_1.png');
     game.load.spritesheet('playerWalkRight', 'client/images/player-walk-right.png', 128, 128)
     game.load.spritesheet('playerStandLeft', 'client/images/player-standing-left.png', 128, 128)
     game.load.spritesheet('playerStandRight', 'client/images/player-standing-right.png', 128, 128)
@@ -150,6 +161,7 @@ var mainState = {
     game.load.image('errorText', 'client/images/error.png')
     game.load.spritesheet('button', 'client/images/button.png')
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
+    game.load.spritesheet('more', 'client/images/more.png')
 
   },
 
@@ -256,15 +268,17 @@ var mainState = {
           type: "POST",
           url: '/updateLesson',
           data: {
-            chapter: {
-              lesson: "1",
-              point: "50",
-              pass: true,
-            }
+            lesson: "1",
+            point: "100",
+            pass: true,
           }
+
         })
+
         console.log("pass")
+        window.location.href = "/lesson_2"
       })
+
     }
   },
 };

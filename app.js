@@ -35,6 +35,9 @@ var chapter_schema = new mongoose.Schema({
 });
 
 var user_Schema = new mongoose.Schema({
+  id: {
+    type: String
+  },
   email: {
     type: String,
     unique: true,
@@ -43,7 +46,6 @@ var user_Schema = new mongoose.Schema({
   },
   name: {
     type: String,
-    unique: true,
     required: true,
     trim: true
   },
@@ -80,21 +82,21 @@ app.get('/login', function (req, res) {
 })
 
 app.get('/pre_test', function (req, res) {
-  res.sendFile(__dirname + '/client/pre_test.html')
-
-})
-
-app.get('/checkTest', function (req, res) {
+  // res.sendFile(__dirname + '/client/pre_test.html')
   var userData = localStorage.getItem('userData')
   if (userData) {
     var userJSON = JSON.parse(userData);
     if (userJSON.score_pre_test == "0") {
-      res.redirect('/pre_test')
+      // res.redirect('/pre_test')
+      res.sendFile(__dirname + '/client/pre_test.html')
     } else {
-      // res.sendFile(__dirname + '/client/lesson_1.html')
       res.redirect('/lesson_1')
     }
   }
+})
+
+app.get('/checkTest', function (req, res) {
+  res.redirect('/pre_test')
 
 })
 
@@ -124,6 +126,11 @@ app.get('/run', (req, res) => {
 
 })
 
+app.get('/profile', function (req, res) {
+  // res.send(localStorage.getItem('userData'))
+  res.sendFile(__dirname + '/client/profile.html')
+});
+
 app.get('/getUser', function (req, res) {
   res.send(localStorage.getItem('userData'))
 });
@@ -144,7 +151,7 @@ app.get('/logout', function (req, res) {
 //   })
 // })
 
-app.post('/createUser', function (req, res) {
+app.post('/googleSign', function (req, res) {
 
   user_model.findOne({
     email: req.body.email
@@ -167,9 +174,22 @@ app.post('/createUser', function (req, res) {
         lesson: "3",
         point: "0",
         pass: false,
-      }]
+      },{
+        lesson: "4",
+        point: "0",
+        pass: false,
+      },{
+        lesson: "5",
+        point: "0",
+        pass: false,
+      },{
+        lesson: "6",
+        point: "0",
+        pass: false,
+      },]
 
       var userData = {
+        id: req.body.id,
         name: req.body.name,
         email: req.body.email,
         imageURL: req.body.imageURL,
@@ -182,13 +202,13 @@ app.post('/createUser', function (req, res) {
 
       user_model.create(userData, function (err, doc) {
         console.log("Create user Success")
+        localStorage.setItem('userData', JSON.stringify(doc));
       })
-      res.status(200).send()
 
     } else {
       console.log("User " + user.name + " sign in")
       localStorage.setItem('userData', JSON.stringify(user));
-      res.status(200).send()
+      return
 
       // req.session.user = user
       // res.cookie('user', '5555');
@@ -227,7 +247,7 @@ app.post('/updateLesson', function (req, res) {
 
   console.log(userJSON.email)
 
-  var new_data = req.body.chapter
+  var new_data = req.body
   console.log(new_data)
   user_model.findOneAndUpdate({
       "email": userJSON.email,
@@ -277,5 +297,10 @@ app.get('/lesson_1', function (req, res) {
 
 app.get('/lesson_2', function (req, res) {
   res.sendFile(__dirname + '/client/lesson_2.html')
+
+})
+
+app.get('/lesson_3', function (req, res) {
+  res.sendFile(__dirname + '/client/lesson_3.html')
 
 })

@@ -18,7 +18,7 @@
   <link rel="stylesheet" type="text/css" href="client/css/style.css">
   <script type="text/javascript" src="client/js/phaser.js"></script>
   <script type="text/javascript" src="client/js/lesson_1_main.js"></script>
-  <script type="text/javascript" src="client/js/load.js"></script>
+  <!-- <script type="text/javascript" src="client/js/load.js"></script> -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
 
@@ -35,8 +35,10 @@
       <div class="col">
         <div class="form-group">
           <div id="editor"># Write your code
-age = 18
+
 print ()
+
+# print ("Somsri")
           </div>
         </div>
         <input id="compile" type="submit" class="btn btn-primary" value="Compile">
@@ -51,6 +53,7 @@ print ()
     </div>
   </div>
   <script>
+    
     function onLoad() {
       gapi.load('auth2', function () {
         gapi.auth2.init();
@@ -61,7 +64,6 @@ print ()
 
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
-        console.log("log out")
         alert("log out")
         window.location.href = "/logout"
       });
@@ -69,6 +71,17 @@ print ()
 
 
     $(document).ready(function () {
+
+      // onLoad()
+      $("#navBar").load("client/navbar.html");
+
+      $('#hint-popover').popover({
+        container: 'body',
+        title: "คำใบ้",
+        content: 'ใช้คำสั่ง print ในการแสดงชื่อของตัวละคร<br>ตัวอย่าง: print(\"Somsri\")<br>ผลลัพธ์: Somsri',
+        placement: 'top',
+        html: true,
+      })
 
       var editor = ace.edit("editor");
       editor.setTheme("ace/theme/monokai");

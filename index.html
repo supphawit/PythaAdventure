@@ -16,36 +16,52 @@
   <meta name="google-signin-client_id" content="849024154553-g7fcnjmp2rgfrl6aprbhkehc65blq65q.apps.googleusercontent.com">
 
   <!-- <script src="/client/js/login_google.js"></script> -->
+  <style>
+    .bg-home {
+      background-image: url('client/images/home-background.png');
+      width: 10%;
+      height: 100%;
+    }
+  </style>
 </head>
 
 <body>
 
   <span id="navBar"></span>
-
+  <!-- <div class="bg-home"></div> -->
+  <img src='client/images/home-background.png' width="100%" style="position: fixed;z-index: -99"></img>
+  <br>
   <div style="margin: 50;text-align: center">
-    <div class="container">
-      <div class="col" align="center">
-        <div id="LoginGoogle" class="g-signin2" data-onsuccess="onSignIn">
-        </div>
-        <div class="col">
-          <a href="#" onclick="signOut();">
-            <h1>Sign out</h1>
-          </a>
-        </div>
 
-        <h1 id="checkLogin" style="display: none;">Welcome</h1>
+    <div style="padding: 25px">
+      <div class="container border border-primary rounded" style="background-color: white">
+        <div style="margin: 40px">
+
+          <div class="col" align="center">
+            <div id="LoginGoogle" class="g-signin2" data-onsuccess="onSignIn">
+            </div>
+            <div class="col">
+              <!-- <a href="#" onclick="signOut()">
+                        <h1>Sign out</h1>
+                      </a> -->
+            </div>
+
+            <h1 id="checkLogin" style="display: none">Welcome</h1>
+          </div>
+
+          <span id="test"></span>
+
+        </div>
       </div>
-
-      <span id="test"></span>
     </div>
-
 
     <script>
       var userObj
 
       function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
+        var profile = googleUser.getBasicProfile()
         userObj = {
+          id: profile.getId(),
           name: profile.getName(),
           email: profile.getEmail(),
           imageURL: profile.getImageUrl(),
@@ -54,37 +70,39 @@
       }
 
       function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
+        var auth2 = gapi.auth2.getAuthInstance()
         auth2.signOut().then(function () {
           console.log("log out")
           alert("log out")
           window.location.href = "/logout"
-        });
+        })
       }
 
       $(document).ready(function () {
-        $("#navBar").load("client/navbar.html");
+        $("#navBar").load("client/navbar.html")
 
         var once_sign_up = 0
         setInterval(function () {
           if ($('#checkLogin').is(':visible')) {
             if (once_sign_up == 0) {
               once_sign_up++
-              // console.log("click Sign up")
-              // console.log(userObj.name)
               var create_newUser = $.ajax({
                 type: "POST",
-                url: '/createUser',
+                url: '/googleSign',
                 data: {
+                  id: userObj.id,
                   name: userObj.name,
                   email: userObj.email,
                   imageURL: userObj.imageURL,
                 }
               })
-              window.location.replace("/checkTest")
+
             }
+            setInterval(function () {
+              window.location.href = "/pre_test"
+            }, 500)
           }
-        }, 0);
+        }, 0)
       })
     </script>
 
