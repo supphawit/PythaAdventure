@@ -9,6 +9,8 @@ if (typeof localStorage === "undefined" || localStorage === null) {
   localStorage = new LocalStorage('./scratch');
 }
 
+const PORT = process.env.PORT || 5000
+
 const mongoose = require('mongoose')
 
 app.use('/client', express.static(__dirname + '/client'))
@@ -22,7 +24,7 @@ app.use(session({
 }))
 
 
-app.listen(2000, () => {
+app.listen(PORT, () => {
   console.log('Start server at port 2000.')
 })
 
