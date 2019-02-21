@@ -23,7 +23,7 @@
       <a class="dropdown-item" href="/lesson_1">Lesson</a>
       <a class="dropdown-item" href="#">Leader Board</a>
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item" onclick="signOut();" href="#">Sign out</a>
+      <a class="dropdown-item" href="/profile">Sign out</a>
     </div>
   </div>
 </nav>
@@ -31,6 +31,13 @@
 
 <script>
 
+  function isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }
   $(document).ready(function () {
 
     var data = $.ajax({
@@ -38,14 +45,12 @@
       type: "GET",
       async: false,
     }).responseText
-
-    if (data) {
-      var userJson = JSON.parse(data);
-
-      $("#userName").html("<span>" + userJson.name + "</span>")
-      $("#userImage").html("<img src='" + userJson.imageURL + "' class='rounded-circle' width='25'>")
-    } else {
+    var userJson = JSON.parse(data);
+    if (isEmpty(userJson)) {
       $("#listProfile").hide()
+    } else {
+      $("#userName").html("<span>" + userJson.name + "</span>")
+      $("#userImage").html("<img src='" + userJson.imgURL + "' class='rounded-circle' width='25'>")
     }
 
   })

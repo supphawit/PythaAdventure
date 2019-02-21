@@ -1,104 +1,132 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser');
-const session = require('express-session')
-
-if (typeof localStorage === "undefined" || localStorage === null) {
-  var LocalStorage = require('node-localstorage').LocalStorage;
-  localStorage = new LocalStorage('./scratch');
-}
+const mysql = require('mysql')
+const session = require("express-session");
 
 const PORT = process.env.PORT || 5000
-
-const mongoose = require('mongoose')
 
 app.use('/client', express.static(__dirname + '/client'))
 
 app.use(bodyParser())
-app.use(cookieParser())
-app.use(session({
-  secret: 'Somsri Secret!!',
-  resave: false,
-  saveUninitialized: true
-}))
-
 
 app.listen(PORT, () => {
-  console.log('Start server at port 2000.')
+  console.log('Start server.')
 })
 
-mongoose.connect('mongodb://localhost:27017/pythaAdventure')
-
-var chapter_schema = new mongoose.Schema({
-  lesson: String,
-  point: String,
-  pass: Boolean,
-});
-
-var user_Schema = new mongoose.Schema({
-  id: {
-    type: String
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true
-  },
-  name: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  imageURL: {
-    type: String,
-    required: true,
-  },
-  chapter: [chapter_schema],
-  score_pre_test: {
-    type: String
-  },
-  score_post_test: {
-    type: String
-  },
-  point: {
-    type: String
-  },
-  achievement: {
-    type: String
-  }
+const con = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: "pytha",
 })
 
-var user_model = mongoose.model('users', user_Schema)
-module.exports = user_model
+con.connect(function (err) {
+  if (err) throw err
+  console.log('Connected Success!')
+})
+
+app.use(session({ secret: 'somsristupid' }));
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html')
-  req.session.test = 1
-})
-
-app.get('/login', function (req, res) {
-  res.sendFile(__dirname + '/client/login.html')
-
-})
-
-app.get('/pre_test', function (req, res) {
-  // res.sendFile(__dirname + '/client/pre_test.html')
-  var userData = localStorage.getItem('userData')
-  if (userData) {
-    var userJSON = JSON.parse(userData);
-    if (userJSON.score_pre_test == "0") {
-      // res.redirect('/pre_test')
-      res.sendFile(__dirname + '/client/pre_test.html')
-    } else {
-      res.redirect('/lesson_1')
-    }
+  if (req.session.email) {
+    res.sendFile(__dirname + '/client/pre_test.html')
+  } else {
+    res.sendFile(__dirname + '/index.html')
   }
+
 })
 
-app.get('/checkTest', function (req, res) {
-  res.redirect('/pre_test')
+app.get('/getUser', function (req, res) {
+  data = {
+    email: req.session.email,
+    name: req.session.name,
+    imgURL: req.session.imgURL,
+    pre: req.session.pre,
+    post: req.session.post
+  }
+  res.send(data)
+
+})
+
+app.get('/signout', function (req, res) {
+  console.log("Sign out")
+  req.session.destroy()
+  res.redirect('/')
+})
+
+
+app.post('/googleSign', function (req, res) {
+
+  var getUser = "SELECT * FROM users where email = '" + req.body.email + "'"
+
+  con.query(getUser, function (err, row) {
+    // console.log("found: " + row)
+    if (err) throw err;
+
+    if (row && row.length) {
+
+      req.session.name = row[0].name
+      req.session.email = row[0].email
+      req.session.imgURL = row[0].imgURL
+      req.session.pre = row[0].pre_test_score
+      req.session.post = row[0].post_test_score
+      res.end('done')
+
+    } else {
+
+      var sql = "INSERT INTO users (email, name, imgURL, pre_test_score, post_test_score) VALUES ?"
+      var values = [
+        [
+          req.body.email,
+          req.body.name,
+          req.body.imgURL,
+          0,
+          0,
+        ]
+      ]
+
+      con.query(sql, [values], function (err, row) {
+        if (err) throw err
+      })
+
+      con.query(getUser, function (err, row) {
+        if (err) throw err;
+
+        req.session.name = row[0].name
+        req.session.email = row[0].email
+        req.session.imgURL = row[0].imgURL
+        req.session.pre = row[0].pre_test_score
+        req.session.post = row[0].post_test_score
+        res.end('done')
+      })
+    }
+
+  })
+ 
+})
+
+app.post('/updateQuestionScore', function (req, res) {
+
+  var preScore = req.body.score_pre_test
+  console.log("from /updateDB: " + preScore)
+  var updateSCore = "UPDATE users SET pre_test_score=" + preScore + " WHERE email = '" + req.session.email + "'"
+
+  con.query(updateSCore, function (err, row) {
+    if (err) throw err;
+  })
+
+})
+app.get('/randomQuestion', function (req, res) {
+
+  var preScore = req.body.score_pre_test
+  console.log("from /updateDB: " + preScore)
+  var getQuestion = "SELECT * from questions"
+
+  con.query(getQuestion, function (err, row) {
+    if (err) throw err;
+    res.send(row)
+  })
 
 })
 
@@ -128,160 +156,9 @@ app.get('/run', (req, res) => {
 
 })
 
-app.get('/profile', function (req, res) {
-  // res.send(localStorage.getItem('userData'))
-  res.sendFile(__dirname + '/client/profile.html')
-});
-
-app.get('/getUser', function (req, res) {
-  res.send(localStorage.getItem('userData'))
-});
-
-app.get('/logout', function (req, res) {
-  localStorage.clear()
-  res.redirect("/")
-});
-
-// app.get('/write', (req, res) => {
-//   var fs = require('fs')
-//   // var encoded = encodeURI(req.query.python)
-//   fs.writeFile("./script/" + req.query.namefile + ".py", req.query.python, function (err) {
-//     if (err) {
-//       return console.log(err)
-//     }
-//     res.redirect("/run?file=" + req.query.namefile )
-//   })
-// })
-
-app.post('/googleSign', function (req, res) {
-
-  user_model.findOne({
-    email: req.body.email
-  }, function (err, user) {
-    if (err) {
-      return res.status(500).send()
-    }
-
-    if (!user) {
-
-      var chapterData = [{
-        lesson: "1",
-        point: "0",
-        pass: false,
-      }, {
-        lesson: "2",
-        point: "0",
-        pass: false,
-      }, {
-        lesson: "3",
-        point: "0",
-        pass: false,
-      },{
-        lesson: "4",
-        point: "0",
-        pass: false,
-      },{
-        lesson: "5",
-        point: "0",
-        pass: false,
-      },{
-        lesson: "6",
-        point: "0",
-        pass: false,
-      },]
-
-      var userData = {
-        id: req.body.id,
-        name: req.body.name,
-        email: req.body.email,
-        imageURL: req.body.imageURL,
-        chapter: chapterData,
-        score_pre_test: "0",
-        score_post_test: "0",
-        point: "0",
-        achievement: "",
-      }
-
-      user_model.create(userData, function (err, doc) {
-        console.log("Create user Success")
-        localStorage.setItem('userData', JSON.stringify(doc));
-      })
-
-    } else {
-      console.log("User " + user.name + " sign in")
-      localStorage.setItem('userData', JSON.stringify(user));
-      return
-
-      // req.session.user = user
-      // res.cookie('user', '5555');
-      // console.log('Cookies: ', req.cookies);
-      // return res.status(200).send("findOne is OK!!")
-    }
-  })
-
-})
-
-app.post('/updateDB', function (req, res) {
-
-  var userData = localStorage.getItem('userData')
-  var userJSON = JSON.parse(userData);
-
-  console.log(userJSON.email)
-
-  var new_data = req.body.updateData
-  console.log(new_data)
-  user_model.updateOne({
-    email: userJSON.email
-  }, new_data, function (err, raw) {
-    if (err) {
-      res.send(err);
-    }
-    // res.send(raw);
-    console.log("UPDATE Success")
-  });
-
-})
-
-app.post('/updateLesson', function (req, res) {
-
-  var userData = localStorage.getItem('userData')
-  var userJSON = JSON.parse(userData);
-
-  console.log(userJSON.email)
-
-  var new_data = req.body
-  console.log(new_data)
-  user_model.findOneAndUpdate({
-      "email": userJSON.email,
-      "chapter.lesson": new_data.lesson
-    }, {
-      "$set": {
-        "chapter.$.point": new_data.point,
-        "chapter.$.pass": new_data.pass
-      }
-    },
-    function (err, doc) {
-      if (err) return
-
-      console.log("update lesson")
-    }
-  );
-
-})
-
-app.post('/isLogin', function (req, res) {
-  var userData = localStorage.getItem('userData')
-  var userJSON = JSON.parse(userData);
-  // console.log(userJSON);
-
-  return res.status(200).send(userJSON)
-})
-
 app.post('/write-post', function (req, res) {
   var fs = require('fs')
   console.log(req.body)
-  // var uri_enc = encodeURIComponent(req.body.python)
-  // var uri_dec = decodeURIComponent(uri_enc)
 
   fs.writeFile("./script/" + req.body.namefile + ".py", req.body.python, function (err) {
     if (err) {
@@ -292,17 +169,53 @@ app.post('/write-post', function (req, res) {
   // res.end(JSON.stringify(res.body))
 })
 
-app.get('/lesson_1', function (req, res) {
-  res.sendFile(__dirname + '/client/lesson_1.html')
+app.get('/pre_test', function (req, res) {
+
+  var authUser = "SELECT * FROM users where email = '" + req.session.email + "'"
+
+  con.query(authUser, function (err, row) {
+    if (err) throw err;
+
+    if (row[0].pre_test_score == 0) {
+      res.sendFile(__dirname + '/client/pre_test.html')
+    } else {
+      res.redirect('/lesson_1')
+    }
+
+  })
 
 })
 
+app.get('/profile', function (req, res) {
+  if (req.session.email) {
+    res.sendFile(__dirname + '/client/profile.html')
+  } else {
+    res.redirect('/')
+  }
+})
+
+
+app.get('/lesson_1', function (req, res) {
+  if (req.session.email && req.session.pre != 0) {
+    res.sendFile(__dirname + '/client/lesson_1.html')
+  } else {
+    res.redirect('/')
+  }
+})
+
 app.get('/lesson_2', function (req, res) {
-  res.sendFile(__dirname + '/client/lesson_2.html')
+  if (req.session.email && req.session.pre != 0) {
+    res.sendFile(__dirname + '/client/lesson_2.html')
+  } else {
+    res.redirect('/')
+  }
 
 })
 
 app.get('/lesson_3', function (req, res) {
-  res.sendFile(__dirname + '/client/lesson_3.html')
-
+  if (req.session.email && req.session.pre != 0) {
+    res.sendFile(__dirname + '/client/lesson_3.html')
+  } else {
+    res.redirect('/')
+  }
 })

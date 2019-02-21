@@ -1,6 +1,7 @@
 # Write your code
 
-print ("adsfs")
+print ()
 
 # print ("Somsri")
+
           

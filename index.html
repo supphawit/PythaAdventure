@@ -46,7 +46,7 @@
                       </a> -->
             </div>
 
-            <h1 id="checkLogin" style="display: none">Welcome</h1>
+            <a href="/pre_test" id="checkLogin" style="display: none">Play Game</h1>
           </div>
 
           <span id="test"></span>
@@ -56,18 +56,33 @@
     </div>
 
     <script>
-      var userObj
 
-      function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile()
-        userObj = {
-          id: profile.getId(),
-          name: profile.getName(),
-          email: profile.getEmail(),
-          imageURL: profile.getImageUrl(),
+      var userObj
+      var loginFuncion = null;
+
+      $(document).ready(function () {
+        $("#navBar").load("client/navbar.html")
+
+        // var once_sign_up = 0
+        // setInterval(function () {
+        //   if ($('#checkLogin').is(':visible')) {
+        // if (once_sign_up == 0) {
+        //   once_sign_up++
+
+        createUserFunction = function () {
+          var create_newUser = $.ajax({
+            type: "POST",
+            url: '/googleSign',
+            data: {
+              name: userObj.name,
+              email: userObj.email,
+              imgURL: userObj.imgURL,
+            }
+          })
         }
-        document.getElementById("checkLogin").style = "display: visible"
-      }
+
+      })
+
 
       function signOut() {
         var auth2 = gapi.auth2.getAuthInstance()
@@ -78,32 +93,18 @@
         })
       }
 
-      $(document).ready(function () {
-        $("#navBar").load("client/navbar.html")
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile()
+        userObj = {
+          id: profile.getId(),
+          name: profile.getName(),
+          email: profile.getEmail(),
+          imgURL: profile.getImageUrl(),
+        }
+        createUserFunction()
+        document.getElementById("checkLogin").style = "display: visible"
+      }
 
-        var once_sign_up = 0
-        setInterval(function () {
-          if ($('#checkLogin').is(':visible')) {
-            if (once_sign_up == 0) {
-              once_sign_up++
-              var create_newUser = $.ajax({
-                type: "POST",
-                url: '/googleSign',
-                data: {
-                  id: userObj.id,
-                  name: userObj.name,
-                  email: userObj.email,
-                  imageURL: userObj.imageURL,
-                }
-              })
-
-            }
-            setInterval(function () {
-              window.location.href = "/pre_test"
-            }, 500)
-          }
-        }, 0)
-      })
     </script>
 
 </body>

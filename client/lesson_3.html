@@ -29,15 +29,24 @@
 
   <span id="navBar"></span>
 
+
+  <div class="container-fluid">
+    <div style="text-align:center">
+      <h1 style="color:aliceblue"> Lesson: for</h1>
+    </div>
+  </div>
+
   <div class="container-fluid " style="margin: 10px">
     <div class="row">
 
       <div class="col">
         <div class="form-group">
           <div id="editor"># Write your code
-            
-def newFunction():
-    return
+
+apple = 5
+
+for i in range(1,apple):
+    print (i)
           </div>
         </div>
         <input id="compile" type="submit" class="btn btn-primary" value="Compile">
@@ -70,7 +79,7 @@ def newFunction():
 
 
     $(document).ready(function () {
-      
+
       $("#navBar").load("client/navbar.html");
 
       $('#hint-popover').popover({
@@ -93,6 +102,7 @@ def newFunction():
         // No redirect
         e.preventDefault();
         var code = editor.getValue();
+        var namefile = 'loop'
         if (code != '') {
 
           var write = $.ajax({
@@ -100,22 +110,33 @@ def newFunction():
             url: '/write-post',
             data: {
               python: code,
-              namefile: 'printname'
+              namefile: namefile
             }
 
           })
         }
         var output_result = $.ajax({
-          url: '/run?file=printname',
+          url: '/run?file=' + namefile,
           type: "GET",
           async: false,
         }).responseText;
-        console.log("from view: " +output_result)
+        console.log("item: " + output_result)
 
-        resultCompile(output_result)
-        // if (output_result.length < 50) {
-        //   test(output_result)
-        // } 
+        if (output_result.length < 50) {
+          resultCompile(output_result.split("\n").length, 1)
+          var updateUser = $.ajax({
+            type: "POST",
+            url: '/updateDB',
+            data: {
+              "$set": {
+                "score_pre_test": "123",
+              }
+            }
+          })
+
+        } else {
+          resultCompile(99, 1)
+        }
       })
     })
   </script>
