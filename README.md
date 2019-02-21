@@ -3,7 +3,7 @@
 ใช้คำสั่ง 
 
 ```
-node app.js
+nodemon app.js
 ```
 
-เปิดเว็บ http://localhost:2000/
+เปิดเว็บ http://localhost:5000/
