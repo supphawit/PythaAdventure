@@ -7,6 +7,7 @@ var wizardState = 0
 var stopState = 0
 var tmpResponse
 var finish_buy
+var item_inventory = []
 
 var conver_1 = ["คนนี้คือพ่อค้า",
   "เจ้าสามารถซื้อของจากเขาได้",
@@ -29,6 +30,23 @@ var conver_3 = ["สามารถดูในกระเป๋า เพื�
 
 function showInventory() {
 
+  $(document).ready(function () {
+    var data = $.ajax({
+      url: '/getItem',
+      type: "GET",
+      async: false,
+    }).responseJSON
+
+    item_inventory.push([data[0].item_name,data[0].amount])
+    console.log(item_inventory[0][0])
+    self.item_apple = game.add.image(405, 300, 'item_' + item_inventory[0][0]);
+    self.item_apple.scale.setTo(0.1, 0.1)
+    self.text_apple = game.add.text(440, 320, item_inventory[0][1], {
+      fontSize: '15px',
+    })
+  
+  })
+
   if (typeof self.inventory !== "undefined") {
     self.inventory.destroy()
     self.xSign.destroy()
@@ -37,6 +55,9 @@ function showInventory() {
   self.inventory.scale.setTo(0.6, 0.6)
   self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
   self.xSign.scale.setTo(0.8, 0.8)
+
+ 
+
 }
 
 function closeInventory() {
@@ -331,7 +352,7 @@ var mainState = {
               query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) VALUES ('" + userJson.email + "', 3 ,'123' )",
             }
           })
-  
+
           console.log("pass")
           window.location.href = "/lesson_4"
 

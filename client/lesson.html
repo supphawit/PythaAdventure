@@ -3,11 +3,13 @@
 <head>
   <title>Lesson</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <meta name="google-signin-client_id"
-    content="849024154553-g7fcnjmp2rgfrl6aprbhkehc65blq65q.apps.googleusercontent.com">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+
   <link rel="stylesheet" type="text/css" href="client/css/style.css">
   <!-- <script type="text/javascript" src="client/js/phaser.js"></script>
   <script type="text/javascript" src="client/js/main.js"></script> -->
@@ -99,12 +101,12 @@
           async: false,
         }).responseJSON
 
-        console.log(data.length)
+        // console.log(data.length)
         data.forEach(element => {
           console.log(element)
           $('#lesson' + element).html(" <a href='/lesson_" + (element) + "' class='btn btn-primary'>Learn</a>")
           $('#l' + element).hide()
-          $('#success' + element).html(" <span class='badge badge-success'>Success</span>")
+          $('#success' + element).html(" <span class='badge badge-success'>Done</span>")
           $('#s' + element).hide()
 
           if (data.length == element) {
@@ -113,19 +115,7 @@
             console.log("JSDKFj", (element + 1))
           }
         });
-        // console.log(data[0])
-        // if (data) {
-        //   var userJson = JSON.parse(data);
 
-        //   // $("#picture").html("<img src='" + userJson.imgURL + "' />")
-        //   $("#name").html("<h4>Name: " + userJson.name + "</h4>")
-        //   $("#email").html("<h4>Email: " + userJson.email + "</h4>")
-        //   $("#preTest").html("<h4>Pre-Test Score: " + userJson.pre + "</h4>")
-        //   $("#postTest").html("<h4>Post-Test Score: " + userJson.post + "</h4>")
-        //   $("#picture").html("<img src='" + userJson.imgURL + "' class='rounded-circle' width='120px' style='margin-left:auto;margin-right:auto'>")
-        // } else {
-        //   $("#listProfile").hide()
-        // }
 
       })
 

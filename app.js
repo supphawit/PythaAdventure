@@ -82,14 +82,27 @@ app.get('/getLesson', function (req, res) {
       // console.log( row[l] )
       dataArray.push(row[l].lesson_level)
     } 
-    data = {
-      lesson: dataArray
-
-    }
-    console.log(dataArray)
+    // console.log(dataArray)
     res.send(dataArray)
   }) 
 
+})
+
+app.get('/getItem', function (req, res) {
+
+  var lesson = "SELECT * FROM inventory where email_user = '" + req.session.email + "'"
+
+  var dataArray = []
+  con.query(lesson, function (err, row) {
+    if (err) throw err;
+
+    for (l in row){
+      // console.log( row[l] )
+      dataArray.push(row[l])
+    } 
+    // console.log(dataArray)
+    res.send(dataArray)
+  }) 
 
 })
 
@@ -256,7 +269,7 @@ app.get('/lesson', function (req, res) {
     res.sendFile(__dirname + '/client/lesson.html')
   }
 })
-
+ 
 
 app.get('/lesson_1', function (req, res) {
   if (req.session.email && req.session.pre != 0) {
@@ -286,6 +299,14 @@ app.get('/lesson_3', function (req, res) {
 app.get('/lesson_4', function (req, res) {
   if (req.session.email && req.session.pre != 0) {
     res.sendFile(__dirname + '/client/lesson_4.html')
+  } else {
+    res.redirect('/')
+  }
+})
+
+app.get('/lesson_5', function (req, res) {
+  if (req.session.email && req.session.pre != 0) {
+    res.sendFile(__dirname + '/client/lesson_5.html')
   } else {
     res.redirect('/')
   }

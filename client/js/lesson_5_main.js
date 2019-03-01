@@ -185,7 +185,7 @@ var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne');
 
 var mainState = {
   preload: function () {
-    game.load.image('background', 'client/images/map_lesson_4.png');
+    game.load.image('background', 'client/images/map_lesson_00.png');
     game.load.spritesheet('playerWalkRight', 'client/images/player-walk-right.png', 128, 128)
     game.load.spritesheet('playerWalkLeft', 'client/images/player-walk-left.png', 128, 128)
     game.load.spritesheet('playerStandLeft', 'client/images/player-standing-left.png', 128, 128)
@@ -301,10 +301,6 @@ var mainState = {
       this.wizard = game.add.sprite(this.wizard.x, this.wizard.y, 'wizardRight')
       this.wizard.animations.add('walk', [0, 1, 2, 3], 5, true)
       this.wizard.animations.play('walk')
-
-      self.textInBox.destroy()
-      self.dialogBox.destroy()
-      self.button.destroy()
       
       playerState = 4
       wizardState = 4
@@ -319,7 +315,7 @@ var mainState = {
       this.wizard.x += speedCharacter
     }
 
-    if (this.player.x == 1200) {
+    if (this.player.x == 1000) {
 
       $(document).ready(function () {
 
