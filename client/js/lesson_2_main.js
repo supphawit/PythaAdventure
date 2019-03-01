@@ -1,7 +1,7 @@
 var current_conver = 0
 var self
 var check_conver = 0
-var speedCharacter = 2
+var speedCharacter = 10
 var playerState = 0
 var wizardState = 0
 var stopState = 0
@@ -36,17 +36,17 @@ var conver_3 = ["ฮ่าๆ เจ้าพอจะเข้าใจแล�
 
 function showInventory() {
 
-  if(typeof self.inventory !== "undefined"){
+  if (typeof self.inventory !== "undefined") {
     self.inventory.destroy()
     self.xSign.destroy()
   }
   self.inventory = game.add.image(350, 50, 'inventory');
-  self.inventory.scale.setTo(0.6,0.6)
+  self.inventory.scale.setTo(0.6, 0.6)
   self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
-  self.xSign.scale.setTo(0.8,0.8)
+  self.xSign.scale.setTo(0.8, 0.8)
 }
 
-function closeInventory(){
+function closeInventory() {
   self.inventory.destroy()
   self.xSign.destroy()
 }
@@ -61,7 +61,7 @@ function resultCompile(responseTxt) {
       playerState = "goLeft"
 
       self.player.destroy()
-      self.player = game.add.sprite(self.player.x, self.player.y, 'playerWalkLeft')
+      self.player = game.add.sprite(self.player.x, self.player.y, 'playerStandLeft')
       self.player.animations.add('walk', [0, 1, 2, 3], 5, true)
       self.player.animations.play('walk')
     }
@@ -70,7 +70,7 @@ function resultCompile(responseTxt) {
       playerState = "goRight"
 
       self.player.destroy()
-      self.player = game.add.sprite(self.player.x, self.player.y, 'playerWalkRight')
+      self.player = game.add.sprite(self.player.x, self.player.y, 'playerStandRight')
       self.player.animations.add('walk', [0, 1, 2, 3], 5, true)
       self.player.animations.play('walk')
     }
@@ -92,7 +92,7 @@ function resultCompile(responseTxt) {
 
     self.errorButton = game.add.button(750, 140, 'errorButton', deleteErrorButton, this)
     self.more = game.add.button(700, 140, 'more', viewMore, this)
-    
+
   }
 }
 
@@ -110,7 +110,7 @@ function deleteErrorButton() {
   // })
 }
 
-function viewMore(){
+function viewMore() {
   self.textErrorInBox.destroy()
   self.textErrorInBox = game.add.text(280, 80, tmpResponse, {
     fontSize: '15px',
@@ -175,9 +175,9 @@ var mainState = {
     game.load.image('dialogBoxRight', 'client/images/text-box-right.png')
     game.load.image('dialogBoxLeft', 'client/images/text-box-left.png')
     game.load.image('backpack', 'client/images/backpack.png')
-    game.load.image('menu', 'client/images/menu.png')   
-    game.load.image('inventory', 'client/images/inventory.png')   
-    game.load.image('xSign', 'client/images/xSign.png')   
+    game.load.image('menu', 'client/images/menu.png')
+    game.load.image('inventory', 'client/images/inventory.png')
+    game.load.image('xSign', 'client/images/xSign.png')
     game.load.image('errorText', 'client/images/error.png')
     game.load.spritesheet('button', 'client/images/button.png')
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
@@ -194,7 +194,7 @@ var mainState = {
     this.bg.scale.setTo(0.86, 0.94)
 
     this.menu = game.add.image(800, 10, 'menu');
-    this.menu.scale.setTo(2,2)
+    this.menu.scale.setTo(2, 2)
     this.backpack = game.add.button(1000, 25, 'backpack', showInventory, this)
     this.backpack.scale.setTo(0.7, 0.7)
 
@@ -250,7 +250,7 @@ var mainState = {
       }
     }
 
-    if (playerState == "fail"){
+    if (playerState == "fail") {
       this.textInBox.destroy()
       this.textInBox = game.add.text(380, 120, "เลือกเอาซักทางซ้ายหรือขวา !!", {
         fontSize: '15px',
@@ -350,28 +350,36 @@ var mainState = {
       this.player.animations.add('walk', [0, 1, 2, 3], 5, true)
       this.player.animations.play('walk')
       playerState = 11
-    }else if (playerState == 11 && this.wizard.x < 1100){
+    } else if (playerState == 11 && this.wizard.x < 1100) {
       this.wizard.x += speedCharacter
       this.player.x += speedCharacter
-    }else if (this.wizard.x == 1100 ){
+    }
+    if (this.player.x == 1100) {
+
       $(document).ready(function () {
 
-        var userUpdate = $.ajax({
-          type: "POST",
-          url: '/updateLesson',
-          data: {
-            lesson: "2",
-            point: "100",
-            pass: true,
-          }
+        var userSession = $.ajax({
+          url: '/getUser',
+          type: "GET",
+          async: false,
+        }).responseText
+        var userJson = JSON.parse(userSession);
 
+        var updateUser = $.ajax({
+          type: "POST",
+          url: '/updateByQuery',
+          data: {
+            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) VALUES ('" + userJson.email + "', 2 ,'123' )",
+          }
         })
 
         console.log("pass")
         window.location.href = "/lesson_3"
+
       })
+
     }
-    
+
   },
 };
 

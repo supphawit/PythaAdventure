@@ -1,7 +1,7 @@
 var current_conver = 0
 var self
 var check_conver = 0
-var speedCharacter = 2
+var speedCharacter = 10
 var playerState = 0
 var wizardState = 0
 var tmpResponse
@@ -291,17 +291,21 @@ var mainState = {
 
       $(document).ready(function () {
 
-        var userUpdate = $.ajax({
+        var userSession = $.ajax({
+          url: '/getUser',
+          type: "GET",
+          async: false,
+        }).responseText
+        var userJson = JSON.parse(userSession);
+
+
+        var updateUser = $.ajax({
           type: "POST",
-          url: '/updateLesson',
+          url: '/updateByQuery',
           data: {
-            lesson: "1",
-            point: "100",
-            pass: true,
+            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) VALUES ('" + userJson.email + "', 1 ,'123' )",
           }
-
         })
-
         console.log("pass")
         window.location.href = "/lesson_2"
       })

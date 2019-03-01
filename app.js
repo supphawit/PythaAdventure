@@ -30,7 +30,8 @@ app.use(session({ secret: 'somsristupid' }));
 
 app.get('/', function (req, res) {
   if (req.session.email) {
-    res.sendFile(__dirname + '/client/pre_test.html')
+    // res.sendFile(__dirname + '/client/pre_test.html')
+    res.redirect('/pre_test')
   } else {
     res.sendFile(__dirname + '/index.html')
   }
@@ -38,14 +39,57 @@ app.get('/', function (req, res) {
 })
 
 app.get('/getUser', function (req, res) {
-  data = {
+
+  var data = {
     email: req.session.email,
     name: req.session.name,
     imgURL: req.session.imgURL,
     pre: req.session.pre,
-    post: req.session.post
+    post: req.session.post,
   }
   res.send(data)
+
+})
+
+app.get('/refreshUser', function (req, res) {
+
+  var authUser = "SELECT * FROM users where email = '" + req.session.email + "'"
+
+  con.query(authUser, function (err, row) {
+    if (err) throw err;
+
+    data = {
+      email: row[0].email,
+      name: row[0].name,
+      imgURL: row[0].imgURL,
+      pre: row[0].pre_test_score,
+      post: row[0].post_test_score,
+    }
+    res.send(data)
+
+  })
+})
+
+app.get('/getLesson', function (req, res) {
+
+  var lesson = "SELECT * FROM lesson where email_user = '" + req.session.email + "'"
+
+  var dataArray = []
+  con.query(lesson, function (err, row) {
+    if (err) throw err;
+
+    for (l in row){
+      // console.log( row[l] )
+      dataArray.push(row[l].lesson_level)
+    } 
+    data = {
+      lesson: dataArray
+
+    }
+    console.log(dataArray)
+    res.send(dataArray)
+  }) 
+
 
 })
 
@@ -103,7 +147,17 @@ app.post('/googleSign', function (req, res) {
     }
 
   })
- 
+
+}) 
+
+
+app.post('/updateByQuery', function (req, res) {
+
+  var query = req.body.query
+  con.query(query, function (err, row) {
+    if (err) throw err;
+  })
+
 })
 
 app.post('/updateQuestionScore', function (req, res) {
@@ -179,7 +233,7 @@ app.get('/pre_test', function (req, res) {
     if (row[0].pre_test_score == 0) {
       res.sendFile(__dirname + '/client/pre_test.html')
     } else {
-      res.redirect('/lesson_1')
+      res.redirect('/lesson')
     }
 
   })
@@ -191,6 +245,15 @@ app.get('/profile', function (req, res) {
     res.sendFile(__dirname + '/client/profile.html')
   } else {
     res.redirect('/')
+  }
+})
+
+
+app.get('/lesson', function (req, res) {
+  if (req.session.email && req.session.pre == 0) {
+    res.redirect('/')
+  } else {
+    res.sendFile(__dirname + '/client/lesson.html')
   }
 })
 
@@ -215,6 +278,14 @@ app.get('/lesson_2', function (req, res) {
 app.get('/lesson_3', function (req, res) {
   if (req.session.email && req.session.pre != 0) {
     res.sendFile(__dirname + '/client/lesson_3.html')
+  } else {
+    res.redirect('/')
+  }
+})
+
+app.get('/lesson_4', function (req, res) {
+  if (req.session.email && req.session.pre != 0) {
+    res.sendFile(__dirname + '/client/lesson_4.html')
   } else {
     res.redirect('/')
   }

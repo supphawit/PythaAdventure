@@ -20,7 +20,7 @@
 
   <link rel="stylesheet" type="text/css" href="client/css/style.css">
   <script type="text/javascript" src="client/js/phaser.js"></script>
-  <script type="text/javascript" src="client/js/lesson_3_main.js"></script>
+  <script type="text/javascript" src="client/js/lesson_4_main.js"></script>
   <!-- <script type="text/javascript" src="client/js/load.js"></script> -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -35,7 +35,7 @@
 
   <div class="container-fluid">
     <div style="text-align:center">
-      <h1 style="color:aliceblue"> Lesson: for</h1>
+      <h1 style="color:aliceblue"> Lesson: function</h1>
     </div>
   </div>
 
@@ -46,10 +46,10 @@
         <div class="form-group">
           <div id="editor"># Write your code
 
-apple = 2
+def test():
+  return ("test")
 
-for i in range(1,apple):
-  print (i)
+print (test())
           </div>
         </div>
         <input id="compile" type="submit" class="btn btn-primary" value="Compile">
@@ -72,7 +72,7 @@ for i in range(1,apple):
       $('#hint-popover').popover({
         container: 'body',
         title: "คำใบ้",
-        content: 'จำนวนของลูกแอปเปิ้ลขึ้นอยู่กับจำนวนรอบของการวนลูป',
+        content: 'สามารถเรียกใช้งานฟังก์ชันได้โดยเขียนชื่อฟังก์ชัน และ ฟังก์ชันจะมี return หรือไม่มีก็ได้',
         placement: 'top',
         html: true,
       })
@@ -89,7 +89,7 @@ for i in range(1,apple):
         // No redirect
         e.preventDefault();
         var code = editor.getValue();
-        var namefile = 'loop'
+        var namefile = 'function'
         if (code != '') {
 
           var write = $.ajax({
@@ -118,14 +118,14 @@ for i in range(1,apple):
         console.log("item: " + output_result)
 
         if (output_result.length < 50) {
-          resultCompile(output_result.split("\n").length, 1)
-          var updateUser = $.ajax({
-            type: "POST",
-            url: '/updateByQuery',
-            data: {
-              query: "INSERT INTO inventory ( email_user, item_name, amount) VALUES ('" + userJson.email + "', 'apple' ," + output_result.split("\n").length + ")",
-            }
-          })
+          resultCompile(output_result)
+          // var updateUser = $.ajax({
+          //   type: "POST",
+          //   url: '/updateInventory',
+          //   data: {
+          //     query: "INSERT INTO inventory ( email_user, item_name, amount) VALUES ('" + userJson.email + "', 'dsfafdsf' ," + output_result.split("\n").length + ")",
+          //   }
+          // })
 
         } else {
           resultCompile(99, 1)

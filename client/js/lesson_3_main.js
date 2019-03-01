@@ -6,6 +6,7 @@ var playerState = 0
 var wizardState = 0
 var stopState = 0
 var tmpResponse
+var finish_buy
 
 var conver_1 = ["คนนี้คือพ่อค้า",
   "เจ้าสามารถซื้อของจากเขาได้",
@@ -21,44 +22,45 @@ var conver_2 = ["เจ้าอยากจะซื้อแอปเปิ้
   "ต้องการกี่ลูกล่ะ?",
 ]
 
-var conver_3 = ["?",
-  "?",
+var conver_3 = ["สามารถดูในกระเป๋า เพื่อดูของที่เก็บมาได้นะ",
+  "พอจะเข้าใจเรื่องการวนลูปบ้างแล้วสินะ",
+  "ไปกันต่อเถอะ",
 ]
 
 function showInventory() {
 
-  if(typeof self.inventory !== "undefined"){
+  if (typeof self.inventory !== "undefined") {
     self.inventory.destroy()
     self.xSign.destroy()
   }
   self.inventory = game.add.image(350, 50, 'inventory');
-  self.inventory.scale.setTo(0.6,0.6)
+  self.inventory.scale.setTo(0.6, 0.6)
   self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
-  self.xSign.scale.setTo(0.8,0.8)
+  self.xSign.scale.setTo(0.8, 0.8)
 }
 
-function closeInventory(){
+function closeInventory() {
   self.inventory.destroy()
   self.xSign.destroy()
 }
 
 
 function resultCompile(responseTxt, n) {
-  // console.log(responseTxt)
-  // tmpResponse = responseTxt.split("\n").length
+  finish_buy = n
+
   if (responseTxt < 50) {
 
-    if (responseTxt == 0) return;
-
-    self.button.destroy()
-    self.textInBox.destroy()
-    // self.dialogBox = game.add.image(150, 50, 'dialogBoxRight')
-    self.button = game.add.button(500, 80, 'button', actionOnClick, this)
-    self.textInBox = game.add.text(240, 70, n, {
-      fontSize: '30px',
-    })
+    if (responseTxt == 0) return
 
     setTimeout(function () {
+      self.button.destroy()
+      self.textInBox.destroy()
+      self.dialogBox.destroy()
+      self.dialogBox = game.add.image(150, 50, 'dialogBoxRight')
+      self.button = game.add.button(500, 80, 'button', actionOnClick, self)
+      self.textInBox = game.add.text(240, 70, n, {
+        fontSize: '30px',
+      })
       self.item_apple = game.add.image(180, 70, 'item_apple');
 
       self.item_apple.scale.setTo(0.1, 0.1)
@@ -66,6 +68,8 @@ function resultCompile(responseTxt, n) {
       resultCompile(--responseTxt, n + 1);
 
     }, 1300);
+
+
 
   } else {
 
@@ -137,11 +141,31 @@ function actionOnClick() {
       current_conver = 0
     }
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
-    self.textInBox.destroy()
-    self.dialogBox.destroy()
-    self.button.destroy()
 
-    self.dialogBox = game.add.image(150, 50, 'dialogBoxRight')
+    console.log("SDFSDF")
+    if (finish_buy >= 1) {
+      self.textInBox.destroy()
+      self.dialogBox.destroy()
+      self.button.destroy()
+
+      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(630, 170, conver_3[current_conver], {
+        fontSize: '15px',
+      })
+      current_conver++
+      console.log(current_conver)
+      if (current_conver >= 3) {
+        console.log("wiz", wizardState)
+        wizardState = 2
+        playerState = 2
+        self.textInBox.destroy()
+        self.dialogBox.destroy()
+        self.button.destroy()
+      }
+    }
+
+    // self.dialogBox = game.add.image(150, 50, 'dialogBoxRight')
     // self.button = game.add.button(790, 130, 'button', actionOnClick, this)
     // self.textInBox = game.add.text(480, 120, conver_3[current_conver], {
     //   fontSize: '15px',
@@ -178,9 +202,9 @@ var mainState = {
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
     game.load.spritesheet('more', 'client/images/more.png')
     game.load.image('backpack', 'client/images/backpack.png')
-    game.load.image('menu', 'client/images/menu.png')   
-    game.load.image('inventory', 'client/images/inventory.png')   
-    game.load.image('xSign', 'client/images/xSign.png')   
+    game.load.image('menu', 'client/images/menu.png')
+    game.load.image('inventory', 'client/images/inventory.png')
+    game.load.image('xSign', 'client/images/xSign.png')
   },
 
   create: function () {
@@ -193,7 +217,7 @@ var mainState = {
     this.bg.scale.setTo(1.25, 1.25)
 
     this.menu = game.add.image(800, 10, 'menu');
-    this.menu.scale.setTo(2,2)
+    this.menu.scale.setTo(2, 2)
     this.backpack = game.add.button(1000, 25, 'backpack', showInventory, this)
     this.backpack.scale.setTo(0.7, 0.7)
 
@@ -250,7 +274,7 @@ var mainState = {
     if (stopState == 10) {
       if (this.item_apple.y != 300) {
         this.item_apple.y += 2
-        console.log( this.item_apple.y)
+        // console.log(this.item_apple.y)
       }
 
       if (this.item_apple.x != 450) {
@@ -260,6 +284,61 @@ var mainState = {
       if (this.item_apple.y == 214 && this.item_apple.x == 450) {
         this.item_apple.destroy()
       }
+
+      if (wizardState == 2) {
+        this.wizard.x += speedCharacter
+      }
+
+      if (playerState == 2) {
+        this.player.x += speedCharacter
+      }
+
+      if (this.wizard.x == 740) {
+        wizardState = 3
+        this.wizard.y += speedCharacter
+
+      }
+
+      if (this.player.x == 740 && playerState != 3) {
+        playerState = 3
+        this.player.destroy()
+        this.player = game.add.sprite(this.player.x, this.player.y, 'playerWalkingDown')
+        this.player.animations.add('walk', [0, 1, 2, 3], 5, true)
+        this.player.animations.play('walk')
+      }
+
+      if (playerState == 3) {
+        this.player.y += speedCharacter
+        console.log(this.player.y)
+      }
+
+
+      if (this.player.y == 650) {
+
+        $(document).ready(function () {
+
+          var userSession = $.ajax({
+            url: '/getUser',
+            type: "GET",
+            async: false,
+          }).responseText
+          var userJson = JSON.parse(userSession);
+
+          var updateUser = $.ajax({
+            type: "POST",
+            url: '/updateByQuery',
+            data: {
+              query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) VALUES ('" + userJson.email + "', 3 ,'123' )",
+            }
+          })
+  
+          console.log("pass")
+          window.location.href = "/lesson_4"
+
+        })
+
+      }
+
 
     }
   },

@@ -3,13 +3,15 @@
 <head>
   <title>แบบทดสอบก่อนการเล่นเกม</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
 
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-  <meta name="google-signin-client_id" content="849024154553-g7fcnjmp2rgfrl6aprbhkehc65blq65q.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="849024154553-g7fcnjmp2rgfrl6aprbhkehc65blq65q.apps.googleusercontent.com">
 
 </head>
 
@@ -24,6 +26,12 @@
 
         <br>
         <form name="quiz" method="post" name="buttons" id="quiz" onsubmit="return false">
+
+          <div id="head_question_0"></div>
+          <div id="choice_question_0_1"></div>
+          <div id="choice_question_0_2"></div>
+          <div id="choice_question_0_3"></div>
+          <div id="choice_question_0_4"></div>
 
           <div id="head_question_1"></div>
           <div id="choice_question_1_1"></div>
@@ -79,13 +87,8 @@
           <div id="choice_question_9_3"></div>
           <div id="choice_question_9_4"></div>
 
-          <div id="head_question_10"></div>
-          <div id="choice_question_10_1"></div>
-          <div id="choice_question_10_2"></div>
-          <div id="choice_question_10_3"></div>
-          <div id="choice_question_10_4"></div>
-
-          <div class="alert alert-success" role="alert" id="result_Exam" style="display: none;text-align: center;font-size: 30px">
+          <div class="alert alert-success" role="alert" id="result_Exam"
+            style="display: none;text-align: center;font-size: 30px">
           </div>
           <button id="send_ex" class="btn btn-primary" type="submit">Submit</button>
 
@@ -127,10 +130,10 @@
 
         var answerTuple = {}
         for (var k = 0; k < questionAfterRandom.length; k++) {
-          console.log(questionAfterRandom[k])
+          // console.log(questionAfterRandom[k])
           var answer = questionAfterRandom[k].q_answer
           var x = 0
-          $("#head_question_" + parseInt(k + 1)).html("<h4>" + parseInt(k + 1) + ". " + questionAfterRandom[k].q_detail + "</h4>")
+          $("#head_question_" + parseInt(k )).html("<h4>" + parseInt(k+1) + ". " + questionAfterRandom[k].q_detail + "</h4>")
           // var answer = {
           //   1: [questionAfterRandom[k].q_choice_1, ],
 
@@ -139,7 +142,7 @@
 
           for (var q = 1; q <= 4; q++) {
 
-            if (questionAfterRandom[k].q_answer == q) {
+            if (answer == q) {
               switch (q) {
                 case 1:
                   answerTuple[q] = [true, questionAfterRandom[k].q_choice_1]
@@ -154,7 +157,6 @@
                   answerTuple[q] = [true, questionAfterRandom[k].q_choice_4]
                   break
               }
-
             } else {
               switch (q) {
                 case 1:
@@ -171,17 +173,18 @@
                   break
               }
             }
-
+            // console.log(answerTuple)
             if (answerTuple[q][0] == true) {
               $("#choice_question_" + parseInt(k) + "_" + parseInt(q)).html("<div class='form-check'>" +
                 " <input class='form-check-input' type='radio' name='group" + parseInt(k) + "' value='correct'>" +
                 "<label class='form-check-label'>" + answerTuple[q][1] + " </label></div>")
-            } else if (answerTuple[q][0] == false){
+            }
+            if (answerTuple[q][0] == false) {
               $("#choice_question_" + parseInt(k) + "_" + parseInt(q)).html("<div class='form-check'>" +
                 " <input class='form-check-input' type='radio' name='group" + parseInt(k) + "' value='wrong'>" +
                 "<label class='form-check-label'>" + answerTuple[q][1] + " </label></div>")
             }
-            console.log(answerTuple)
+            // console.log(answerTuple)
           }
         }
 
@@ -193,7 +196,7 @@
       $("#send_ex").click(async (e) => {
 
         var amountCorrect = 0;
-        for (var i = 1; i <= 45; i++) {
+        for (var i = 0; i <= 45; i++) {
           var radios = document.getElementsByName('group' + i);
           for (var j = 0; j < radios.length; j++) {
             var radio = radios[j];
@@ -213,7 +216,7 @@
           }
         })
         setInterval(function () {
-          window.location.href = "/lesson_1"
+          window.location.href = "/lesson"
         }, 1000);
       })
     })

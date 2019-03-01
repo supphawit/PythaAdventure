@@ -42,7 +42,7 @@
         $("#navBar").load("client/navbar.html");
 
         var data = $.ajax({
-          url: '/getUser',
+          url: '/refreshUser',
           type: "GET",
           async: false,
         }).responseText

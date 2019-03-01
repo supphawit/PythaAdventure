@@ -1,0 +1,135 @@
+<html>
+
+<head>
+  <title>Lesson</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id"
+    content="849024154553-g7fcnjmp2rgfrl6aprbhkehc65blq65q.apps.googleusercontent.com">
+  <link rel="stylesheet" type="text/css" href="client/css/style.css">
+  <!-- <script type="text/javascript" src="client/js/phaser.js"></script>
+  <script type="text/javascript" src="client/js/main.js"></script> -->
+</head>
+
+<body>
+
+  <span id="navBar"></span>
+
+
+  <div class="container" style="padding: 25px;">
+    <h4>ฝึกสอน</h4>
+    <div class="row">
+
+      <div class="card-deck">
+        <div class="card">
+          <img class="card-img-top border border-primary" src="/client/images/map_lesson_1.png">
+          <div class="card-body">
+            <h5 class="card-title">print</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+              content. This content is a little bit longer.</p>
+          </div>
+          <div class="card-footer">
+
+            <span id='lesson1'></span>
+            <a href="/lesson_1" class="btn btn-primary " id='l1'>Learn</a>
+            <span class="badge badge-secondary" id="s1">Undo</span>
+            <span id='success1'></span>
+
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top border border-primary " src="/client/images/map_lesson_2.png">
+          <div class="card-body">
+            <h5 class="card-title">if else</h5>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          </div>
+          <div class="card-footer">
+            <span id='lesson2'></span>
+            <a href="/lesson_2" class="btn btn-primary disabled" id='l2'>Learn</a>
+            <span id='success2'></span>
+            <span class="badge badge-secondary" id="s2">Undo</span>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top border border-primary " src="/client/images/map_lesson_3.png">
+          <div class="card-body">
+            <h5 class="card-title">for loop</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+              content. This card has even longer content than the first to show that equal height action.</p>
+          </div>
+          <div class="card-footer">
+            <span id='lesson3'></span>
+            <a href="/lesson_3" class="btn btn-primary disabled" id='l3'>Learn</a>
+            <span id='success3'></span>
+            <span class="badge badge-secondary" id="s3">Undo</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <img class="card-img-top border border-primary " src="/client/images/map_lesson_4.png">
+          <div class="card-body">
+            <h5 class="card-title">function</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+              content. This card has even longer content than the first to show that equal height action.</p>
+          </div>
+          <div class="card-footer">
+            <span id='lesson4'></span>
+            <a href="/lesson_4" class="btn btn-primary disabled" id='l4'>Learn</a>
+            <span id='success4'></span>
+            <span class="badge badge-secondary" id="s4">Undo</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+  <div style="display: none" class="g-signin2" data-onsuccess="onSignIn">
+
+
+    <script>
+      $(document).ready(function () {
+        $("#navBar").load("client/navbar.html");
+
+        var data = $.ajax({
+          url: '/getLesson',
+          type: "GET",
+          async: false,
+        }).responseJSON
+
+        console.log(data.length)
+        data.forEach(element => {
+          console.log(element)
+          $('#lesson' + element).html(" <a href='/lesson_" + (element) + "' class='btn btn-primary'>Learn</a>")
+          $('#l' + element).hide()
+          $('#success' + element).html(" <span class='badge badge-success'>Success</span>")
+          $('#s' + element).hide()
+
+          if (data.length == element) {
+            $('#lesson' + (element + 1)).html(" <a href='/lesson_" + (element + 1) + "' class='btn btn-primary'>Learn</a>")
+            $('#l' + (element + 1)).hide()
+            console.log("JSDKFj", (element + 1))
+          }
+        });
+        // console.log(data[0])
+        // if (data) {
+        //   var userJson = JSON.parse(data);
+
+        //   // $("#picture").html("<img src='" + userJson.imgURL + "' />")
+        //   $("#name").html("<h4>Name: " + userJson.name + "</h4>")
+        //   $("#email").html("<h4>Email: " + userJson.email + "</h4>")
+        //   $("#preTest").html("<h4>Pre-Test Score: " + userJson.pre + "</h4>")
+        //   $("#postTest").html("<h4>Post-Test Score: " + userJson.post + "</h4>")
+        //   $("#picture").html("<img src='" + userJson.imgURL + "' class='rounded-circle' width='120px' style='margin-left:auto;margin-right:auto'>")
+        // } else {
+        //   $("#listProfile").hide()
+        // }
+
+      })
+
+    </script>
+</body>
+
+</html>
