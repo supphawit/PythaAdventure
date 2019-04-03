@@ -40,11 +40,11 @@
 
       <div class="col">
         <div class="form-group">
-          <div id="editor"># Write your code+
+          <div id="editor"># Write your code
 ex = [1,3,5]
 
 print (len(ex))
-</div>
+          </div>
         </div>
         <input id="compile" type="submit" class="btn btn-primary" value="Compile">
         <span id="nextEp"></span>
@@ -96,7 +96,7 @@ print (len(ex))
 
           })
         }
-        var nextTmp 
+        var nextTmp
 
         var userSession = $.ajax({
           url: '/getUser',
@@ -113,7 +113,13 @@ print (len(ex))
         // console.log("item: " + output_result)
 
         if (output_result.length < 50) {
-          nextTmp =  resultCompile(output_result)
+          nextTmp = resultCompile(output_result)
+
+          var Range = require("ace/range").Range
+          var row = editor.selection.lead.row
+          var newText = "print (\"test\") \n" +
+            "# eiei"
+            editor.session.replace(new Range(1, 0, 5, Number.MAX_VALUE), newText)
         }
 
         // if (nextTmp == 1 ){
