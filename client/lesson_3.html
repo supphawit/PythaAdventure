@@ -46,7 +46,7 @@
 apple = 2
 
 for i in range(1,apple):
-  print (i)
+print (i)
           </div>
         </div>
         <input id="compile" type="submit" class="btn btn-primary" value="Compile">
@@ -120,7 +120,7 @@ for i in range(1,apple):
             type: "POST",
             url: '/updateByQuery',
             data: {
-              query: "INSERT INTO inventory ( email_user, item_name, amount) VALUES ('" + userJson.email + "', 'apple' ," + output_result.split("\n").length + ")",
+              query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'boots' , " + output_result.split("\n").length + ") AS tmp WHERE NOT EXISTS (SELECT item_name FROM inventory WHERE item_name = 'boots' ) LIMIT 1",
             }
           })
 

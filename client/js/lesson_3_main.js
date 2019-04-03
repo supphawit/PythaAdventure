@@ -163,7 +163,7 @@ function actionOnClick() {
     }
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
 
-    console.log("SDFSDF")
+
     if (finish_buy >= 1) {
       self.textInBox.destroy()
       self.dialogBox.destroy()
@@ -177,7 +177,7 @@ function actionOnClick() {
       current_conver++
       console.log(current_conver)
       if (current_conver >= 3) {
-        console.log("wiz", wizardState)
+
         wizardState = 2
         playerState = 2
         self.textInBox.destroy()
@@ -349,7 +349,7 @@ var mainState = {
             type: "POST",
             url: '/updateByQuery',
             data: {
-              query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) VALUES ('" + userJson.email + "', 3 ,'123' )",
+              query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) SELECT * FROM  (SELECT '" + userJson.email + "', 3 ,'loop' ) AS tmp WHERE NOT EXISTS (SELECT lesson_level FROM lesson WHERE lesson_level = 3  AND email_user = '" + userJson.email + "') LIMIT 1",
             }
           })
 

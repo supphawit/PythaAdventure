@@ -3,12 +3,14 @@
 <head>
   <title>Lesson</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
   <link rel="stylesheet" type="text/css" href="client/css/style.css">
   <!-- <script type="text/javascript" src="client/js/phaser.js"></script>
@@ -21,7 +23,7 @@
 
 
   <div class="container" style="padding: 25px;">
-    <h4>ฝึกสอน</h4>
+    <h2>ฝึกสอน</h2>
     <div class="row">
 
       <div class="card-deck">
@@ -29,14 +31,14 @@
           <img class="card-img-top border border-primary" src="/client/images/map_lesson_1.png">
           <div class="card-body">
             <h5 class="card-title">print</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-              content. This content is a little bit longer.</p>
+            <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวการใช้คำสั่ง Print เพื่อแสดงข้อความออกมาทางหน้าจอ
+              ซึ่งเป็นพื้นฐานในการเรียนภาษาทางคอมพิวเตอร์ใหม่ทุกภาษา</p>
           </div>
           <div class="card-footer">
 
             <span id='lesson1'></span>
-            <a href="/lesson_1" class="btn btn-primary " id='l1'>Learn</a>
-            <span class="badge badge-secondary" id="s1">Undo</span>
+            <a href="/lesson_1" class="btn btn-secondary " id='l1'>Learn</a>
+            <span class="badge badge-secondary" id="s1">Unavailable</span>
             <span id='success1'></span>
 
           </div>
@@ -45,27 +47,32 @@
           <img class="card-img-top border border-primary " src="/client/images/map_lesson_2.png">
           <div class="card-body">
             <h5 class="card-title">if else</h5>
-            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+            <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวกับการใช้คำสั่ง IF ELSE ในการทำเงื่อนไขต่างๆ ในภาษา Python
+              ผู้เรียนจะได้ทราบถึงวิธีการใช้เงื่อนไข IF ELSE และรูปแบบต่างๆ ของเงื่อนไข
+
+            </p>
           </div>
           <div class="card-footer">
             <span id='lesson2'></span>
-            <a href="/lesson_2" class="btn btn-primary disabled" id='l2'>Learn</a>
+            <a href="/lesson_2" class="btn btn-secondary disabled" id='l2'>Learn</a>
             <span id='success2'></span>
-            <span class="badge badge-secondary" id="s2">Undo</span>
+            <span class="badge badge-secondary" id="s2">Unavailable</span>
           </div>
         </div>
         <div class="card">
           <img class="card-img-top border border-primary " src="/client/images/map_lesson_3.png">
           <div class="card-body">
             <h5 class="card-title">for loop</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-              content. This card has even longer content than the first to show that equal height action.</p>
+            <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวการใช้ For Loop เพื่อแสดงข้อความออกมาทางหน้าจอ
+              โดยจะมีการสอนพร้อมยกตัวอย่างประกอบในฉาก
+
+            </p>
           </div>
           <div class="card-footer">
             <span id='lesson3'></span>
-            <a href="/lesson_3" class="btn btn-primary disabled" id='l3'>Learn</a>
+            <a href="/lesson_3" class="btn btn-secondary disabled" id='l3'>Learn</a>
             <span id='success3'></span>
-            <span class="badge badge-secondary" id="s3">Undo</span>
+            <span class="badge badge-secondary" id="s3">Unavailable</span>
           </div>
         </div>
 
@@ -73,21 +80,84 @@
           <img class="card-img-top border border-primary " src="/client/images/map_lesson_4.png">
           <div class="card-body">
             <h5 class="card-title">function</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-              content. This card has even longer content than the first to show that equal height action.</p>
+            <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวการสร้าง Function
+              โดยจะมีการสอนการเรียกฟังก์ชั่นมาใช้พร้อมยกตัวอย่างในฉาก</p>
           </div>
           <div class="card-footer">
             <span id='lesson4'></span>
-            <a href="/lesson_4" class="btn btn-primary disabled" id='l4'>Learn</a>
+            <a href="/lesson_4" class="btn btn-secondary disabled" id='l4'>Learn</a>
             <span id='success4'></span>
-            <span class="badge badge-secondary" id="s4">Undo</span>
+            <span class="badge badge-secondary" id="s4">Unavailable</span>
           </div>
         </div>
+
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+
+      <div class="card-deck">
+        <div class="card">
+          <img class="card-img-top border border-primary" src="/client/images/map_lesson_3.png">
+          <div class="card-body">
+            <h5 class="card-title">List</h5>
+            <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวกับการประกาศและสร้าง List รวมถึงเมธอดพื้นฐานและการใช้ For
+              loop แสดงค่าออกมา</p>
+          </div>
+          <div class="card-footer">
+
+            <span id='lesson5'></span>
+            <a href="/lesson_5" class="btn btn-secondary " id='l5'>Learn</a>
+            <span class="badge badge-secondary" id="s5">Unavailable</span>
+            <span id='success5'></span>
+
+          </div>
+        </div>
+        <div class="card">
+        </div>
+        <div class="card">
+        </div>
+        <div class="card">
+        </div>
+
       </div>
 
     </div>
+    <br>
+    <h2>เนื้อเรื่อง</h2>
+
+    <!-- <div class="row">
+
+        <div class="card-deck">
+          <div class="card">
+            <img class="card-img-top border border-primary" src="/client/images/map_lesson_00.png">
+            <div class="card-body">
+              <h5 class="card-title">First kill</h5>
+              <p class="card-text">เนื้อเรื่องแรกจะให้จัดการกับมอนส์เตอร์ โดยใช้ความรู้จากเนื้อหาก่อนหน้าในการผ่านด่าน</p>
+            </div>
+            <div class="card-footer">
+
+              <span id='story1'></span>
+              <a href="/story_1" class="btn btn-primary " id='st1'>Learn</a>
+              <span class="badge badge-warning" id="ss1">Unavailable</span>
+              <span id='story_success1'></span>
+
+            </div>
+          </div>
+          <div class="card">
+          </div>
+          <div class="card">
+          </div>
+          <div class="card">
+          </div>
+
+        </div>
+
+      </div> -->
   </div>
-  </div>
+
   <div style="display: none" class="g-signin2" data-onsuccess="onSignIn">
 
 
@@ -101,7 +171,7 @@
           async: false,
         }).responseJSON
 
-        // console.log(data.length)
+        console.log(data)
         data.forEach(element => {
           console.log(element)
           $('#lesson' + element).html(" <a href='/lesson_" + (element) + "' class='btn btn-primary'>Learn</a>")
@@ -113,8 +183,18 @@
             $('#lesson' + (element + 1)).html(" <a href='/lesson_" + (element + 1) + "' class='btn btn-primary'>Learn</a>")
             $('#l' + (element + 1)).hide()
             console.log("JSDKFj", (element + 1))
+            $('#success' + (element + 1)).html(" <span class='badge badge-warning'>Available</span>")
+            $('#s' + (element + 1)).hide()
           }
+
         });
+
+        if (data.length == 0) {
+          $('#lesson' + (1)).html(" <a href='/lesson_" + (1) + "' class='btn btn-primary'>Learn</a>")
+          $('#l' + (1)).hide()
+          $('#success' + (1)).html(" <span class='badge badge-warning'>Available</span>")
+          $('#s' + (1)).hide()
+        }
 
 
       })

@@ -33,20 +33,32 @@ var conver_3 = ["เอาล่ะ พอจะเข้าใจบ้าง�
   "ให้เจ้าเรียนรู้เกี่ยวกับ Python",
 ]
 
+var pause = 0
+function music() {
+  if (pause == 0) {
+    music.pause()
+    pause = 1
+  } else if (pause == 1) {
+    music.resume()
+    pause = 0
+  }
+}
+
 
 function showInventory() {
 
-  if(typeof self.inventory !== "undefined"){
+  if (typeof self.inventory !== "undefined") {
     self.inventory.destroy()
     self.xSign.destroy()
   }
   self.inventory = game.add.image(350, 50, 'inventory');
-  self.inventory.scale.setTo(0.6,0.6)
+  self.inventory.scale.setTo(0.6, 0.6)
   self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
-  self.xSign.scale.setTo(0.8,0.8)
+  self.xSign.scale.setTo(0.8, 0.8)
+
 }
 
-function closeInventory(){
+function closeInventory() {
   self.inventory.destroy()
   self.xSign.destroy()
 }
@@ -103,7 +115,7 @@ function deleteErrorButton() {
   self.errorTextDialog.destroy()
   self.textErrorInBox.destroy()
   self.more.destroy()
-  
+
   actionOnClick()
   // self.dialogBox = game.add.image(350, 100, 'dialogBoxLeft')
   // self.button = game.add.button(690, 130, 'button', actionOnClick, this)
@@ -112,7 +124,7 @@ function deleteErrorButton() {
   // })
 }
 
-function viewMore(){
+function viewMore() {
   self.textErrorInBox.destroy()
   self.textErrorInBox = game.add.text(280, 80, tmpResponse, {
     fontSize: '15px',
@@ -177,14 +189,16 @@ var mainState = {
     game.load.image('dialogBoxRight', 'client/images/text-box-right.png')
     game.load.image('dialogBoxLeft', 'client/images/text-box-left.png')
     game.load.image('backpack', 'client/images/backpack.png')
-    game.load.image('menu', 'client/images/menu.png')   
-    game.load.image('inventory', 'client/images/inventory.png')   
-    game.load.image('xSign', 'client/images/xSign.png')   
+    game.load.image('menu', 'client/images/menu.png')
+    game.load.image('inventory', 'client/images/inventory.png')
+    game.load.image('xSign', 'client/images/xSign.png')
     game.load.image('errorText', 'client/images/error.png')
+    game.load.image('speaker', 'client/images/speaker.png')
+    game.load.image('mute', 'client/images/mute.png')
     game.load.spritesheet('button', 'client/images/button.png')
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
     game.load.spritesheet('more', 'client/images/more.png')
-
+    game.load.audio('music', 'client/images/audio/Celestial.mp3')
   },
 
   create: function () {
@@ -197,9 +211,11 @@ var mainState = {
     this.bg.scale.setTo(0.72, 0.8)
 
     this.menu = game.add.image(800, 10, 'menu');
-    this.menu.scale.setTo(2,2)
-    this.backpack = game.add.button(1000, 25, 'backpack', showInventory, this)
+    this.menu.scale.setTo(2, 2)
+    this.backpack = game.add.button(950, 25, 'backpack', showInventory, this)
     this.backpack.scale.setTo(0.7, 0.7)
+    this.sound = game.add.button(1000, 28, 'speaker', music, this)
+    this.sound.scale.setTo(0.9, 0.9)
 
     this.player = game.add.sprite(-50, 320, 'playerWalkRight')
     this.player.smoothed = false
@@ -214,6 +230,9 @@ var mainState = {
     this.player.animations.play('right')
     this.wizard.animations.play('left')
 
+    music = game.add.audio('music');
+
+    music.play();
   },
 
   update: function () {
@@ -303,7 +322,7 @@ var mainState = {
           type: "POST",
           url: '/updateByQuery',
           data: {
-            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) VALUES ('" + userJson.email + "', 1 ,'123' )",
+            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) SELECT * FROM  (SELECT '" + userJson.email + "', 1 ,'print' ) AS tmp WHERE NOT EXISTS (SELECT lesson_level FROM lesson WHERE lesson_level = 1 AND email_user = '" + userJson.email + "') LIMIT 1",
           }
         })
         console.log("pass")

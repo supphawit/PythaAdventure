@@ -1,7 +1,6 @@
 # Write your code
 
-def test():
-  return ("I want to go")
+attack = "Attack"
 
-print (test())
+print (attack)
           

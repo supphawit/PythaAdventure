@@ -1,13 +1,7 @@
 # Write your code
 
-go = 2
+print ()
 
-if (go == 1):
-    print ("left")
+# print ("Somsri")
 
-elif (go == 2):
-    print ("right")
-
-else: 
-    print ("fail")
           

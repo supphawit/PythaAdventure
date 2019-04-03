@@ -40,13 +40,13 @@
 
       <div class="col">
         <div class="form-group">
-          <div id="editor"># Write your code
+          <div id="editor"># Write your code+
 
 def test():
   return ("test")
 
 print (test())
-          </div>
+</div>
         </div>
         <input id="compile" type="submit" class="btn btn-primary" value="Compile">
         <span id="nextEp"></span>
@@ -98,6 +98,7 @@ print (test())
 
           })
         }
+        var nextTmp 
 
         var userSession = $.ajax({
           url: '/getUser',
@@ -111,14 +112,24 @@ print (test())
           type: "GET",
           async: false,
         }).responseText;
-        console.log("item: " + output_result)
+        // console.log("item: " + output_result)
 
         if (output_result.length < 50) {
-          resultCompile(output_result)
-
-        } else {
-          resultCompile(99, 1)
+          nextTmp =  resultCompile(output_result)
         }
+
+        // if (nextTmp == 1 ){
+        //   console.log("DEWEWFWEF")
+        //   $('#editor').text("<div id='editor'># Write your code+"+
+        //     "def test():"+
+        //     "  return (\"test\")"+
+        //     "print (test())")
+        //   // editor.text('# Write your code')
+        //   // $('#xx').hide()
+        // }
+        // if (nextTmp == 2 ){
+        //   console.log("DDDDDDDDDDDDDDDDDDDDD")
+        // }
       })
     })
   </script>

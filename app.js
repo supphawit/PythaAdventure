@@ -311,3 +311,11 @@ app.get('/lesson_5', function (req, res) {
     res.redirect('/')
   }
 })
+
+app.get('/story_1', function (req, res) {
+  if (req.session.email && req.session.pre != 0) {
+    res.sendFile(__dirname + '/client/story_1.html')
+  } else {
+    res.redirect('/')
+  }
+})

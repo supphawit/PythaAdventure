@@ -6,27 +6,55 @@ var playerState = 0
 var wizardState = 0
 var stopState = 0
 var tmpResponse
-var checkState = 0
+var c_compiler = 0
+var ex_compiler
 var item_inventory = []
 
-var conver_1 = ["บทนี้จะสอนเรื่องฟังก์ชัน (Function)",
-  "ฟังก์ชัน (Function) คือส่วนของโค้ดหรือ\nโปรแกรมที่ทำงานเพื่อวัตถุประสงค์บางอย่าง",
-  "ในภาษา Python คุณสามารถสร้างฟังก์ชัน\nของคุณเองเพื่อให้ทำงานที่ต้องการ",
-  "ในการเขียนโปรแกรมเรามักจะแยกโค้ด\nที่มีการทำงานเหมือนๆ กันเป็นฟังก์ชันเอาไว้ ",
-  "และเรียกใช้ฟังก์ชันนั้นซ้ำๆ \nซึ่งเป็นแนวคิดของการใช้ซ้ำโค้ด ",
-  "นี่เป็นรูปแบบของการประกาศ\nฟังก์ชันในภาษา Python",
-  "def function_name(args...)\n    # statements",
-  "ลองสร้างฟังก์ชันแล้ว\nreturn string ออกมาสิ "
+var conver_1 = ["ในบทนี้ เจ้าจะได้เรียนรู้\nเกี่ยวกับโครงสร้างข้อมูลแบบ List",
+  "ข้าจะบอกการสร้างและใช้งาน List ในเบื้องต้น",
+  "การใช้งานเมธอดและฟังก์ชัน\nเพื่อจัดการข้อมูลภายใน List ",
+  "และการใช้งานคำสั่ง For loop กับ List",
+  "ยกตัวอย่างเช่น numbers = [1, 7, 5]",
+  "หรือ names = ['Tjung', 'Prayud', 'James']",
+  "จะรวมกันก็ได้เป็น \nmixed = [1, 3, \"Mountain\", \"Python\"]",
+  "สามารถใช้เมธอด append() \nเพื่อเพิ่มข้อมูลใหม่เข้าไปใน List",
+  "และลองใช้ฟังก์ชัน len() \nนับจำนวนสมาชิกใน List ออกมาดู",
 ]
 
-var conver_2 = ["ง่ายๆแค่นี้เอง",
-  "ถ้าอยากจะผ่านไปล่ะก็",
-  "ให้เจ้า return ค่าออกมาเป็น string ",
-  "เป็นคำว่า \"I want to go\"",
+var conver_2 = ["คราวนี้ใช้เมธอด append() \nเพิ่มสมาชิกให้กับ List ",
+  "ข้าจะยกตัวอย่างให้ดู \nex.append(10)",
+  "สมาชิกใน List ก็จะเพิ่มขึ้น",
+  "ลองใช้ฟังก์ชัน len() \nตรวจสอบจำนวนสมาชิกใน List ดูสิ",
 ]
 
-var conver_3 = ["ถูกต้อง !!",
-  "ไปกันต่อเถอะ",
+var conver_3 = ["การเข้าถึงข้อมูลภายใน List",
+  "List นั้นใช้ Index สำหรับการเข้าถึงข้อมูล",
+  "โดย Index ของ List จะเป็นจำนวนเต็ม\nที่เริ่มจาก 0 และเพิ่มขึ้นทีละ 1 ไปเรื่อยๆ",
+  "อ่านค่าได้โดย print (ex[0])",
+  "ก็จะได้ค่าภายใน List ลำดับแรกออกมา",
+  "ลองเอาค่าลำดับที่ 2 ออกมาให้ดูหน่อยซิ"
+]
+
+var conver_4 = ["การอ่านค่าใน List ด้วยคำสัง For loop",
+  "มักจะใช้คำสั่งวนซ้ำกับ List \nเพราะทำให้การทำงานรวดเร็วและง่ายขึ้น ",
+  "เช่น การใช้คำสั่งวนซ้ำวนอ่านค่าใน List \nที่มีข้อมูลเป็นจำนวนมาก เป็นต้น ",
+  "ต่อไปมาดูตัวอย่างการใช้คำสั่ง For loop \nกับ List ในภาษา Python",
+  "numbers = [10, 20, 30, 40, 50]",
+  "for n in numbers:\n    print(n)",
+  "ผลลัพธ์คือ 10 20 30 40 50 ",
+  "ให้เพิ่มจำนวนสมาชิกให้ถึง 8 \nจำนวนด้วยเมธอด append ",
+  "และใช้คำสั่ง for loop แสดงค่าออกมา"
+]
+
+var conver_5 = ["ให้ซื้อชุดเกราะกับพ่อค้า",
+  "โดยสร้าง List เก็บ string \nเป็นชนิดของอุปกรณ์แต่ละชิ้น",
+  "ซึ่งอุปกรณ์มีดังนี้\n\"helmet\" \"armor\" \"weapon\" \"boots\"",
+  "ให้แสดงค่าออกมาด้วยคำสั่ง for loop",
+]
+
+var conver_6 = ["ตอนนี้อุปกรณ์เจ้าพร้อมแล้ว",
+  "ข้าจะไปส่งเจ้าที่ป่าให้ออกเดินทาง",
+  "ไปปราบจอมมาร",
 ]
 
 function showInventory() {
@@ -56,6 +84,9 @@ function showInventory() {
   self.inventory.scale.setTo(0.6, 0.6)
   self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
   self.xSign.scale.setTo(0.8, 0.8)
+
+
+
 }
 
 function closeInventory() {
@@ -64,27 +95,133 @@ function closeInventory() {
 }
 
 
-function resultCompile(responseTxt) {
-  // console.log((responseTxt))
-  // console.log(("I want to go".length))
+function resultCompile(responseTxt, n) {
+
   if (responseTxt.length < 50) {
-    checkState = 1
-    self.textInBox.destroy()
-    self.button.destroy()
-    self.dialogBox.destroy()
 
-    self.dialogBox = game.add.image(300, 100, 'dialogBoxLeft')
-    self.textInBox = game.add.text(330, 120, responseTxt, {
-      fontSize: '15px',
-    })
-    self.button = game.add.button(640, 130, 'button', actionOnClick, this)
+    if (c_compiler == 4) {
+      var count = 0
+      var res = responseTxt.split("\n")
+      res = res.filter(function (str) {
+        return /\S/.test(str);
+      });
+      console.log("res", res)
+      var all = ['helmet', 'armor', 'weapon', 'boots']
+      for (var i = 0; i <= 3; i++) {
+        console.log("i", res[i])
+        for (var j = 0; j <= 3; j++) {
+          console.log("j", all[j])
+          if (res[i].trim() == all[j].trim()) {
+            count += 1
+          }
+        }
+      }
 
-    if (responseTxt.trim() == "I want to go") {
-      checkState = 2
-      stopState = 1
-      playerState = 3
-      wizardState = 3
-      console.log(playerState)
+      if (count != 4) {
+        self.textInBox.destroy()
+        self.dialogBox.destroy()
+        self.button.destroy()
+
+        self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+        self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+        self.textInBox = game.add.text(630, 170, "อุปรกณ์ยังไม่ครบ !!", {
+          fontSize: '15px',
+        })
+        console.log(count)
+      } else {
+        stopState = 1
+        c_compiler = 5
+      }
+    }
+    if (c_compiler == 3) {
+      var res = responseTxt.split("\n")
+      res = res.filter(function (str) {
+        return /\S/.test(str);
+      });
+
+      if (res.length != 8) {
+        self.textInBox.destroy()
+        self.dialogBox.destroy()
+        self.button.destroy()
+
+        self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+        self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+        self.textInBox = game.add.text(630, 170, "สมาชิกไม่ครบ 8 จำนวน!!", {
+          fontSize: '15px',
+        })
+      } else {
+        self.textInBox.destroy()
+        self.button.destroy()
+        self.dialogBox.destroy()
+
+        self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
+        self.button = game.add.button(410, 180, 'button', actionOnClick, this)
+        self.textInBox = game.add.text(110, 170, res, {
+          fontSize: '15px',
+        })
+        c_compiler = 4
+
+      }
+    }
+
+    if (c_compiler == 2) {
+      if (responseTxt == 3) {
+        self.textInBox.destroy()
+        self.button.destroy()
+        self.dialogBox.destroy()
+        self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
+        self.button = game.add.button(410, 180, 'button', actionOnClick, this)
+        self.textInBox = game.add.text(110, 170, "ค่าลำดับที่ 2 คือ " + responseTxt, {
+          fontSize: '15px',
+        })
+        c_compiler = 3
+      } else {
+        self.textInBox.destroy()
+        self.dialogBox.destroy()
+        self.button.destroy()
+
+        self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+        self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+        self.textInBox = game.add.text(630, 170, "ยังไม่ใช่ค่าลำดับที่ 2 นะ", {
+          fontSize: '15px',
+        })
+      }
+    }
+
+    if (c_compiler == 1) {
+      if (responseTxt == ex_compiler) {
+        self.textInBox.destroy()
+        self.dialogBox.destroy()
+        self.button.destroy()
+
+        self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+        self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+        self.textInBox = game.add.text(630, 170, "เจ้ายังไม่ได้เพิ่มสมาชิก\nโดยใช้เมธอด append เลย", {
+          fontSize: '15px',
+        })
+      } else {
+        self.textInBox.destroy()
+        self.button.destroy()
+        self.dialogBox.destroy()
+        self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
+        self.button = game.add.button(410, 180, 'button', actionOnClick, this)
+        self.textInBox = game.add.text(110, 170, "จำนวนใน List เพิ่มเป็น " + responseTxt.trim() + " แล้ว", {
+          fontSize: '15px',
+        })
+        c_compiler = 2
+      }
+    }
+    if (c_compiler == 0) {
+      self.textInBox.destroy()
+      self.button.destroy()
+      self.dialogBox.destroy()
+      self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
+      self.button = game.add.button(410, 180, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(110, 170, "จำนวนสมาชิกใน List คือ " + responseTxt, {
+        fontSize: '15px',
+      })
+      c_compiler = 1
+      ex_compiler = responseTxt
     }
   } else {
 
@@ -119,7 +256,6 @@ function viewMore() {
   })
 }
 
-
 function actionOnClick() {
 
   if (conver_1[current_conver] != undefined && check_conver == 0) {
@@ -127,54 +263,107 @@ function actionOnClick() {
     self.dialogBox.destroy()
     self.button.destroy()
 
-    self.dialogBox = game.add.image(400, 100, 'dialogBoxLeft')
-    self.textInBox = game.add.text(430, 120, conver_1[current_conver], {
+    self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+    self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+    self.textInBox = game.add.text(630, 170, conver_1[current_conver], {
       fontSize: '15px',
     })
-    self.button = game.add.button(740, 130, 'button', actionOnClick, this)
     current_conver++
-    if (current_conver == 8) {
+    if (current_conver == 9) {
       check_conver = 1
       current_conver = 0
     }
   } else if (conver_2[current_conver] != undefined && check_conver == 1) {
-    if (checkState == 1) {
+    if (c_compiler == 1) {
       self.textInBox.destroy()
       self.dialogBox.destroy()
       self.button.destroy()
 
-      self.dialogBox = game.add.image(400, 100, 'dialogBoxLeft')
-      self.textInBox = game.add.text(430, 120, conver_2[current_conver], {
+      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(630, 170, conver_2[current_conver], {
         fontSize: '15px',
       })
-      self.button = game.add.button(740, 130, 'button', actionOnClick, this)
       current_conver++
+      if (current_conver == 4) {
+        check_conver = 2
+        current_conver = 0
+      }
     }
-    if (current_conver == 4) {
-      check_conver = 2
-      current_conver = 0
-    }
-
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
-    if (checkState == 2) {
+    if (c_compiler == 2) {
       self.textInBox.destroy()
       self.dialogBox.destroy()
       self.button.destroy()
 
-      self.dialogBox = game.add.image(400, 100, 'dialogBoxLeft')
-      self.textInBox = game.add.text(430, 120, conver_3[current_conver], {
+      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(630, 170, conver_3[current_conver], {
         fontSize: '15px',
       })
-      self.button = game.add.button(740, 130, 'button', actionOnClick, this)
       current_conver++
 
-      if (current_conver == 2) {
-        stopState = 3
+      if (current_conver == 6) {
         check_conver = 3
         current_conver = 0
       }
     }
+  } else if (conver_4[current_conver] != undefined && check_conver == 3) {
+    if (c_compiler == 3) {
+      self.textInBox.destroy()
+      self.dialogBox.destroy()
+      self.button.destroy()
 
+      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(630, 170, conver_4[current_conver], {
+        fontSize: '15px',
+      })
+      current_conver++
+      if (current_conver == 9) {
+        check_conver = 4
+        current_conver = 0
+      }
+    }
+  } else if (conver_5[current_conver] != undefined && check_conver == 4) {
+    if (c_compiler == 4) {
+      self.textInBox.destroy()
+      self.dialogBox.destroy()
+      self.button.destroy()
+
+      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(630, 170, conver_5[current_conver], {
+        fontSize: '15px',
+      })
+      current_conver++
+      if (current_conver == 4) {
+        check_conver = 5
+        current_conver = 0
+      }
+    }
+  } else if (conver_6[current_conver] != undefined && check_conver == 5) {
+    if (c_compiler == 5) {
+      self.textInBox.destroy()
+      self.dialogBox.destroy()
+      self.button.destroy()
+
+      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(630, 170, conver_6[current_conver], {
+        fontSize: '15px',
+      })
+      current_conver++
+      if (current_conver == 3) {
+        check_conver = 6
+        current_conver = 0
+        playerState = 3
+        wizardState = 3
+        self.textInBox.destroy()
+        self.dialogBox.destroy()
+        self.button.destroy()
+      }
+    }
   } else {
     current_conver--
   }
@@ -185,7 +374,7 @@ var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne');
 
 var mainState = {
   preload: function () {
-    game.load.image('background', 'client/images/map_lesson_00.png');
+    game.load.image('background', 'client/images/map_lesson_3.png');
     game.load.spritesheet('playerWalkRight', 'client/images/player-walk-right.png', 128, 128)
     game.load.spritesheet('playerWalkLeft', 'client/images/player-walk-left.png', 128, 128)
     game.load.spritesheet('playerStandLeft', 'client/images/player-standing-left.png', 128, 128)
@@ -206,6 +395,10 @@ var mainState = {
     game.load.image('menu', 'client/images/menu.png')
     game.load.image('inventory', 'client/images/inventory.png')
     game.load.image('xSign', 'client/images/xSign.png')
+    game.load.image('helmet', 'client/images/helmet-font.png')
+    game.load.image('boots', 'client/images/armor-bottom.png')
+    game.load.image('armor', 'client/images/armor-top.png')
+    game.load.image('weapon', 'client/images/weapon.png')
   },
 
   create: function () {
@@ -222,100 +415,195 @@ var mainState = {
     this.backpack = game.add.button(1000, 25, 'backpack', showInventory, this)
     this.backpack.scale.setTo(0.7, 0.7)
 
-    this.player = game.add.sprite(200, -100, 'playerWalkingDown')
-    this.player.animations.add('walk', [0, 1, 2, 3], 5, true)
+    this.dealer = game.add.sprite(490, 150, 'dealer')
+    this.dealer.animations.add('walk', [0, 1], 5, true)
 
-    this.wizard = game.add.sprite(200, 0, 'wizardRight')
+    this.player = game.add.sprite(750, 700, 'playerWalkLeft')
+    this.player.animations.add('walk', [0, 1, 2, 3], 5, true)
+    this.player.smoothed = false
+
+    this.wizard = game.add.sprite(750, 600, 'wizardLeft')
     this.wizard.animations.add('walk', [0, 1, 2, 3], 5, true)
 
+    this.dealer.animations.play('walk')
     this.player.animations.play('walk')
     this.wizard.animations.play('walk')
 
   },
 
   update: function () {
+
     if (playerState == 0) {
-      this.player.y += speedCharacter
-      if (this.player.y == 220) {
+      if (this.player.y > 230) {
+        this.player.y -= speedCharacter
+      } else {
+        this.player.destroy()
+        this.player = game.add.sprite(this.player.x, this.player.y, 'playerStandLeft')
+        this.player.animations.add('walk', [0, 1, 2, 3], 5, true)
+        this.player.animations.play('walk')
         playerState = 1
       }
     }
 
     if (wizardState == 0) {
-      this.wizard.y += speedCharacter
-      if (this.wizard.y == 220) {
-        wizardState = 1
-      }
-    }
-
-    if (wizardState == 1) {
-      this.wizard.x += speedCharacter
-      if (this.wizard.x == 350) {
-        wizardState = 2
+      if (this.wizard.y > 230) {
+        this.wizard.y -= speedCharacter
+      } else {
         this.wizard.destroy()
         this.wizard = game.add.sprite(this.wizard.x, this.wizard.y, 'wizardLeft')
         this.wizard.animations.add('walk', [0, 1, 2, 3], 5, true)
         this.wizard.animations.play('walk')
+        wizardState = 1
       }
     }
+
     if (playerState == 1) {
-      this.player.x += speedCharacter
-      if (this.player.x == 250) {
-        playerState = 2
+      if (this.player.x > 400) {
+        this.player.x -= speedCharacter
+      } else {
         this.player.destroy()
         this.player = game.add.sprite(this.player.x, this.player.y, 'playerStandRight')
         this.player.animations.add('walk', [0, 1, 2, 3], 5, true)
         this.player.animations.play('walk')
+        playerState = 2
       }
     }
 
-    if (playerState == 2 && wizardState == 2) {
-
-      this.dialogBox = game.add.image(400, 100, 'dialogBoxLeft')
-      this.textInBox = game.add.text(430, 120, conver_1[current_conver], {
-        fontSize: '15px',
-      })
-      this.button = game.add.button(740, 130, 'button', actionOnClick, this)
-      playerState = 3
-      // this.back = game.add.button(650, 130, 'back', actionOnClick, this)
-      // current_conver++
+    if (wizardState == 1) {
+      if (this.wizard.x > 550) {
+        this.wizard.x -= speedCharacter
+      } else {
+        this.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+        this.textInBox = game.add.text(630, 170, conver_1[current_conver], {
+          fontSize: '15px',
+        })
+        this.button = game.add.button(930, 180, 'button', actionOnClick, this)
+        wizardState = 2
+      }
     }
 
-    if (stopState == 1 && playerState == 3 && wizardState == 3) {
+    if (stopState == 1) {
       self.textInBox.destroy()
       self.dialogBox.destroy()
       self.button.destroy()
 
-      self.dialogBox = game.add.image(400, 100, 'dialogBoxLeft')
-      self.textInBox = game.add.text(430, 120, conver_3[current_conver], {
-        fontSize: '15px',
-      })
-      self.button = game.add.button(740, 130, 'button', actionOnClick, this)
-      current_conver++
+      self.dialogBox = game.add.image(150, 50, 'dialogBoxRight')
+      self.button = game.add.button(500, 80, 'button', actionOnClick, this)
 
       stopState = 2
+      console.log(this.player.x)
     }
 
-    if (stopState == 3 && playerState == 3 && wizardState == 3) {
+    if (stopState == 2) {
+      this.item_helmet = game.add.image(180, 70, 'helmet');
+      this.item_helmet.scale.setTo(0.5, 0.5)
+      stopState = 3
+    }
+
+    if (stopState == 3) {
+      if (this.item_helmet.y != 300) {
+        this.item_helmet.y += 2
+        // console.log(this.item_apple.y)
+      }
+
+      if (this.item_helmet.x != 400) {
+        this.item_helmet.x += 5
+      }
+
+      if (this.item_helmet.y == 214 && this.item_helmet.x == 400) {
+        this.item_helmet.destroy()
+        stopState = 4
+      }
+    }
+
+    if (stopState == 4) {
+      this.item_armor = game.add.image(180, 70, 'armor');
+      this.item_armor.scale.setTo(0.5, 0.5)
+      stopState = 5
+    }
+    if (stopState == 5) {
+      if (this.item_armor.y != 300) {
+        this.item_armor.y += 2
+        // console.log(this.item_apple.y)
+      }
+
+      if (this.item_armor.x != 400) {
+        this.item_armor.x += 5
+      }
+
+      if (this.item_armor.y == 214 && this.item_armor.x == 400) {
+        this.item_armor.destroy()
+        stopState = 6
+      }
+    }
+
+    if (stopState == 6) {
+      this.item_weapon = game.add.image(180, 70, 'weapon');
+      this.item_weapon.scale.setTo(0.5, 0.5)
+      stopState = 7
+    }
+    if (stopState == 7) {
+      if (this.item_weapon.y != 300) {
+        this.item_weapon.y += 2
+        // console.log(this.item_apple.y)
+      }
+
+      if (this.item_weapon.x != 400) {
+        this.item_weapon.x += 5
+      }
+
+      if (this.item_weapon.y == 214 && this.item_weapon.x == 400) {
+        this.item_weapon.destroy()
+        stopState = 8
+      }
+    }
+
+    if (stopState == 8) {
+      this.item_boots = game.add.image(180, 70, 'boots');
+      this.item_boots.scale.setTo(0.5, 0.5)
+      stopState = 9
+    }
+    if (stopState == 9) {
+      if (this.item_boots.y != 300) {
+        this.item_boots.y += 2
+        // console.log(this.item_apple.y)
+      }
+
+      if (this.item_boots.x != 400) {
+        this.item_boots.x += 5
+      }
+
+      if (this.item_boots.y == 214 && this.item_boots.x == 400) {
+        this.item_boots.destroy()
+        stopState = 10
+        self.dialogBox.destroy()
+        self.button.destroy()
+      }
+    }
+
+    if (stopState == 10) {
+      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(630, 170, conver_6[current_conver], {
+        fontSize: '15px',
+      })
+      stopState = 11
+    }
+
+    if (playerState == 3 && wizardState == 3) {
       this.wizard.destroy()
       this.wizard = game.add.sprite(this.wizard.x, this.wizard.y, 'wizardRight')
       this.wizard.animations.add('walk', [0, 1, 2, 3], 5, true)
       this.wizard.animations.play('walk')
-      
-      playerState = 4
       wizardState = 4
     }
 
-    if (playerState == 4){
-      this.player.x += speedCharacter
-      console.log(this.player.x )
-    }
-
-    if (wizardState == 4){
+    if (wizardState == 4) {
       this.wizard.x += speedCharacter
-    }
+      this.player.x += speedCharacter
 
-    if (this.player.x == 1000) {
+    }
+    if (this.player.x == 1200) {
 
       $(document).ready(function () {
 
@@ -330,17 +618,46 @@ var mainState = {
           type: "POST",
           url: '/updateByQuery',
           data: {
-            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) VALUES ('" + userJson.email + "', 4 ,'123' )",
+            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) SELECT * FROM  (SELECT '" + userJson.email + "', 5 ,'list' ) AS tmp WHERE NOT EXISTS (SELECT lesson_level FROM lesson WHERE lesson_level = 5  AND email_user = '" + userJson.email + "') LIMIT 1",
+          }
+        })
+
+        var updateInventory_armor = $.ajax({
+          type: "POST",
+          url: '/updateByQuery',
+          data: {
+            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'armor' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name FROM inventory WHERE item_name = 'armor' ) LIMIT 1",
+          }
+        })
+
+        var updateInventory_helmet = $.ajax({
+          type: "POST",
+          url: '/updateByQuery',
+          data: {
+            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'helmet' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name FROM inventory WHERE item_name = 'helmet' ) LIMIT 1",
+          }
+        })
+
+        var updateInventory_weapon = $.ajax({
+          type: "POST",
+          url: '/updateByQuery',
+          data: {
+            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'weapon' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name FROM inventory WHERE item_name = 'weapon' ) LIMIT 1",
+          }
+        })
+
+        var updateInventory_boots = $.ajax({
+          type: "POST",
+          url: '/updateByQuery',
+          data: {
+            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'boots' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name FROM inventory WHERE item_name = 'boots' ) LIMIT 1",
           }
         })
 
         console.log("pass")
-        window.location.href = "/lesson_5"
-
+        window.location.href = "/story_1"
       })
-
     }
-
 
   },
 };

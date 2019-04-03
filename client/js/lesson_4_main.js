@@ -8,6 +8,9 @@ var stopState = 0
 var tmpResponse
 var checkState = 0
 var item_inventory = []
+var x = 0
+var y = 0
+
 
 var conver_1 = ["บทนี้จะสอนเรื่องฟังก์ชัน (Function)",
   "ฟังก์ชัน (Function) คือส่วนของโค้ดหรือ\nโปรแกรมที่ทำงานเพื่อวัตถุประสงค์บางอย่าง",
@@ -18,15 +21,23 @@ var conver_1 = ["บทนี้จะสอนเรื่องฟังก์
   "def function_name(args...)\n    # statements",
   "ลองสร้างฟังก์ชันแล้ว\nreturn string ออกมาสิ "
 ]
+var conver_2 = ["การเขียนฟังก์ชันสามารถส่งค่า argument \nให้กับฟังก์ชันได้",
+  "นี่คือตัวอย่าง",
+  "def example(x)\n    return (\"Hello \" + x)",
+  "ผลลัพธ์ที่ได้ก็คือฟังก์ชัน\nจะได้คำว่า Hello ตามด้วยค่าที่ส่งไป",
+  "จงเขียนฟังก์ชันที่มีการรับส่งค่า argument ",
+  "และดูผลลัพธ์ที่ได้"
+]
 
-var conver_2 = ["ง่ายๆแค่นี้เอง",
+var conver_3 = ["ง่ายๆแค่นี้เอง",
   "ถ้าอยากจะผ่านไปล่ะก็",
   "ให้เจ้า return ค่าออกมาเป็น string ",
   "เป็นคำว่า \"I want to go\"",
 ]
 
-var conver_3 = ["ถูกต้อง !!",
-  "ไปกันต่อเถอะ",
+var conver_10 = ["ถูกต้อง !!",
+  "แต่ข้าลืมสอนเรื่อง List ไปเลย",
+  "กลับไปที่พ่อค้าคนเมื่อกี้ก่อน",
 ]
 
 function showInventory() {
@@ -59,16 +70,25 @@ function showInventory() {
 }
 
 function closeInventory() {
+  if (typeof self.item_apple !== "undefined") {
+    self.item_apple.destroy()
+    self.text_apple.destroy()
+  }
+
   self.inventory.destroy()
   self.xSign.destroy()
 }
 
 
 function resultCompile(responseTxt) {
-  // console.log((responseTxt))
-  // console.log(("I want to go".length))
+
   if (responseTxt.length < 50) {
-    checkState = 1
+    if (check_conver == 1) {
+      checkState = 1
+    }
+    if (check_conver == 2) {
+      checkState = 2
+    }
     self.textInBox.destroy()
     self.button.destroy()
     self.dialogBox.destroy()
@@ -80,14 +100,16 @@ function resultCompile(responseTxt) {
     self.button = game.add.button(640, 130, 'button', actionOnClick, this)
 
     if (responseTxt.trim() == "I want to go") {
-      checkState = 2
+
+      checkState = 10
       stopState = 1
       playerState = 3
       wizardState = 3
-      console.log(playerState)
+      return (2)
+    } else {
+      return (1)
     }
   } else {
-
     // self.dialogBox.destroy()
     // self.button.destroy()
     self.errorTextDialog = game.add.image(250, 50, 'errorText');
@@ -150,13 +172,13 @@ function actionOnClick() {
       self.button = game.add.button(740, 130, 'button', actionOnClick, this)
       current_conver++
     }
-    if (current_conver == 4) {
+    if (current_conver == 6) {
       check_conver = 2
       current_conver = 0
     }
 
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
-    if (checkState == 2) {
+    if (checkState == 2 ) {
       self.textInBox.destroy()
       self.dialogBox.destroy()
       self.button.destroy()
@@ -168,14 +190,36 @@ function actionOnClick() {
       self.button = game.add.button(740, 130, 'button', actionOnClick, this)
       current_conver++
 
-      if (current_conver == 2) {
-        stopState = 3
-        check_conver = 3
+      if (current_conver == 4) {
+        check_conver = 10
         current_conver = 0
       }
     }
 
+  } else if (conver_10[current_conver] != undefined && check_conver == 10) {
+    if (checkState == 10 ) {
+      self.textInBox.destroy()
+      self.dialogBox.destroy()
+      self.button.destroy()
+
+      self.dialogBox = game.add.image(400, 100, 'dialogBoxLeft')
+      self.textInBox = game.add.text(430, 120, conver_10[current_conver], {
+        fontSize: '15px',
+      })
+      self.button = game.add.button(740, 130, 'button', actionOnClick, this)
+      console.log("b4",current_conver)
+      current_conver++
+      console.log("after",current_conver)
+
+      if (current_conver == 3) {
+        console.log("stop",current_conver)
+        // stopState = 3
+
+      }
+    }
   } else {
+    console.log("else")
+    stopState = 3
     current_conver--
   }
 }
@@ -277,8 +321,7 @@ var mainState = {
       })
       this.button = game.add.button(740, 130, 'button', actionOnClick, this)
       playerState = 3
-      // this.back = game.add.button(650, 130, 'back', actionOnClick, this)
-      // current_conver++
+
     }
 
     if (stopState == 1 && playerState == 3 && wizardState == 3) {
@@ -287,11 +330,10 @@ var mainState = {
       self.button.destroy()
 
       self.dialogBox = game.add.image(400, 100, 'dialogBoxLeft')
-      self.textInBox = game.add.text(430, 120, conver_3[current_conver], {
+      self.textInBox = game.add.text(430, 120, conver_10[current_conver], {
         fontSize: '15px',
       })
       self.button = game.add.button(740, 130, 'button', actionOnClick, this)
-      current_conver++
 
       stopState = 2
     }
@@ -305,21 +347,44 @@ var mainState = {
       self.textInBox.destroy()
       self.dialogBox.destroy()
       self.button.destroy()
-      
+
       playerState = 4
       wizardState = 4
     }
 
-    if (playerState == 4){
-      this.player.x += speedCharacter
-      console.log(this.player.x )
+    if (playerState == 4 && wizardState == 5) {
+      this.player.x -= speedCharacter
+      console.log(this.player.x)
+
+      if (this.player.x == 200 ){
+        playerState = 5
+      }
     }
 
-    if (wizardState == 4){
-      this.wizard.x += speedCharacter
+    if (wizardState == 4) {
+      this.wizard.x -= speedCharacter
+
+      if (this.wizard.x == 200){
+        wizardState = 5
+      }
     }
 
-    if (this.player.x == 1200) {
+    if (wizardState == 5) {
+      this.wizard.y -= speedCharacter
+      console.log(this.wizard.y)
+    }
+
+    if (playerState == 5){
+      if (this.wizard.y == 50){
+        playerState = 6
+      }
+    }
+
+    if (playerState == 6){
+      this.player.y -= speedCharacter
+    }
+
+    if (this.player.y == -600) {
 
       $(document).ready(function () {
 
@@ -334,7 +399,7 @@ var mainState = {
           type: "POST",
           url: '/updateByQuery',
           data: {
-            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) VALUES ('" + userJson.email + "', 4 ,'123' )",
+            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) SELECT * FROM  (SELECT '" + userJson.email + "', 4 ,'function' ) AS tmp WHERE NOT EXISTS (SELECT lesson_level FROM lesson WHERE lesson_level = 4  AND email_user = '" + userJson.email + "') LIMIT 1",
           }
         })
 
