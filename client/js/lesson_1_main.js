@@ -36,11 +36,17 @@ var conver_3 = ["เอาล่ะ พอจะเข้าใจบ้าง�
 var pause = 0
 function music() {
   if (pause == 0) {
-    music.pause()
+    self.music.pause()
     pause = 1
+    self.sound.destroy()
+    self.sound = game.add.button(1000, 28, 'mute', music, this)
+    self.sound.scale.setTo(0.9, 0.9)
   } else if (pause == 1) {
-    music.resume()
+    self.music.resume()
     pause = 0
+    self.sound.destroy()
+    self.sound = game.add.button(1000, 28, 'speaker', music, this)
+    self.sound.scale.setTo(0.9, 0.9)
   }
 }
 
@@ -230,9 +236,9 @@ var mainState = {
     this.player.animations.play('right')
     this.wizard.animations.play('left')
 
-    music = game.add.audio('music');
+    this.music = game.add.audio('music');
 
-    music.play();
+    this.music.play();
   },
 
   update: function () {
