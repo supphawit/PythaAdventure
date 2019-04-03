@@ -40,11 +40,9 @@
       <div class="col">
         <div class="form-group">
           <div id="editor"># Write your code
-
             print ()
 
             # print ("Somsri")
-
           </div>
         </div>
         <input id="compile" type="submit" class="btn btn-primary" value="Compile">
@@ -61,23 +59,19 @@
   </div>
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">How to play</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+            <h4 class="modal-title"> Header</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
 
-
-          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width: 400px; height:200px; margin: 0 auto">
+          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="client/images/modal01_01.jpg" class="d-block w-100" alt="...">
+                <img src="client/images/modal01_01.JPG" class="d-block w-100" alt="...">
                 นี่คือส่วนหลักของตัวเกม
               </div>
               <div class="carousel-item">
@@ -90,7 +84,7 @@
               </div>
               <div class="carousel-item">
                 <img src="client/images/modal01_04.jpg" class="d-block w-100" alt="...">
-                กดปุ่มนี้เพื่อแสดง Hint 
+                กดปุ่มนี้เพื่อแสดง Hint
               </div>
               <div class="carousel-item">
                 <img src="client/images/modal01_05.jpg" class="d-block w-100" alt="...">
@@ -104,7 +98,7 @@
                 <img src="client/images/modal01_07.jpg" class="d-block w-100" alt="...">
                 ปุ่มนี้เป็นปุ่มจัดการสัมภาระติดตัวของผู้เล่น
               </div>
-              
+
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -119,10 +113,11 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
   </div>
 
 
@@ -145,7 +140,7 @@
 
 
     $(document).ready(function () {
-      $("#exampleModal").modal()
+      $("#myModal").modal()
 
       // onLoad()
       $("#navBar").load("client/navbar.html");
