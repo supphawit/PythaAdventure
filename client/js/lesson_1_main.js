@@ -5,6 +5,8 @@ var speedCharacter = 10
 var playerState = 0
 var wizardState = 0
 var tmpResponse
+var position_dialog_x
+var position_dialog_y
 
 var conver_1 = ["สวัสดี เจ้าอยู่ในโลกของ Python",
   "โลกของภาษาคอมพิวเตอร์",
@@ -57,7 +59,7 @@ function showInventory() {
     self.inventory.destroy()
     self.xSign.destroy()
   }
-  self.inventory = game.add.image(350, 50, 'inventory');
+  self.inventory = game.add.image(350, 50, 'inventory')
   self.inventory.scale.setTo(0.6, 0.6)
   self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
   self.xSign.scale.setTo(0.8, 0.8)
@@ -70,7 +72,6 @@ function closeInventory() {
 }
 
 function resultCompile(responseTxt) {
-  tmpResponse = responseTxt
 
   if (responseTxt.length < 50) {
     if (check_conver == 0) {
@@ -104,7 +105,7 @@ function resultCompile(responseTxt) {
 
     self.dialogBox.destroy()
     self.button.destroy()
-    self.errorTextDialog = game.add.image(250, 50, 'errorText');
+    self.errorTextDialog = game.add.image(250, 50, 'errorText')
     self.errorTextDialog.scale.setTo(5, 5)
 
     self.textErrorInBox = game.add.text(280, 80, "มีข้อผิดพลาดในโค้ดของคุณ\nตรวจสอบและทำการแก้ไข\nและคอมไพล์ใหม่อีกครั้ง", {
@@ -123,11 +124,6 @@ function deleteErrorButton() {
   self.more.destroy()
 
   actionOnClick()
-  // self.dialogBox = game.add.image(350, 100, 'dialogBoxLeft')
-  // self.button = game.add.button(690, 130, 'button', actionOnClick, this)
-  // self.textInBox = game.add.text(380, 120, conver_1[current_conver], {
-  //   fontSize: '15px',
-  // })
 }
 
 function viewMore() {
@@ -137,28 +133,83 @@ function viewMore() {
   })
 }
 
+function backward() {
+  if (current_conver > 1) {
+    current_conver--
+    self.textInBox.destroy()
+    self.dialogBox.destroy()
+    self.button.destroy()
+    self.back.destroy()
+    self.current_text.destroy()
+
+    position_dialog_x = 100
+    position_dialog_y = 200
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver , {
+      fontSize: '15px',
+    })
+
+    switch (check_conver) {
+      case 0:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+      case 1:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+      case 2:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+    }
+
+  }
+}
+
 function actionOnClick() {
 
   if (conver_1[current_conver] != undefined && check_conver == 0) {
     self.textInBox.destroy()
     self.dialogBox.destroy()
     self.button.destroy()
+    self.back.destroy()
+    self.current_text.destroy()
 
-    self.dialogBox = game.add.image(100, 200, 'dialogBoxRight')
-    self.button = game.add.button(440, 230, 'button', actionOnClick, this)
-    self.textInBox = game.add.text(130, 220, conver_1[current_conver], {
+    position_dialog_x = 100
+    position_dialog_y = 200
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver ], {
       fontSize: '15px',
     })
     current_conver++
-    console.log(current_conver)
+    // console.log(current_conver)
   } else if (conver_2[current_conver] != undefined && check_conver == 1) {
     self.textInBox.destroy()
     self.dialogBox.destroy()
     self.button.destroy()
+    self.back.destroy()
+    self.current_text.destroy()
 
-    self.dialogBox = game.add.image(100, 200, 'dialogBoxRight')
-    self.button = game.add.button(440, 230, 'button', actionOnClick, this)
-    self.textInBox = game.add.text(130, 220, conver_2[current_conver], {
+    position_dialog_x = 100
+    position_dialog_y = 200
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver ], {
       fontSize: '15px',
     })
     current_conver++
@@ -166,10 +217,18 @@ function actionOnClick() {
     self.textInBox.destroy()
     self.dialogBox.destroy()
     self.button.destroy()
+    self.back.destroy()
+    self.current_text.destroy()
 
-    self.dialogBox = game.add.image(100, 200, 'dialogBoxRight')
-    self.button = game.add.button(440, 230, 'button', actionOnClick, this)
-    self.textInBox = game.add.text(130, 220, conver_3[current_conver], {
+    position_dialog_x = 100
+    position_dialog_y = 200
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver], {
       fontSize: '15px',
     })
     current_conver++
@@ -181,11 +240,11 @@ function actionOnClick() {
   }
 }
 
-var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne');
+var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne')
 
 var mainState = {
   preload: function () {
-    game.load.image('background', 'client/images/map_lesson_1.png');
+    game.load.image('background', 'client/images/map_lesson_1.png')
     game.load.spritesheet('playerWalkRight', 'client/images/player-walk-right.png', 128, 128)
     game.load.spritesheet('playerStandLeft', 'client/images/player-standing-left.png', 128, 128)
     game.load.spritesheet('playerStandRight', 'client/images/player-standing-right.png', 128, 128)
@@ -202,26 +261,29 @@ var mainState = {
     game.load.image('speaker', 'client/images/speaker.png')
     game.load.image('mute', 'client/images/mute.png')
     game.load.spritesheet('button', 'client/images/button.png')
+    game.load.spritesheet('back', 'client/images/back.png')
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
     game.load.spritesheet('more', 'client/images/more.png')
-    game.load.audio('music', 'client/images/audio/Celestial.mp3')
+    game.load.audio('music', 'client/images/audio/Windless Slopes.mp3')
   },
 
   create: function () {
     self = this
-    // var button
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    game.physics.startSystem(Phaser.Physics.ARCADE)
     this.myWorld = game.add.group()
 
-    this.bg = game.add.image(0, 0, 'background');
+    this.bg = game.add.image(0, 0, 'background')
     this.bg.scale.setTo(0.72, 0.8)
 
-    this.menu = game.add.image(800, 10, 'menu');
+    this.menu = game.add.image(800, 10, 'menu')
     this.menu.scale.setTo(2, 2)
     this.backpack = game.add.button(950, 25, 'backpack', showInventory, this)
     this.backpack.scale.setTo(0.7, 0.7)
     this.sound = game.add.button(1000, 28, 'speaker', music, this)
     this.sound.scale.setTo(0.9, 0.9)
+    this.music = game.add.audio('music')
+    this.music.play()
 
     this.player = game.add.sprite(-50, 320, 'playerWalkRight')
     this.player.smoothed = false
@@ -236,9 +298,7 @@ var mainState = {
     this.player.animations.play('right')
     this.wizard.animations.play('left')
 
-    this.music = game.add.audio('music');
 
-    this.music.play();
   },
 
   update: function () {
@@ -251,19 +311,26 @@ var mainState = {
       this.player.frame = 0
       this.player.animations.play('right')
 
-      this.dialogBox = game.add.image(100, 200, 'dialogBoxRight')
-
-      // this.textInBox
-      this.textInBox = game.add.text(130, 220, conver_1[current_conver], {
+      position_dialog_x = 100
+      position_dialog_y = 200
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
         fontSize: '15px',
       })
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       current_conver++
-      this.button = game.add.button(440, 230, 'button', actionOnClick, this)
+
       this.player.x += speedCharacter
     } else if (playerState == 1) {
       this.dialogBox.destroy()
       this.textInBox.destroy()
       this.button.destroy()
+      this.current_text.destroy()
+      this.back.destroy()
       this.player.destroy()
 
       this.player = game.add.sprite(this.player.x, 320, 'playerWalkRight')
@@ -321,7 +388,7 @@ var mainState = {
           type: "GET",
           async: false,
         }).responseText
-        var userJson = JSON.parse(userSession);
+        var userJson = JSON.parse(userSession)
 
 
         var updateUser = $.ajax({
@@ -337,8 +404,8 @@ var mainState = {
 
     }
   },
-};
+}
 
 
-game.state.add('main', mainState);
-game.state.start('main');
+game.state.add('main', mainState)
+game.state.start('main')

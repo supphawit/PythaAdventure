@@ -1,6 +1,5 @@
-# Write your code
+# Write your code+
+ex = [1,3,5]
 
-attack = "Attack"
-
-print (attack)
+print (len(ex))
           

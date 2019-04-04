@@ -34,6 +34,23 @@ var conver_3 = ["ฮ่าๆ เจ้าพอจะเข้าใจแล�
   "ข้าจะพาไปดูบทเรียนถัดไป",
 ]
 
+var pause = 0
+function music() {
+  if (pause == 0) {
+    self.music.pause()
+    pause = 1
+    self.sound.destroy()
+    self.sound = game.add.button(1000, 28, 'mute', music, this)
+    self.sound.scale.setTo(0.9, 0.9)
+  } else if (pause == 1) {
+    self.music.resume()
+    pause = 0
+    self.sound.destroy()
+    self.sound = game.add.button(1000, 28, 'speaker', music, this)
+    self.sound.scale.setTo(0.9, 0.9)
+  }
+}
+
 function showInventory() {
 
   if (typeof self.inventory !== "undefined") {
@@ -179,9 +196,13 @@ var mainState = {
     game.load.image('inventory', 'client/images/inventory.png')
     game.load.image('xSign', 'client/images/xSign.png')
     game.load.image('errorText', 'client/images/error.png')
+    game.load.image('speaker', 'client/images/speaker.png')
+    game.load.image('mute', 'client/images/mute.png')
     game.load.spritesheet('button', 'client/images/button.png')
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
     game.load.spritesheet('more', 'client/images/more.png')
+    game.load.audio('music', 'client/images/audio/Windless Slopes.mp3')
+
   },
 
   create: function () {
@@ -195,8 +216,13 @@ var mainState = {
 
     this.menu = game.add.image(800, 10, 'menu');
     this.menu.scale.setTo(2, 2)
-    this.backpack = game.add.button(1000, 25, 'backpack', showInventory, this)
+    this.backpack = game.add.button(950, 25, 'backpack', showInventory, this)
     this.backpack.scale.setTo(0.7, 0.7)
+    this.sound = game.add.button(1000, 28, 'speaker', music, this)
+    this.sound.scale.setTo(0.9, 0.9)
+    this.music = game.add.audio('music');
+    this.music.play();
+
 
     this.player = game.add.sprite(490, -300, 'playerWalkingDown')
     this.player.animations.add('walk', [0, 1, 2, 3], 5, true)

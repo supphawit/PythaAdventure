@@ -28,6 +28,23 @@ var conver_3 = ["สามารถดูในกระเป๋า เพื�
   "ไปกันต่อเถอะ",
 ]
 
+var pause = 0
+function music() {
+  if (pause == 0) {
+    self.music.pause()
+    pause = 1
+    self.sound.destroy()
+    self.sound = game.add.button(1000, 28, 'mute', music, this)
+    self.sound.scale.setTo(0.9, 0.9)
+  } else if (pause == 1) {
+    self.music.resume()
+    pause = 0
+    self.sound.destroy()
+    self.sound = game.add.button(1000, 28, 'speaker', music, this)
+    self.sound.scale.setTo(0.9, 0.9)
+  }
+}
+
 function showInventory() {
 
   $(document).ready(function () {
@@ -145,6 +162,9 @@ function actionOnClick() {
     if (current_conver == 6) {
       check_conver = 1
       current_conver = 0
+      $(document).ready(function () {
+        $("#myModal").modal()
+      })
     }
   } else if (conver_2[current_conver] != undefined && check_conver == 1) {
     self.textInBox.destroy()
@@ -218,6 +238,8 @@ var mainState = {
     game.load.image('dialogBoxRight', 'client/images/text-box-right.png')
     game.load.image('dialogBoxLeft', 'client/images/text-box-left.png')
     game.load.image('errorText', 'client/images/error.png')
+    game.load.image('speaker', 'client/images/speaker.png')
+    game.load.image('mute', 'client/images/mute.png')
     game.load.spritesheet('button', 'client/images/button.png')
     game.load.spritesheet('back', 'client/images/back.png')
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
@@ -226,6 +248,8 @@ var mainState = {
     game.load.image('menu', 'client/images/menu.png')
     game.load.image('inventory', 'client/images/inventory.png')
     game.load.image('xSign', 'client/images/xSign.png')
+    game.load.audio('music', 'client/images/audio/Windless Slopes.mp3')
+
   },
 
   create: function () {
@@ -239,8 +263,13 @@ var mainState = {
 
     this.menu = game.add.image(800, 10, 'menu');
     this.menu.scale.setTo(2, 2)
-    this.backpack = game.add.button(1000, 25, 'backpack', showInventory, this)
+    this.backpack = game.add.button(950, 25, 'backpack', showInventory, this)
     this.backpack.scale.setTo(0.7, 0.7)
+    this.sound = game.add.button(1000, 28, 'speaker', music, this)
+    this.sound.scale.setTo(0.9, 0.9)
+    this.music = game.add.audio('music');
+    this.music.play();
+
 
     this.dealer = game.add.sprite(490, 150, 'dealer')
     this.dealer.animations.add('walk', [0, 1], 5, true)
