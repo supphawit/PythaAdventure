@@ -1,6 +1,7 @@
 var current_conver = 0
 var self
 var check_conver = 0
+var state_compile
 var speedCharacter = 10
 var playerState = 0
 var wizardState = 0
@@ -71,50 +72,12 @@ function closeInventory() {
   self.xSign.destroy()
 }
 
-function resultCompile(responseTxt) {
-
-  if (responseTxt.length < 50) {
-    if (check_conver == 0) {
-      self.textInBox.destroy()
-      self.button.destroy()
-      self.dialogBox.destroy()
-      self.dialogBox = game.add.image(100, 200, 'dialogBoxLeft')
-      self.textInBox = game.add.text(130, 220, "ผมชื่อว่า " + responseTxt.trim(), {
-        fontSize: '15px',
-      })
-      self.button = game.add.button(440, 230, 'button', actionOnClick, this)
-    } else if (check_conver == 1) {
-      console.log(responseTxt)
-      self.textInBox.destroy()
-      self.dialogBox.destroy()
-      self.button.destroy()
-      self.dialogBox = game.add.image(100, 200, 'dialogBoxLeft')
-      self.textInBox = game.add.text(130, 220, "ตอนนี้ผมอายุ " + responseTxt.trim() + " ปี", {
-        fontSize: '15px',
-      })
-      self.button = game.add.button(440, 230, 'button', actionOnClick, this)
-    }
-
-    if (check_conver == 0) {
-      check_conver = 1
-    } else if (check_conver = 1) {
-      check_conver = 2
-    }
-    current_conver = 0
-  } else {
-
-    self.dialogBox.destroy()
-    self.button.destroy()
-    self.errorTextDialog = game.add.image(250, 50, 'errorText')
-    self.errorTextDialog.scale.setTo(5, 5)
-
-    self.textErrorInBox = game.add.text(280, 80, "มีข้อผิดพลาดในโค้ดของคุณ\nตรวจสอบและทำการแก้ไข\nและคอมไพล์ใหม่อีกครั้ง", {
-      fontSize: '30px',
-    })
-
-    self.errorButton = game.add.button(750, 140, 'errorButton', deleteErrorButton, this)
-    self.more = game.add.button(700, 140, 'more', viewMore, this)
-  }
+function closeDialog() {
+  self.textInBox.destroy()
+  self.dialogBox.destroy()
+  self.button.destroy()
+  self.back.destroy()
+  self.current_text.destroy()
 }
 
 function deleteErrorButton() {
@@ -133,53 +96,64 @@ function viewMore() {
   })
 }
 
-function backward() {
-  if (current_conver > 1) {
-    current_conver--
-    self.textInBox.destroy()
-    self.dialogBox.destroy()
-    self.button.destroy()
-    self.back.destroy()
-    self.current_text.destroy()
+function resultCompile(responseTxt) {
 
-    position_dialog_x = 100
-    position_dialog_y = 200
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
-    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver , {
-      fontSize: '15px',
-    })
+  if (responseTxt.length < 50) {
+    // console.log(check_conver,current_conver)
+    if (check_conver == 1 && current_conver == 0) {
+      closeDialog()
 
-    switch (check_conver) {
-      case 0:
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver - 1], {
-          fontSize: '15px',
-        })
-        break
-      case 1:
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver - 1], {
-          fontSize: '15px',
-        })
-        break
-      case 2:
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver - 1], {
-          fontSize: '15px',
-        })
-        break
+      position_dialog_x = 100
+      position_dialog_y = 200
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "เราชื่อว่า " + responseTxt.trim(), {
+        fontSize: '15px',
+      })
+      state_compile = 1
+    } else if (check_conver == 2 && current_conver == 0) {
+      closeDialog()
+
+      position_dialog_x = 100
+      position_dialog_y = 200
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ตอนนี้ผมอายุ " + responseTxt.trim() + " ปี", {
+        fontSize: '15px',
+      })
+      state_compile = 2
+    } else {
+      closeDialog()
+
+      position_dialog_x = 100
+      position_dialog_y = 200
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, responseTxt.trim(), {
+        fontSize: '15px',
+      })
     }
 
+  } else {
+
+    self.dialogBox.destroy()
+    self.button.destroy()
+    self.errorTextDialog = game.add.image(250, 50, 'errorText')
+    self.errorTextDialog.scale.setTo(5, 5)
+
+    self.textErrorInBox = game.add.text(280, 80, "มีข้อผิดพลาดในโค้ดของคุณ\nตรวจสอบและทำการแก้ไข\nและคอมไพล์ใหม่อีกครั้ง", {
+      fontSize: '30px',
+    })
+
+    self.errorButton = game.add.button(750, 140, 'errorButton', deleteErrorButton, this)
+    self.more = game.add.button(700, 140, 'more', viewMore, this)
   }
 }
 
 function actionOnClick() {
 
   if (conver_1[current_conver] != undefined && check_conver == 0) {
-    self.textInBox.destroy()
-    self.dialogBox.destroy()
-    self.button.destroy()
-    self.back.destroy()
-    self.current_text.destroy()
+    closeDialog()
 
     position_dialog_x = 100
     position_dialog_y = 200
@@ -189,17 +163,19 @@ function actionOnClick() {
     self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
       fontSize: '15px',
     })
-    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver ], {
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
       fontSize: '15px',
     })
     current_conver++
+    if (current_conver >= 9) {
+      check_conver = 1
+      current_conver = 0
+    }
     // console.log(current_conver)
-  } else if (conver_2[current_conver] != undefined && check_conver == 1) {
-    self.textInBox.destroy()
-    self.dialogBox.destroy()
-    self.button.destroy()
-    self.back.destroy()
-    self.current_text.destroy()
+    // console.log(check_conver)
+
+  } else if (conver_2[current_conver] != undefined && check_conver == 1 && state_compile == 1) {
+    closeDialog()
 
     position_dialog_x = 100
     position_dialog_y = 200
@@ -209,16 +185,20 @@ function actionOnClick() {
     self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
       fontSize: '15px',
     })
-    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver ], {
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver], {
       fontSize: '15px',
     })
     current_conver++
-  } else if (conver_3[current_conver] != undefined && check_conver == 2) {
-    self.textInBox.destroy()
-    self.dialogBox.destroy()
-    self.button.destroy()
-    self.back.destroy()
-    self.current_text.destroy()
+    if (current_conver >= 6) {
+      check_conver = 2
+      current_conver = 0
+      $(document).ready(function () {
+        $("#integerLesson").modal()
+        $('#hint2').html(" <a href='#''><span id='hint2' class='badge badge-info' data-toggle='modal' data-target='#integerLesson'>คำใบ้ 2</span></a>")
+      })
+    }
+  } else if (conver_3[current_conver] != undefined && check_conver == 2 && state_compile == 2) {
+    closeDialog()
 
     position_dialog_x = 100
     position_dialog_y = 200
@@ -235,8 +215,43 @@ function actionOnClick() {
     if (current_conver == 5) {
       playerState = 1
     }
-  } else {
+  } 
+}
+
+function backward() {
+  if (current_conver > 1) {
     current_conver--
+    closeDialog()
+
+    position_dialog_x = 100
+    position_dialog_y = 200
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
+      fontSize: '15px',
+    })
+
+    switch (check_conver) {
+      case 0:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
+      case 1:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
+      case 2:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+    }
+
   }
 }
 
@@ -326,11 +341,7 @@ var mainState = {
 
       this.player.x += speedCharacter
     } else if (playerState == 1) {
-      this.dialogBox.destroy()
-      this.textInBox.destroy()
-      this.button.destroy()
-      this.current_text.destroy()
-      this.back.destroy()
+      closeDialog()
       this.player.destroy()
 
       this.player = game.add.sprite(this.player.x, 320, 'playerWalkRight')

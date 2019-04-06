@@ -40,14 +40,26 @@
       <div class="col">
         <div class="form-group">
           <div id="editor"># Write your code
-print ()
+print ("test")
 
           </div>
         </div>
-        <input id="compile" type="submit" class="btn btn-primary" value="Compile">
-        <span id="nextEp"></span>
-        <a href="#myModal" data-toggle="modal"><img src="client/images/scroll.png" style="width: 75px;font-size: 30"
-            align="right"></a>
+
+        <div class="row">
+
+          <div class="col-3">
+            <input id="compile" type="submit" class="btn btn-primary" value="Compile">
+          </div>
+          <div class="col">
+            <a href="#">
+              <span class="badge badge-primary" data-toggle="modal" data-target="#intro">วิธีเล่น</span>
+            </a>
+            <a href="#" id="hint1" data-toggle="modal" data-target="#intro"><span class="badge badge-info">คำใบ้
+                1</span></a>
+            <a href="#" id="hint2"><span class="badge badge-secondary">คำใบ้ 2</span></a>
+          </div>
+
+        </div>
 
       </div>
       <div class="col-9">
@@ -59,7 +71,7 @@ print ()
 
 
   <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="intro" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -128,6 +140,52 @@ print ()
   </div>
   <!-- End Modal -->
 
+  <!-- Modal -->
+  <div class="modal fade" id="integerLesson" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"> <strong>How to play</strong></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+
+          <div id="integerCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#integerCarousel" data-slide-to="0" class="active"></li>
+              <li data-target="#integerCarousel" data-slide-to="1"></li>
+            </ol>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <FONT SIZE="5">นี่คือส่วนหลักของตัวเกม</FONT>
+                <img src="client/images/map_lesson_01.png" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <FONT SIZE="5">พิมพ์โค้ดต่างๆ ลงตรงบริเวณนี้</FONT>
+                <img src="client/images/map_lesson_01.png" class="d-block w-100" alt="...">
+              </div>
+
+            </div>
+            <a class="carousel-control-prev" href="#integerCarousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#integerCarousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal -->
+
   <script>
 
     function onLoad() {
@@ -147,7 +205,7 @@ print ()
 
 
     $(document).ready(function () {
-      // $("#myModal").modal()
+      $("#myModal").modal()
 
       // onLoad()
       $("#navBar").load("client/navbar.html");

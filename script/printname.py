@@ -1,4 +1,4 @@
 # Write your code
-print ()
+print ("test")
 
           

@@ -171,9 +171,8 @@
           async: false,
         }).responseJSON
 
-        console.log(data)
         data.forEach(element => {
-          console.log(element)
+
           $('#lesson' + element).html(" <a href='/lesson_" + (element) + "' class='btn btn-primary'>Learn</a>")
           $('#l' + element).hide()
           $('#success' + element).html(" <span class='badge badge-success'>Completed</span>")
@@ -182,7 +181,6 @@
           if (data.length == element) {
             $('#lesson' + (element + 1)).html(" <a href='/lesson_" + (element + 1) + "' class='btn btn-primary'>Learn</a>")
             $('#l' + (element + 1)).hide()
-            console.log("JSDKFj", (element + 1))
             $('#success' + (element + 1)).html(" <span class='badge badge-warning'>Available</span>")
             $('#s' + (element + 1)).hide()
           }
