@@ -8,6 +8,9 @@ var wizardState = 0
 var tmpResponse
 var position_dialog_x
 var position_dialog_y
+var press_back = 0
+var messageErr
+
 
 var conver_1 = ["สวัสดี เจ้าอยู่ในโลกของ Python",
   "โลกของภาษาคอมพิวเตอร์",
@@ -84,25 +87,31 @@ function deleteErrorButton() {
   self.errorButton.destroy()
   self.errorTextDialog.destroy()
   self.textErrorInBox.destroy()
+  self.textViewMore.destroy()
   self.more.destroy()
-
-  actionOnClick()
 }
 
 function viewMore() {
   self.textErrorInBox.destroy()
+  self.textViewMore.destroy()
+  self.more.destroy()
   self.textErrorInBox = game.add.text(280, 80, tmpResponse, {
     fontSize: '15px',
   })
+  self.errorButton = game.add.button(750, 160, 'xSign', deleteErrorButton, this)
+
 }
 
 function resultCompile(responseTxt) {
+  tmpResponse = responseTxt
 
   if (responseTxt.length < 50) {
     // console.log(check_conver,current_conver)
-    if (check_conver == 1 && current_conver == 0) {
+    if (press_back == 1) {
       closeDialog()
 
+      current_conver = 0
+      check_conver = 1
       position_dialog_x = 100
       position_dialog_y = 200
       self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
@@ -111,9 +120,11 @@ function resultCompile(responseTxt) {
         fontSize: '15px',
       })
       state_compile = 1
-    } else if (check_conver == 2 && current_conver == 0) {
+    } else if (press_back == 2) {
       closeDialog()
 
+      current_conver = 0
+      check_conver = 2
       position_dialog_x = 100
       position_dialog_y = 200
       self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
@@ -136,17 +147,34 @@ function resultCompile(responseTxt) {
 
   } else {
 
-    self.dialogBox.destroy()
-    self.button.destroy()
+    if (typeof self.errorTextDialog !== "undefined") {
+      deleteErrorButton()
+    }
+
     self.errorTextDialog = game.add.image(250, 50, 'errorText')
     self.errorTextDialog.scale.setTo(5, 5)
 
-    self.textErrorInBox = game.add.text(280, 80, "มีข้อผิดพลาดในโค้ดของคุณ\nตรวจสอบและทำการแก้ไข\nและคอมไพล์ใหม่อีกครั้ง", {
-      fontSize: '30px',
-    })
+    if (tmpResponse.includes("indent")) {
+      messageErr = "ผิดพลาด!!\nบล็อคหรือระยะห่างของคำสั่งถูกต้องหรือเปล่า?"
+      self.more = game.add.button(750, 160, 'more', viewMore, this)
+    } else if (tmpResponse.includes("Missing parentheses") || tmpResponse.includes("unexpected EOF while parsing")) {
+      messageErr = "ผิดพลาด!!\nลืมใส่วงเล็บในตรงไหนหรือเปล่า?"
+      self.more = game.add.button(700, 140, 'more', viewMore, this)
+    } else if (tmpResponse.includes("EOL while scanning string literal")) {
+      messageErr = "ผิดพลาด!!\nสัญลักษณ์ \" (double quote) หายไปหรือเปล่า?"
+      self.more = game.add.button(700, 140, 'more', viewMore, this)
+    } else {
+      messageErr = "ผิดพลาด!!\nลืมใส่วงเล็บในคำสั่งหรือเปล่า?"
+    }
 
-    self.errorButton = game.add.button(750, 140, 'errorButton', deleteErrorButton, this)
-    self.more = game.add.button(700, 140, 'more', viewMore, this)
+    self.textErrorInBox = game.add.text(280, 80, messageErr, {
+      fontSize: '20px',
+    })
+    self.textViewMore = game.add.text(725, 180, "View Code Error", {
+      fontSize: '10px',
+    })
+    // self.more = game.add.button(750, 160, 'more', viewMore, this)
+
   }
 }
 
@@ -168,8 +196,8 @@ function actionOnClick() {
     })
     current_conver++
     if (current_conver >= 9) {
-      check_conver = 1
-      current_conver = 0
+      press_back = 1
+      // current_conver = 0
     }
     // console.log(current_conver)
     // console.log(check_conver)
@@ -190,8 +218,7 @@ function actionOnClick() {
     })
     current_conver++
     if (current_conver >= 6) {
-      check_conver = 2
-      current_conver = 0
+      press_back = 2
       $(document).ready(function () {
         $("#integerLesson").modal()
         $('#hint2').html(" <a href='#''><span id='hint2' class='badge badge-info' data-toggle='modal' data-target='#integerLesson'>คำใบ้ 2</span></a>")
@@ -215,7 +242,7 @@ function actionOnClick() {
     if (current_conver == 5) {
       playerState = 1
     }
-  } 
+  }
 }
 
 function backward() {
@@ -298,7 +325,7 @@ var mainState = {
     this.sound = game.add.button(1000, 28, 'speaker', music, this)
     this.sound.scale.setTo(0.9, 0.9)
     this.music = game.add.audio('music')
-    this.music.play()
+    // this.music.play()
 
     this.player = game.add.sprite(-50, 320, 'playerWalkRight')
     this.player.smoothed = false
