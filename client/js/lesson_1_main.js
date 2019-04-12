@@ -1,17 +1,3 @@
-var current_conver = 0
-var self
-var check_conver = 0
-var state_compile
-var speedCharacter = 10
-var playerState = 0
-var wizardState = 0
-var tmpResponse
-var position_dialog_x
-var position_dialog_y
-var press_back = 0
-var messageErr
-
-
 var conver_1 = ["สวัสดี เจ้าอยู่ในโลกของ Python",
   "โลกของภาษาคอมพิวเตอร์",
   "ที่ทุกๆอย่างคือการใช้คำสั่งในภาษาไพทอน",
@@ -39,74 +25,11 @@ var conver_3 = ["เอาล่ะ พอจะเข้าใจบ้าง�
   "ให้เจ้าเรียนรู้เกี่ยวกับ Python",
 ]
 
-var pause = 0
-function music() {
-  if (pause == 0) {
-    self.music.pause()
-    pause = 1
-    self.sound.destroy()
-    self.sound = game.add.button(1000, 28, 'mute', music, this)
-    self.sound.scale.setTo(0.9, 0.9)
-  } else if (pause == 1) {
-    self.music.resume()
-    pause = 0
-    self.sound.destroy()
-    self.sound = game.add.button(1000, 28, 'speaker', music, this)
-    self.sound.scale.setTo(0.9, 0.9)
-  }
-}
-
-
-function showInventory() {
-
-  if (typeof self.inventory !== "undefined") {
-    self.inventory.destroy()
-    self.xSign.destroy()
-  }
-  self.inventory = game.add.image(350, 50, 'inventory')
-  self.inventory.scale.setTo(0.6, 0.6)
-  self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
-  self.xSign.scale.setTo(0.8, 0.8)
-
-}
-
-function closeInventory() {
-  self.inventory.destroy()
-  self.xSign.destroy()
-}
-
-function closeDialog() {
-  self.textInBox.destroy()
-  self.dialogBox.destroy()
-  self.button.destroy()
-  self.back.destroy()
-  self.current_text.destroy()
-}
-
-function deleteErrorButton() {
-  self.errorButton.destroy()
-  self.errorTextDialog.destroy()
-  self.textErrorInBox.destroy()
-  self.textViewMore.destroy()
-  self.more.destroy()
-}
-
-function viewMore() {
-  self.textErrorInBox.destroy()
-  self.textViewMore.destroy()
-  self.more.destroy()
-  self.textErrorInBox = game.add.text(280, 80, tmpResponse, {
-    fontSize: '15px',
-  })
-  self.errorButton = game.add.button(750, 160, 'xSign', deleteErrorButton, this)
-
-}
-
 function resultCompile(responseTxt) {
   tmpResponse = responseTxt
 
   if (responseTxt.length < 50) {
-    // console.log(check_conver,current_conver)
+
     if (press_back == 1) {
       closeDialog()
 
@@ -156,15 +79,18 @@ function resultCompile(responseTxt) {
 
     if (tmpResponse.includes("indent")) {
       messageErr = "ผิดพลาด!!\nบล็อคหรือระยะห่างของคำสั่งถูกต้องหรือเปล่า?"
-      self.more = game.add.button(750, 160, 'more', viewMore, this)
+      self.showErrModal = game.add.button(690, 165, 'information', indent, this)
+      self.showErrModal.scale.setTo(0.7,0.7)
     } else if (tmpResponse.includes("Missing parentheses") || tmpResponse.includes("unexpected EOF while parsing")) {
       messageErr = "ผิดพลาด!!\nลืมใส่วงเล็บในตรงไหนหรือเปล่า?"
-      self.more = game.add.button(700, 140, 'more', viewMore, this)
+      self.showErrModal = game.add.button(690, 165, 'information', parentheses, this)
+      self.showErrModal.scale.setTo(0.7,0.7)
     } else if (tmpResponse.includes("EOL while scanning string literal")) {
       messageErr = "ผิดพลาด!!\nสัญลักษณ์ \" (double quote) หายไปหรือเปล่า?"
-      self.more = game.add.button(700, 140, 'more', viewMore, this)
+      self.showErrModal = game.add.button(690, 165, 'information', EOL, this)
+      self.showErrModal.scale.setTo(0.7,0.7)
     } else {
-      messageErr = "ผิดพลาด!!\nลืมใส่วงเล็บในคำสั่งหรือเปล่า?"
+      messageErr = "ผิดพลาด!!\nความผิดพลาดนี้อยู่นอกเหนือความคาดหมาย\nกด View Code Error เพื่อดู?"
     }
 
     self.textErrorInBox = game.add.text(280, 80, messageErr, {
@@ -173,7 +99,7 @@ function resultCompile(responseTxt) {
     self.textViewMore = game.add.text(725, 180, "View Code Error", {
       fontSize: '10px',
     })
-    // self.more = game.add.button(750, 160, 'more', viewMore, this)
+    self.more = game.add.button(750, 160, 'more', viewMore, this)
 
   }
 }
@@ -197,10 +123,7 @@ function actionOnClick() {
     current_conver++
     if (current_conver >= 9) {
       press_back = 1
-      // current_conver = 0
     }
-    // console.log(current_conver)
-    // console.log(check_conver)
 
   } else if (conver_2[current_conver] != undefined && check_conver == 1 && state_compile == 1) {
     closeDialog()
@@ -302,6 +225,7 @@ var mainState = {
     game.load.image('errorText', 'client/images/error.png')
     game.load.image('speaker', 'client/images/speaker.png')
     game.load.image('mute', 'client/images/mute.png')
+    game.load.image('information', 'client/images/information.png')
     game.load.spritesheet('button', 'client/images/button.png')
     game.load.spritesheet('back', 'client/images/back.png')
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
@@ -325,7 +249,7 @@ var mainState = {
     this.sound = game.add.button(1000, 28, 'speaker', music, this)
     this.sound.scale.setTo(0.9, 0.9)
     this.music = game.add.audio('music')
-    // this.music.play()
+    this.music.play()
 
     this.player = game.add.sprite(-50, 320, 'playerWalkRight')
     this.player.smoothed = false

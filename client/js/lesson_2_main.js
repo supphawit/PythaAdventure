@@ -1,15 +1,3 @@
-var current_conver = 0
-var self
-var check_conver = 0
-var speedCharacter = 10
-var playerState = 0
-var wizardState = 0
-var stopState = 0
-var tmpResponse
-var position_dialog_x
-var position_dialog_y
-var state_compile
-var press_back = 0
 
 var conver_1 = ["ตอนนี้ถึงอีกหนึ่งบทเรียน",
   "บทเรียนนี้จะสอนเจ้าเรื่องคำสั่งเงื่อนไข",
