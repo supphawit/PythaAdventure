@@ -40,6 +40,8 @@ function resultCompile(responseTxt) {
         self.player = game.add.sprite(self.player.x, self.player.y, 'playerStandLeft')
         self.player.animations.add('walk', [0, 1, 2, 3], 5, true)
         self.player.animations.play('walk')
+        current_conver = 0
+        check_conver = 1
       }
 
       if (txt == "right") {
@@ -57,7 +59,6 @@ function resultCompile(responseTxt) {
         playerState = "fail"
       }
     }
-
 
   } else {
 
@@ -123,15 +124,22 @@ function actionOnClick() {
     }
     // console.log(check_conver)
     // console.log(current_conver)
-  } else if (conver_2[current_conver] != undefined && check_conver == 1 && state_compile == 1) {
+  } else if (conver_2[current_conver] != undefined && check_conver == 1 ) {
     closeDialog()
-
-    self.dialogBox = game.add.image(350, 100, 'dialogBoxLeft')
-    self.button = game.add.button(690, 130, 'button', actionOnClick, this)
-    self.textInBox = game.add.text(380, 120, conver_2[current_conver], {
+    
+    position_dialog_x = 350
+    position_dialog_y = 100
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
       fontSize: '15px',
     })
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     current_conver++
+
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
     closeDialog()
 
@@ -147,6 +155,46 @@ function actionOnClick() {
   }
 
 }
+
+
+
+function backward() {
+  if (current_conver > 1) {
+    current_conver--
+    closeDialog()
+
+    position_dialog_x = 350
+    position_dialog_y = 100
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
+      fontSize: '15px',
+    })
+
+    switch (check_conver) {
+      case 0:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
+      case 1:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
+      case 2:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+    }
+
+  }
+}
+
 
 var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne');
 
@@ -234,7 +282,7 @@ var mainState = {
         })
         this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
         this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-      
+
         current_conver++
       }
     }

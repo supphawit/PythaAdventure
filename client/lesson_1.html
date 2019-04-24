@@ -189,7 +189,8 @@ print ("test")
       $("#answer02").click(async (e) => {
         var Range = require("ace/range").Range
         var row = editor.selection.lead.row
-        var newText = "\nprint (\"name\") \n\n" 
+        var newText = "\nage = 18 \n\n" +
+        "print (age)"
         editor.session.replace(new Range(1, 0, 5, Number.MAX_VALUE), newText)
       })
 
