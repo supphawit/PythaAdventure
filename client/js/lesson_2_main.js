@@ -1,4 +1,3 @@
-
 var conver_1 = ["ตอนนี้ถึงอีกหนึ่งบทเรียน",
   "บทเรียนนี้จะสอนเจ้าเรื่องคำสั่งเงื่อนไข",
   "เพื่อให้สามารถทำงานที่ซับซ้อน\nและมีประสิทธิภาพมากขึ้น",
@@ -26,55 +25,14 @@ var conver_3 = ["ฮ่าๆ เจ้าพอจะเข้าใจแล�
   "ข้าจะพาไปดูบทเรียนถัดไป",
 ]
 
-var pause = 0
-function music() {
-  if (pause == 0) {
-    self.music.pause()
-    pause = 1
-    self.sound.destroy()
-    self.sound = game.add.button(1000, 28, 'mute', music, this)
-    self.sound.scale.setTo(0.9, 0.9)
-  } else if (pause == 1) {
-    self.music.resume()
-    pause = 0
-    self.sound.destroy()
-    self.sound = game.add.button(1000, 28, 'speaker', music, this)
-    self.sound.scale.setTo(0.9, 0.9)
-  }
-}
-
-function showInventory() {
-
-  if (typeof self.inventory !== "undefined") {
-    self.inventory.destroy()
-    self.xSign.destroy()
-  }
-  self.inventory = game.add.image(350, 50, 'inventory');
-  self.inventory.scale.setTo(0.6, 0.6)
-  self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
-  self.xSign.scale.setTo(0.8, 0.8)
-}
-
-function closeDialog() {
-  self.textInBox.destroy()
-  self.dialogBox.destroy()
-  self.button.destroy()
-  self.back.destroy()
-  self.current_text.destroy()
-}
-
-function closeInventory() {
-  self.inventory.destroy()
-  self.xSign.destroy()
-}
-
 function resultCompile(responseTxt) {
   tmpResponse = responseTxt
 
   if (responseTxt.length < 50) {
     txt = responseTxt.trim()
 
-    if (check_conver == 1 && current_conver == 0) {
+    if (press_back = 1) {
+
       if (txt == "left") {
         playerState = "goLeft"
 
@@ -91,7 +49,7 @@ function resultCompile(responseTxt) {
         self.player = game.add.sprite(self.player.x, self.player.y, 'playerStandRight')
         self.player.animations.add('walk', [0, 1, 2, 3], 5, true)
         self.player.animations.play('walk')
-         
+
         state_compile = 1
       }
 
@@ -103,40 +61,42 @@ function resultCompile(responseTxt) {
 
   } else {
 
-    self.dialogBox.destroy()
-    self.button.destroy()
-    self.errorTextDialog = game.add.image(250, 50, 'errorText');
+
+    if (typeof self.errorTextDialog !== "undefined") {
+      deleteErrorButton()
+    }
+
+    self.errorTextDialog = game.add.image(250, 50, 'errorText')
     self.errorTextDialog.scale.setTo(5, 5)
 
-    self.textErrorInBox = game.add.text(280, 80, "มีข้อผิดพลาดในโค้ดของคุณ\nตรวจสอบและทำการแก้ไข\nและคอมไพล์ใหม่อีกครั้ง", {
-      fontSize: '30px',
-    })
+    if (tmpResponse.includes("indent")) {
+      messageErr = "ผิดพลาด!!\nบล็อคหรือระยะห่างของคำสั่งถูกต้องหรือเปล่า?"
+      self.showErrModal = game.add.button(690, 165, 'information', indent, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+    } else if (tmpResponse.includes("Missing parentheses") || tmpResponse.includes("unexpected EOF while parsing")) {
+      messageErr = "ผิดพลาด!!\nลืมใส่วงเล็บในตรงไหนหรือเปล่า?"
+      self.showErrModal = game.add.button(690, 165, 'information', parentheses, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+    } else if (tmpResponse.includes("EOL while scanning string literal")) {
+      messageErr = "ผิดพลาด!!\nสัญลักษณ์ \" (double quote) หายไปหรือเปล่า?"
+      self.showErrModal = game.add.button(690, 165, 'information', EOL, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+    } else {
+      self.showErrModal = game.add.button(690, 165, 'information', indent, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+      messageErr = "ผิดพลาด!!\nความผิดพลาดนี้อยู่นอกเหนือความคาดหมาย\nกด View Code Error เพื่อดู?"
+    }
 
-    self.errorButton = game.add.button(750, 140, 'errorButton', deleteErrorButton, this)
-    self.more = game.add.button(700, 140, 'more', viewMore, this)
+    self.textErrorInBox = game.add.text(280, 80, messageErr, {
+      fontSize: '20px',
+    })
+    self.textViewMore = game.add.text(725, 180, "View Code Error", {
+      fontSize: '10px',
+    })
+    self.more = game.add.button(750, 160, 'more', viewMore, this)
+
 
   }
-}
-
-function deleteErrorButton() {
-  self.errorButton.destroy()
-  self.errorTextDialog.destroy()
-  self.textErrorInBox.destroy()
-  self.more.destroy()
-
-  actionOnClick()
-  // self.dialogBox = game.add.image(350, 100, 'dialogBoxLeft')
-  // self.button = game.add.button(690, 130, 'button', actionOnClick, this)
-  // self.textInBox = game.add.text(380, 120, conver_1[current_conver], {
-  //   fontSize: '15px',
-  // })
-}
-
-function viewMore() {
-  self.textErrorInBox.destroy()
-  self.textErrorInBox = game.add.text(280, 80, tmpResponse, {
-    fontSize: '15px',
-  })
 }
 
 function actionOnClick() {
@@ -144,23 +104,25 @@ function actionOnClick() {
   if (conver_1[current_conver] != undefined && check_conver == 0) {
     closeDialog()
 
-    self.dialogBox = game.add.image(350, 100, 'dialogBoxLeft')
-    self.button = game.add.button(350 + 360, 130, 'button', actionOnClick, this)
-    self.back = game.add.button(350 + 340, 130, 'back', backward, this)
-    self.textInBox = game.add.text(380, 120, conver_1[current_conver], {
+    position_dialog_x = 350
+    position_dialog_y = 100
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
       fontSize: '15px',
     })
-    self.current_text = game.add.text((350 + 380), (100 + 10), current_conver + 1, {
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
       fontSize: '15px',
     })
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+
     current_conver++
 
     if (current_conver >= 12) {
-      check_conver = 1
-      current_conver = 0
+      press_back = 1
     }
-    console.log(check_conver)
-    console.log(current_conver)
+    // console.log(check_conver)
+    // console.log(current_conver)
   } else if (conver_2[current_conver] != undefined && check_conver == 1 && state_compile == 1) {
     closeDialog()
 
@@ -182,46 +144,8 @@ function actionOnClick() {
     if (current_conver == 5) {
       playerState = 10
     }
-  } 
-  
-}
-
-
-function backward() {
-  if (current_conver >= 0) {
-    current_conver--
-    closeDialog()
-
-    position_dialog_x = 350
-    position_dialog_y = 100
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
-      fontSize: '15px',
-    })
-
-    switch (check_conver) {
-      case 0:
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver - 1], {
-          fontSize: '15px',
-        })
-        break
-
-      case 1:
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver - 1], {
-          fontSize: '15px',
-        })
-        break
-
-      case 2:
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver - 1], {
-          fontSize: '15px',
-        })
-        break
-    }
-
   }
+
 }
 
 var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne');
@@ -244,6 +168,7 @@ var mainState = {
     game.load.image('errorText', 'client/images/error.png')
     game.load.image('speaker', 'client/images/speaker.png')
     game.load.image('mute', 'client/images/mute.png')
+    game.load.image('information', 'client/images/information.png')
     game.load.spritesheet('button', 'client/images/button.png')
     game.load.spritesheet('back', 'client/images/back.png')
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
@@ -297,15 +222,19 @@ var mainState = {
         this.player.animations.add('walk', [0, 1, 2, 3], 5, true)
         this.player.animations.play('walk')
 
-        this.dialogBox = game.add.image(350, 100, 'dialogBoxLeft')
-        this.textInBox = game.add.text(380, 120, conver_1[current_conver], {
+
+        position_dialog_x = 350
+        position_dialog_y = 100
+        this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+        this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
           fontSize: '15px',
         })
-        this.current_text = game.add.text((350 + 380), (100 + 10), current_conver + 1, {
+        this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
           fontSize: '15px',
         })
-        this.button = game.add.button(350 + 360, 130, 'button', actionOnClick, this)
-        this.back = game.add.button(350 + 340, 130, 'back', actionOnClick, this)
+        this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      
         current_conver++
       }
     }
@@ -361,7 +290,7 @@ var mainState = {
 
         this.dialogBox = game.add.image(350, 100, 'dialogBoxLeft')
         this.button = game.add.button(350 + 360, 130, 'button', actionOnClick, this)
-        this.back = game.add.button(350 + 340, 130, 'back', actionOnClick, this)        
+        this.back = game.add.button(350 + 340, 130, 'back', backward, this)
         this.textInBox = game.add.text(380, 120, conver_2[current_conver], {
           fontSize: '15px',
         })
