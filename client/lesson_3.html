@@ -49,11 +49,21 @@ for i in range(1,apple):
 print (i)
           </div>
         </div>
-        <input id="compile" type="submit" class="btn btn-primary" value="Compile">
-        <span id="nextEp"></span>
-        <a href="#"><img src="client/images/scroll.png" style="width: 75px;font-size: 30" align="right"
-            id="hint-popover"></a>
+        
+        <div class="row">
 
+          <div class="col-3">
+            <input id="compile" type="submit" class="btn btn-primary" value="Compile">
+          </div>
+          <div class="col">
+            <a href="#">
+              <span class="badge badge-primary" data-toggle="modal" data-target="#intro">วิธีเล่น</span>
+            </a>
+            <a href="#" id="hint1" data-toggle="modal" data-target="#intro"><span class="badge badge-info">คำใบ้ 1</span></a>
+            <a href="#" id="hint2"><span class="badge badge-secondary">คำใบ้ 2</span></a>
+          </div>
+
+        </div>
       </div>
       <div class="col-9">
         <div id="gameLessonOne"></div>

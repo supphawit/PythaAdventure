@@ -25,10 +25,11 @@ var conver_3 = ["เอาล่ะ พอจะเข้าใจบ้าง�
   "ให้เจ้าเรียนรู้เกี่ยวกับ Python",
 ]
 
-function resultCompile(responseTxt) {
+function resultCompile(responseTxt,originalCode) {
   tmpResponse = responseTxt
+  console.log("original",originalCode)
 
-  if (responseTxt.length < 50) {
+  if (responseTxt.length < 50 && originalCode.includes("print")) {
 
     if (press_back == 1) {
       closeDialog()

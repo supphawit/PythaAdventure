@@ -25,39 +25,45 @@ var conver_3 = ["ฮ่าๆ เจ้าพอจะเข้าใจแล�
   "ข้าจะพาไปดูบทเรียนถัดไป",
 ]
 
-function resultCompile(responseTxt) {
+function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
 
   if (responseTxt.length < 50) {
     txt = responseTxt.trim()
 
-    if (press_back = 1) {
+    if ( originalCode.includes("if") || originalCode.includes("elif") || originalCode.includes("else") ) {
 
-      if (txt == "left") {
-        playerState = "goLeft"
+      if (press_back = 1) {
 
-        self.player.destroy()
-        self.player = game.add.sprite(self.player.x, self.player.y, 'playerStandLeft')
-        self.player.animations.add('walk', [0, 1, 2, 3], 5, true)
-        self.player.animations.play('walk')
-        current_conver = 0
-        check_conver = 1
+        if (txt == "left") {
+          playerState = "goLeft"
+
+          self.player.destroy()
+          self.player = game.add.sprite(self.player.x, self.player.y, 'playerStandLeft')
+          self.player.animations.add('walk', [0, 1, 2, 3], 5, true)
+          self.player.animations.play('walk')
+          current_conver = 0
+          check_conver = 1
+        }
+
+        if (txt == "right") {
+          playerState = "goRight"
+
+          self.player.destroy()
+          self.player = game.add.sprite(self.player.x, self.player.y, 'playerStandRight')
+          self.player.animations.add('walk', [0, 1, 2, 3], 5, true)
+          self.player.animations.play('walk')
+
+          state_compile = 1
+          check_conver = 2
+        }
+
+        if (txt == "fail") {
+          playerState = "fail"
+        }
       }
-
-      if (txt == "right") {
-        playerState = "goRight"
-
-        self.player.destroy()
-        self.player = game.add.sprite(self.player.x, self.player.y, 'playerStandRight')
-        self.player.animations.add('walk', [0, 1, 2, 3], 5, true)
-        self.player.animations.play('walk')
-
-        state_compile = 1
-      }
-
-      if (txt == "fail") {
-        playerState = "fail"
-      }
+    } else {
+      alert("ใช้คำสั่งให้ตรงกับบทเรียนด้วย !!")
     }
 
   } else {
@@ -107,7 +113,7 @@ function actionOnClick() {
 
     position_dialog_x = 350
     position_dialog_y = 100
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
     self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
       fontSize: '15px',
     })
@@ -122,15 +128,14 @@ function actionOnClick() {
     if (current_conver >= 12) {
       press_back = 1
     }
-    // console.log(check_conver)
-    // console.log(current_conver)
-  } else if (conver_2[current_conver] != undefined && check_conver == 1 ) {
+
+  } else if (conver_2[current_conver] != undefined && check_conver == 1) {
     closeDialog()
-    
+
     position_dialog_x = 350
     position_dialog_y = 100
     self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver], {
       fontSize: '15px',
     })
     self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
@@ -143,11 +148,17 @@ function actionOnClick() {
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
     closeDialog()
 
-    self.dialogBox = game.add.image(450, 100, 'dialogBoxRight')
-    self.button = game.add.button(790, 130, 'button', actionOnClick, this)
-    self.textInBox = game.add.text(480, 120, conver_3[current_conver], {
+    position_dialog_x = 450
+    position_dialog_y = 100
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver], {
       fontSize: '15px',
     })
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     current_conver++
     if (current_conver == 5) {
       playerState = 10
@@ -165,7 +176,15 @@ function backward() {
 
     position_dialog_x = 350
     position_dialog_y = 100
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    if (check_conver == 0) {
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    } else if (check_conver == 1) {
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    } else if (check_conver == 2) {
+      position_dialog_x = 450
+      position_dialog_y = 100
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    }
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
     self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
@@ -273,7 +292,7 @@ var mainState = {
 
         position_dialog_x = 350
         position_dialog_y = 100
-        this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+        this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
         this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
           fontSize: '15px',
         })
@@ -304,11 +323,24 @@ var mainState = {
     }
 
     if (playerState == "fail") {
-      this.textInBox.destroy()
-      this.textInBox = game.add.text(380, 120, "เลือกเอาซักทางซ้ายหรือขวา !!", {
+      // this.textInBox.destroy()
+      // this.textInBox = game.add.text(380, 120, "เลือกเอาซักทางซ้ายหรือขวา !!", {
+      //   fontSize: '15px',
+      // })
+      playerState = "updateFail"
+      closeDialog()
+      position_dialog_x = 380
+      position_dialog_y = 120
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "เลือกเอาซักทางซ้ายหรือขวา !!", {
         fontSize: '15px',
       })
-      playerState = "updateFail"
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, 0, {
+        fontSize: '15px',
+      })
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      current_conver++
     }
 
     if (playerState == "goLeft") {
@@ -336,12 +368,18 @@ var mainState = {
 
         closeDialog()
 
-        this.dialogBox = game.add.image(350, 100, 'dialogBoxLeft')
-        this.button = game.add.button(350 + 360, 130, 'button', actionOnClick, this)
-        this.back = game.add.button(350 + 340, 130, 'back', backward, this)
-        this.textInBox = game.add.text(380, 120, conver_2[current_conver], {
+
+        position_dialog_x = 350
+        position_dialog_y = 100
+        this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver], {
           fontSize: '15px',
         })
+        this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+          fontSize: '15px',
+        })
+        this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
         current_conver++
         stopState = 0
       }
@@ -363,9 +401,7 @@ var mainState = {
 
         stopState = 2
       } else if (this.player.x == 900 && stopState == 2) {
-        this.textInBox.destroy()
-        this.dialogBox.destroy()
-        this.button.destroy()
+        closeDialog()
 
         this.wizard.destroy()
         this.wizard = game.add.sprite(this.wizard.x, this.wizard.y, 'wizardRight')
@@ -377,25 +413,30 @@ var mainState = {
       }
       if (this.wizard.x <= 750 && stopState == 3) {
         this.wizard.x += speedCharacter
-        console.log(this.wizard.x)
+        // console.log(this.wizard.x)
       } else if (this.wizard.x >= 750 && stopState != 4) {
         stopState = 4
         current_conver = 0
         check_conver = 2
 
-        this.dialogBox = game.add.image(450, 100, 'dialogBoxRight')
-        this.button = game.add.button(790, 130, 'button', actionOnClick, this)
-        this.textInBox = game.add.text(480, 120, conver_3[current_conver], {
+        closeDialog()
+        position_dialog_x = 450
+        position_dialog_y = 100
+        this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+        this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver], {
           fontSize: '15px',
         })
+        this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+          fontSize: '15px',
+        })
+        this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
         current_conver++
       }
     }
 
     if (playerState == 10) {
-      this.textInBox.destroy()
-      this.dialogBox.destroy()
-      this.button.destroy()
+      closeDialog()
       this.player.destroy()
 
       this.player = game.add.sprite(this.player.x, this.player.y, 'playerWalkRight')

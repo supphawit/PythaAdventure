@@ -1,4 +1,3 @@
-# Write your code
-print ("test)
-
-          
+a = 1
+if a ==1:
+    print ("fail")
