@@ -160,23 +160,8 @@ print ("test")
       </div>
     </div>
     <!-- End Modal -->
+    
   <script>
-
-    function onLoad() {
-      gapi.load('auth2', function () {
-        gapi.auth2.init();
-      });
-    }
-
-    function signOut() {
-
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-        alert("log out")
-        window.location.href = "/logout"
-      });
-    }
-
 
     $(document).ready(function () {
       $("#navBar").load("client/navbar.html");

@@ -84,7 +84,7 @@ function indent() {
 
 function parentheses() {
   $(document).ready(function () {
-    $("#parentheses").modal()
+    $("#parent").modal()
   })
 }
 

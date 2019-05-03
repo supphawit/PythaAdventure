@@ -1,11 +1,3 @@
-var current_conver = 0
-var self
-var check_conver = 0
-var speedCharacter = 10
-var playerState = 0
-var wizardState = 0
-var stopState = 0
-var tmpResponse
 var finish_buy
 var item_inventory = []
 
@@ -26,120 +18,79 @@ var conver_2 = ["เจ้าอยากจะซื้อแอปเปิ้
 var conver_3 = ["สามารถดูในกระเป๋า เพื่อดูของที่เก็บมาได้นะ",
   "พอจะเข้าใจเรื่องการวนลูปบ้างแล้วสินะ",
   "ไปกันต่อเถอะ",
+  "สู้"
 ]
 
-var pause = 0
-function music() {
-  if (pause == 0) {
-    self.music.pause()
-    pause = 1
-    self.sound.destroy()
-    self.sound = game.add.button(1000, 28, 'mute', music, this)
-    self.sound.scale.setTo(0.9, 0.9)
-  } else if (pause == 1) {
-    self.music.resume()
-    pause = 0
-    self.sound.destroy()
-    self.sound = game.add.button(1000, 28, 'speaker', music, this)
-    self.sound.scale.setTo(0.9, 0.9)
-  }
-}
-
-function showInventory() {
-
-  $(document).ready(function () {
-    var data = $.ajax({
-      url: '/getItem',
-      type: "GET",
-      async: false,
-    }).responseJSON
-
-    item_inventory.push([data[0].item_name,data[0].amount])
-    console.log(item_inventory[0][0])
-    self.item_apple = game.add.image(405, 300, 'item_' + item_inventory[0][0]);
-    self.item_apple.scale.setTo(0.1, 0.1)
-    self.text_apple = game.add.text(440, 320, item_inventory[0][1], {
-      fontSize: '15px',
-    })
-  
-  })
-
-  if (typeof self.inventory !== "undefined") {
-    self.inventory.destroy()
-    self.xSign.destroy()
-  }
-  self.inventory = game.add.image(350, 50, 'inventory');
-  self.inventory.scale.setTo(0.6, 0.6)
-  self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
-  self.xSign.scale.setTo(0.8, 0.8)
-
- 
-
-}
-
-function closeInventory() {
-  self.inventory.destroy()
-  self.xSign.destroy()
-}
-
-
-function resultCompile(responseTxt, n) {
+function resultCompile(responseTxt, n, originalCode, realCode) {
   finish_buy = n
 
-  if (responseTxt < 50) {
+  if (responseTxt == 0) return
 
-    if (responseTxt == 0) return
+  if (responseTxt <= 5 && responseTxt >= 0) {
 
-    setTimeout(function () {
-      self.button.destroy()
-      self.textInBox.destroy()
-      self.dialogBox.destroy()
-      self.dialogBox = game.add.image(150, 50, 'dialogBoxRight')
-      self.button = game.add.button(500, 80, 'button', actionOnClick, self)
-      self.textInBox = game.add.text(240, 70, n, {
-        fontSize: '30px',
-      })
-      self.item_apple = game.add.image(180, 70, 'item_apple');
+    if (originalCode.includes("for")) {
 
-      self.item_apple.scale.setTo(0.1, 0.1)
-      moveToPlayer()
-      resultCompile(--responseTxt, n + 1);
+      current_conver = 0
+      check_conver = 2
+      setTimeout(function () {
+        closeDialog()
+        self.dialogBox = game.add.image(150, 50, 'dialogBoxRight')
+        self.button = game.add.button(500, 80, 'button', actionOnClick, self)
+        self.textInBox = game.add.text(240, 70, n, {
+          fontSize: '30px',
+        })
+        self.item_apple = game.add.image(180, 70, 'item_apple');
 
-    }, 1300);
+        self.item_apple.scale.setTo(0.1, 0.1)
+        moveToPlayer()
+        resultCompile(--responseTxt, n + 1, originalCode, realCode);
 
+      }, 1300);
 
+    } else{
+      alert("ใช้คำสั่งให้ตรงกับบทเรียน!!\nบทเรียนนี้ควรมี for ในโค้ดด้วย")
+    }
+
+  } else if (responseTxt > 5 && responseTxt < 50) {
+    alert("มีเงินไม่พอ!!")
 
   } else {
 
-    // self.dialogBox.destroy()
-    // self.button.destroy()
-    self.errorTextDialog = game.add.image(250, 50, 'errorText');
+    
+    if (typeof self.errorTextDialog !== "undefined") {
+      deleteErrorButton()
+    }
+
+    self.errorTextDialog = game.add.image(250, 50, 'errorText')
     self.errorTextDialog.scale.setTo(5, 5)
 
-    self.textErrorInBox = game.add.text(280, 80, "มีข้อผิดพลาดในโค้ดของคุณ\nตรวจสอบและทำการแก้ไข\nและคอมไพล์ใหม่อีกครั้ง", {
-      fontSize: '30px',
-    })
+    if (realCode.includes("indent")) {
+      messageErr = "ผิดพลาด!!\nบล็อคหรือระยะห่างของคำสั่งถูกต้องหรือเปล่า?"
+      self.showErrModal = game.add.button(690, 165, 'information', indent, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+    } else if (realCode.includes("Missing parentheses") || realCode.includes("unexpected EOF while parsing")) {
+      messageErr = "ผิดพลาด!!\nลืมใส่วงเล็บในตรงไหนหรือเปล่า?"
+      self.showErrModal = game.add.button(690, 165, 'information', parentheses, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+    } else if (realCode.includes("EOL while scanning string literal")) {
+      messageErr = "ผิดพลาด!!\nสัญลักษณ์ \" (double quote) หายไปหรือเปล่า?"
+      self.showErrModal = game.add.button(690, 165, 'information', EOL, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+    } else {
+      self.showErrModal = game.add.button(690, 165, 'information', indent, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+      messageErr = "ผิดพลาด!!\nความผิดพลาดนี้อยู่นอกเหนือความคาดหมาย\nกด View Code Error เพื่อดู?"
+    }
 
-    self.errorButton = game.add.button(750, 140, 'errorButton', deleteErrorButton, this)
-    self.more = game.add.button(700, 140, 'more', viewMore, this)
+    self.textErrorInBox = game.add.text(280, 80, messageErr, {
+      fontSize: '20px',
+    })
+    self.textViewMore = game.add.text(725, 180, "View Code Error", {
+      fontSize: '10px',
+    })
+    self.more = game.add.button(750, 160, 'more', viewMore, this)
 
   }
-}
-
-function deleteErrorButton() {
-  self.errorButton.destroy()
-  self.errorTextDialog.destroy()
-  self.textErrorInBox.destroy()
-  self.more.destroy()
-
-  actionOnClick()
-}
-
-function viewMore() {
-  self.textErrorInBox.destroy()
-  self.textErrorInBox = game.add.text(280, 80, tmpResponse, {
-    fontSize: '15px',
-  })
 }
 
 function moveToPlayer() {
@@ -148,78 +99,120 @@ function moveToPlayer() {
 
 function actionOnClick() {
 
+  console.log("check",check_conver)
+  console.log("curr",current_conver)
   if (conver_1[current_conver] != undefined && check_conver == 0) {
-    self.textInBox.destroy()
-    self.dialogBox.destroy()
-    self.button.destroy()
 
-    self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-    self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-    self.textInBox = game.add.text(630, 170, conver_1[current_conver], {
+    closeDialog()
+
+    position_dialog_x = 600
+    position_dialog_y = 150
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
       fontSize: '15px',
     })
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     current_conver++
+
     if (current_conver == 6) {
       check_conver = 1
       current_conver = 0
-      $(document).ready(function () {
-        $("#myModal").modal()
-      })
     }
   } else if (conver_2[current_conver] != undefined && check_conver == 1) {
-    self.textInBox.destroy()
-    self.dialogBox.destroy()
-    self.button.destroy()
 
-    self.dialogBox = game.add.image(150, 50, 'dialogBoxRight')
-    self.button = game.add.button(500, 80, 'button', actionOnClick, this)
-    self.textInBox = game.add.text(180, 70, conver_2[current_conver], {
+    closeDialog()
+
+    position_dialog_x = 150
+    position_dialog_y = 50
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver], {
       fontSize: '15px',
     })
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     current_conver++
     if (current_conver >= 2) {
-      check_conver = 2
-      current_conver = 0
+      // check_conver = 2
+
     }
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
 
 
     if (finish_buy >= 1) {
-      self.textInBox.destroy()
-      self.dialogBox.destroy()
-      self.button.destroy()
 
-      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(630, 170, conver_3[current_conver], {
+      closeDialog()
+
+      position_dialog_x = 600
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver], {
         fontSize: '15px',
       })
+      self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       current_conver++
-      console.log(current_conver)
-      if (current_conver >= 3) {
+      if (current_conver >= 4) {
 
         wizardState = 2
         playerState = 2
-        self.textInBox.destroy()
-        self.dialogBox.destroy()
-        self.button.destroy()
+        closeDialog()
       }
     }
 
-    // self.dialogBox = game.add.image(150, 50, 'dialogBoxRight')
-    // self.button = game.add.button(790, 130, 'button', actionOnClick, this)
-    // self.textInBox = game.add.text(480, 120, conver_3[current_conver], {
-    //   fontSize: '15px',
-    // })
-    // current_conver++
-    // if (current_conver == 5) {
-    //   playerState = 10
-    // }
-  } else {
-    current_conver--
   }
 }
 
+
+function backward() {
+  if (current_conver > 1) {
+    current_conver--
+    closeDialog()
+
+    position_dialog_x = 600
+    position_dialog_y = 150
+    switch (check_conver) {
+      case 0:
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
+      case 1:
+        position_dialog_x = 150
+        position_dialog_y = 50
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
+      case 2:
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+    }
+
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
+      fontSize: '15px',
+    })
+
+  }
+}
 
 var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne');
 
@@ -240,6 +233,7 @@ var mainState = {
     game.load.image('errorText', 'client/images/error.png')
     game.load.image('speaker', 'client/images/speaker.png')
     game.load.image('mute', 'client/images/mute.png')
+    game.load.image('information', 'client/images/information.png')
     game.load.spritesheet('button', 'client/images/button.png')
     game.load.spritesheet('back', 'client/images/back.png')
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
@@ -314,13 +308,20 @@ var mainState = {
 
     if (wizardState == 1 && playerState == 1 && stopState == 0) {
       stopState = 1
-      this.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-      this.textInBox = game.add.text(630, 170, conver_1[current_conver], {
+
+      position_dialog_x = 600
+      position_dialog_y = 150
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
         fontSize: '15px',
       })
-      this.button = game.add.button(930, 180, 'button', actionOnClick, this)
-    }
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
 
+    }
     if (stopState == 10) {
       if (this.item_apple.y != 300) {
         this.item_apple.y += 2

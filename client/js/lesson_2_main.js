@@ -63,7 +63,7 @@ function resultCompile(responseTxt, originalCode) {
         }
       }
     } else {
-      alert("ใช้คำสั่งให้ตรงกับบทเรียนด้วย !!")
+      alert("ใช้คำสั่งให้ตรงกับบทเรียน!!\nบทเรียนนี้ควรมี if, elif, else ในโค้ดด้วย")
     }
 
   } else {
@@ -89,8 +89,8 @@ function resultCompile(responseTxt, originalCode) {
       self.showErrModal = game.add.button(690, 165, 'information', EOL, this)
       self.showErrModal.scale.setTo(0.7, 0.7)
     } else {
-      self.showErrModal = game.add.button(690, 165, 'information', indent, this)
-      self.showErrModal.scale.setTo(0.7, 0.7)
+      // self.showErrModal = game.add.button(690, 165, 'information', indent, this)
+      // self.showErrModal.scale.setTo(0.7, 0.7)
       messageErr = "ผิดพลาด!!\nความผิดพลาดนี้อยู่นอกเหนือความคาดหมาย\nกด View Code Error เพื่อดู?"
     }
 

@@ -80,11 +80,11 @@ else:
   </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal fade" id="teach" role="dialog">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title"> <strong>How to play</strong></h4>
+            <h4 class="modal-title"> <strong>วิธีเขียนโค้ดให้ผ่านเงื่อนไข</strong></h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
@@ -92,33 +92,12 @@ else:
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="client/images/Modal01.png" class="d-block w-100" alt="...">
-                  <FONT SIZE="5">นี่คือส่วนหลักของตัวเกม</FONT>
+                  หากโค้ดที่เขียน ไม่มีชุดคำสั่งตามที่บทเรียนต้องการ ก็ไม่สามารถผ่านบทเรียนไปได้
                 </div>
                 <div class="carousel-item">
-                  <img src="client/images/Modal01_01.png" class="d-block w-100" alt="...">
-                  <FONT SIZE="5">พิมพ์โค้ดต่างๆ ลงตรงบริเวณนี้</FONT>
+                ตั้งใจอ่านที่ตัวละครพ่อมดบอก แล้วคุณจะผ่านไปได้
                 </div>
-                <div class="carousel-item">
-                  <img src="client/images/Modal01_02.png" class="d-block w-100" alt="...">
-                  <FONT SIZE="5">หลังจากพิมพ์โค้ดแล้วให้กดปุ่มนี้เพื่อทำการ Compile</FONT>
-                </div>
-                <div class="carousel-item">
-                  <img src="client/images/Modal01_03.png" class="d-block w-100" alt="...">
-                  <FONT SIZE="5">กดปุ่มนี้เพื่อแสดง Hint</FONT>
-                </div>
-                <div class="carousel-item">
-                  <img src="client/images/Modal01_04.png" class="d-block w-100" alt="...">
-                  <FONT SIZE="5">บริเวณนี้เป็นส่วนการจัดการกับตัวเกม</FONT>
-                </div>
-                <div class="carousel-item">
-                  <img src="client/images/Modal01_05.png" class="d-block w-100" alt="...">
-                  <FONT SIZE="5">ปุ่มนี้เป็นปุ่มจัดการเสียง (เปิด/ปิด)</FONT>
-                </div>
-                <div class="carousel-item">
-                  <img src="client/images/Modal01_06.png" class="d-block w-100" alt="...">
-                  <FONT SIZE="5">ปุ่มนี้เป็นปุ่มจัดการกับสัมภาระผู้เล่น</FONT>
-                </div>
+                
               </div>
               <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -142,25 +121,10 @@ else:
   </div>
 
   <script>
-    function onLoad() {
-      gapi.load('auth2', function () {
-        gapi.auth2.init();
-      });
-    }
-
-    function signOut() {
-
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-        console.log("log out")
-        alert("log out")
-        window.location.href = "/logout"
-      });
-    }
-
 
     $(document).ready(function () {
-      // onLoad()
+
+      $("#teach").modal()
 
       $("#answer01").click(async (e) => {
         var Range = require("ace/range").Range

@@ -2,6 +2,6 @@
 
 apple = 2
 
-for i in range(5,apple):
-print (i)
+for i in range(1,apple):
+    print (i)
           
