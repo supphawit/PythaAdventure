@@ -48,7 +48,7 @@ function showInventory() {
 
     item_inventory.push([data[0].item_name, data[0].amount])
     console.log(item_inventory[0][0])
-    self.item_apple = game.add.image(405, 300, 'item_' + item_inventory[0][0]);
+    self.item_apple = game.add.image(405, 300, 'item_' + item_inventory[0][0])
     self.item_apple.scale.setTo(0.1, 0.1)
     self.text_apple = game.add.text(440, 320, item_inventory[0][1], {
       fontSize: '15px',
@@ -60,7 +60,7 @@ function showInventory() {
     self.inventory.destroy()
     self.xSign.destroy()
   }
-  self.inventory = game.add.image(350, 50, 'inventory');
+  self.inventory = game.add.image(350, 50, 'inventory')
   self.inventory.scale.setTo(0.6, 0.6)
   self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
   self.xSign.scale.setTo(0.8, 0.8)
@@ -84,7 +84,7 @@ function resultCompile(responseTxt, originalCode) {
 
       var x = 0
 
-      console.log("jakfsdjkf;lsdl;k")
+      console.log("jakfsdjkflsdlk")
       closeDialog()
       self.dialogBox = game.add.image(300, 100, 'dialogBoxLeft')
       self.textInBox = game.add.text(330, 120, responseTxt.trim(), {
@@ -349,11 +349,11 @@ function backward() {
   }
 }
 
-var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne');
+var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne')
 
 var mainState = {
   preload: function () {
-    game.load.image('background', 'client/images/map_lesson_4.png');
+    game.load.image('background', 'client/images/map_lesson_4.png')
     game.load.spritesheet('playerWalkRight', 'client/images/player-walk-right.png', 128, 128)
     game.load.spritesheet('playerWalkLeft', 'client/images/player-walk-left.png', 128, 128)
     game.load.spritesheet('playerStandLeft', 'client/images/player-standing-left.png', 128, 128)
@@ -384,20 +384,20 @@ var mainState = {
   create: function () {
     self = this
 
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.startSystem(Phaser.Physics.ARCADE)
     this.myWorld = game.add.group()
 
-    this.bg = game.add.image(0, 0, 'background');
+    this.bg = game.add.image(0, 0, 'background')
     this.bg.scale.setTo(1.25, 1.25)
 
-    this.menu = game.add.image(800, 10, 'menu');
+    this.menu = game.add.image(800, 10, 'menu')
     this.menu.scale.setTo(2, 2)
     this.backpack = game.add.button(950, 25, 'backpack', showInventory, this)
     this.backpack.scale.setTo(0.7, 0.7)
     this.sound = game.add.button(1000, 28, 'speaker', music, this)
     this.sound.scale.setTo(0.9, 0.9)
-    this.music = game.add.audio('music');
-    // this.music.play();
+    this.music = game.add.audio('music')
+    // this.music.play()
 
 
     this.player = game.add.sprite(200, -100, 'playerWalkingDown')
@@ -537,7 +537,7 @@ var mainState = {
           type: "GET",
           async: false,
         }).responseText
-        var userJson = JSON.parse(userSession);
+        var userJson = JSON.parse(userSession)
 
         var updateUser = $.ajax({
           type: "POST",
@@ -556,8 +556,8 @@ var mainState = {
 
 
   },
-};
+}
 
 
-game.state.add('main', mainState);
-game.state.start('main');
+game.state.add('main', mainState)
+game.state.start('main')

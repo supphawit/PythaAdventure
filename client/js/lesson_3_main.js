@@ -41,13 +41,13 @@ function resultCompile(responseTxt, n, originalCode, realCode) {
         self.textInBox = game.add.text(240, 70, n, {
           fontSize: '30px',
         })
-        self.item_apple = game.add.image(180, 70, 'item_apple');
+        self.item_apple = game.add.image(180, 70, 'item_apple')
 
         self.item_apple.scale.setTo(0.1, 0.1)
         moveToPlayer()
-        resultCompile(--responseTxt, n + 1, originalCode, realCode);
+        resultCompile(--responseTxt, n + 1, originalCode, realCode)
 
-      }, 1300);
+      }, 1300)
 
     } else{
       alert("ใช้คำสั่งให้ตรงกับบทเรียน!!\nบทเรียนนี้ควรมี for ในโค้ดด้วย")
@@ -219,11 +219,11 @@ function backward() {
   }
 }
 
-var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne');
+var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne')
 
 var mainState = {
   preload: function () {
-    game.load.image('background', 'client/images/map_lesson_3.png');
+    game.load.image('background', 'client/images/map_lesson_3.png')
     game.load.spritesheet('playerWalkRight', 'client/images/player-walk-right.png', 128, 128)
     game.load.spritesheet('playerWalkLeft', 'client/images/player-walk-left.png', 128, 128)
     game.load.spritesheet('playerStandLeft', 'client/images/player-standing-left.png', 128, 128)
@@ -254,20 +254,20 @@ var mainState = {
   create: function () {
     self = this
     // var button
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.startSystem(Phaser.Physics.ARCADE)
     this.myWorld = game.add.group()
 
-    this.bg = game.add.image(0, 0, 'background');
+    this.bg = game.add.image(0, 0, 'background')
     this.bg.scale.setTo(1.25, 1.25)
 
-    this.menu = game.add.image(800, 10, 'menu');
+    this.menu = game.add.image(800, 10, 'menu')
     this.menu.scale.setTo(2, 2)
     this.backpack = game.add.button(950, 25, 'backpack', showInventory, this)
     this.backpack.scale.setTo(0.7, 0.7)
     this.sound = game.add.button(1000, 28, 'speaker', music, this)
     this.sound.scale.setTo(0.9, 0.9)
-    this.music = game.add.audio('music');
-    // this.music.play();
+    this.music = game.add.audio('music')
+    // this.music.play()
 
 
     this.dealer = game.add.sprite(490, 150, 'dealer')
@@ -378,7 +378,7 @@ var mainState = {
             type: "GET",
             async: false,
           }).responseText
-          var userJson = JSON.parse(userSession);
+          var userJson = JSON.parse(userSession)
 
           var updateUser = $.ajax({
             type: "POST",
@@ -398,8 +398,8 @@ var mainState = {
 
     }
   },
-};
+}
 
 
-game.state.add('main', mainState);
-game.state.start('main');
+game.state.add('main', mainState)
+game.state.start('main')

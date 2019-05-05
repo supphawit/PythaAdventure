@@ -218,11 +218,11 @@ function backward() {
 }
 
 
-var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne');
+var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne')
 
 var mainState = {
   preload: function () {
-    game.load.image('background', 'client/images/map_lesson_2.png');
+    game.load.image('background', 'client/images/map_lesson_2.png')
     game.load.spritesheet('playerWalkRight', 'client/images/player-walk-right.png', 128, 128)
     game.load.spritesheet('playerStandLeft', 'client/images/player-standing-left.png', 128, 128)
     game.load.spritesheet('playerStandRight', 'client/images/player-standing-right.png', 128, 128)
@@ -250,20 +250,20 @@ var mainState = {
   create: function () {
     self = this
     // var button
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.startSystem(Phaser.Physics.ARCADE)
     this.myWorld = game.add.group()
 
-    this.bg = game.add.image(0, 0, 'background');
+    this.bg = game.add.image(0, 0, 'background')
     this.bg.scale.setTo(0.86, 0.94)
 
-    this.menu = game.add.image(800, 10, 'menu');
+    this.menu = game.add.image(800, 10, 'menu')
     this.menu.scale.setTo(2, 2)
     this.backpack = game.add.button(950, 25, 'backpack', showInventory, this)
     this.backpack.scale.setTo(0.7, 0.7)
     this.sound = game.add.button(1000, 28, 'speaker', music, this)
     this.sound.scale.setTo(0.9, 0.9)
-    this.music = game.add.audio('music');
-    // this.music.play();
+    this.music = game.add.audio('music')
+    this.music.play()
 
 
     this.player = game.add.sprite(490, -300, 'playerWalkingDown')
@@ -459,7 +459,7 @@ var mainState = {
           type: "GET",
           async: false,
         }).responseText
-        var userJson = JSON.parse(userSession);
+        var userJson = JSON.parse(userSession)
 
         var updateUser = $.ajax({
           type: "POST",
@@ -477,8 +477,8 @@ var mainState = {
     }
 
   },
-};
+}
 
 
-game.state.add('main', mainState);
-game.state.start('main');
+game.state.add('main', mainState)
+game.state.start('main')
