@@ -42,16 +42,8 @@
       <div class="col">
         <div class="form-group">
           <div id="editor"># Write your code
-go =
-
 if (go == 1):
     print ("left")
-
-elif (go == 2):
-    print ("right")
-
-else:
-    print ("fail")
 
           </div>
         </div>
@@ -65,8 +57,7 @@ else:
             <a href="#">
               <span class="badge badge-primary" data-toggle="modal" data-target="#intro">วิธีเล่น</span>
             </a>
-            <a href="#" id="hint1" data-toggle="modal" data-target="#intro"><span class="badge badge-info">คำใบ้ 1</span></a>
-            <a href="#" id="hint2"><span class="badge badge-secondary">คำใบ้ 2</span></a>
+            <a href="#" id="hint1" data-toggle="modal" data-target="#teach"><span class="badge badge-info">คำใบ้ 1</span></a>
           </div>
 
         </div>
@@ -84,7 +75,7 @@ else:
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title"> <strong>วิธีเขียนโค้ดให้ผ่านเงื่อนไข</strong></h4>
+            <h4 class="modal-title"> <strong>วิธีเขียนโค้ดให้ผ่านบทเรียน</strong></h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
@@ -129,23 +120,18 @@ else:
       $("#answer01").click(async (e) => {
         var Range = require("ace/range").Range
         var row = editor.selection.lead.row
-        var newText = "\nage = 15 \n\n" +
-          "print (age)"
-        editor.session.replace(new Range(1, 0, 5, Number.MAX_VALUE), newText)
+        var newText = "\ngo = 2 \n\n" +
+          "if (go == 1):\n"+
+          "    print (\"left\")\n"+
+          "elif (go == 2):\n"+
+          "    print (\"right\")\n"+
+          "else:\n"+
+          "    print (\"fail\")"
+        editor.session.replace(new Range(1, 0, 10, Number.MAX_VALUE), newText)
       })
-
 
       $("#navBar").load("client/navbar.html");
       $("#modalAll").load("client/modal.html");
-
-
-      $('#hint-popover').popover({
-        container: 'body',
-        title: "คำใบ้",
-        content: 'กำหนดค่าให้กับตัวแปร go เพื่อกำหนดทิศทางที่ตัวละครจะเดิน',
-        placement: 'top',
-        html: true,
-      })
 
       var editor = ace.edit("editor");
       editor.setTheme("ace/theme/monokai");
@@ -166,19 +152,24 @@ else:
             url: '/write-post',
             data: {
               python: code,
-              namefile: 'printname'
+              namefile: 'if'
             }
 
           })
         }
-        var output_result = $.ajax({
-          url: '/run?file=printname',
-          type: "GET",
-          async: false,
-        }).responseText;
-        console.log("from view: " + output_result)
 
-        resultCompile(output_result,code)
+       if (code.includes("print")) {
+          var output_result = $.ajax({
+            url: '/run?file=if',
+            type: "GET",
+            async: false,
+          }).responseText;
+          console.log(output_result)
+
+          resultCompile(output_result, code)
+        } else {
+          alert("จำเป็นต้องมีคำสั่ง print ในการแสดงผลด้วย")
+        }
         // if (output_result.length < 50) {
         //   test(output_result)
         // } 

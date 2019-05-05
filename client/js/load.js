@@ -11,8 +11,10 @@ var position_dialog_y
 var state_compile
 var press_back = 0
 var messageErr
+var checkState = 0
 
 var pause = 0
+
 function music() {
   if (pause == 0) {
     self.music.pause()
@@ -31,16 +33,33 @@ function music() {
 
 function showInventory() {
 
+  $(document).ready(function () {
+    var data = $.ajax({
+      url: '/getItem',
+      type: "GET",
+      async: false,
+    }).responseJSON
+
+    item_inventory.push([data[0].item_name, data[0].amount])
+    // console.log(item_inventory[0][0])
+    self.item_apple = game.add.image(405, 300, 'item_' + item_inventory[0][0]);
+    self.item_apple.scale.setTo(0.1, 0.1)
+    self.text_apple = game.add.text(440, 320, item_inventory[0][1], {
+      fontSize: '15px',
+    })
+
+  })
+
   if (typeof self.inventory !== "undefined") {
     self.inventory.destroy()
     self.xSign.destroy()
   }
-  self.inventory = game.add.image(350, 50, 'inventory')
+  self.inventory = game.add.image(350, 50, 'inventory');
   self.inventory.scale.setTo(0.6, 0.6)
   self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
   self.xSign.scale.setTo(0.8, 0.8)
-
 }
+
 
 function closeInventory() {
   self.inventory.destroy()
@@ -92,4 +111,8 @@ function EOL() {
   $(document).ready(function () {
     $("#EOL").modal()
   })
+}
+
+function otherError() {
+  console.log("read error message")
 }

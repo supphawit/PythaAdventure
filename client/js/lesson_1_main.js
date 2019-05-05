@@ -91,6 +91,8 @@ function resultCompile(responseTxt,originalCode) {
       self.showErrModal = game.add.button(690, 165, 'information', EOL, this)
       self.showErrModal.scale.setTo(0.7,0.7)
     } else {
+      self.showErrModal = game.add.button(690, 165, 'information', otherError, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
       messageErr = "ผิดพลาด!!\nความผิดพลาดนี้อยู่นอกเหนือความคาดหมาย\nกด View Code Error เพื่อดู?"
     }
 
@@ -124,6 +126,9 @@ function actionOnClick() {
     current_conver++
     if (current_conver >= 9) {
       press_back = 1
+      $(document).ready(function () {
+        $("#lesson1-hint-1").modal()
+      })
     }
 
   } else if (conver_2[current_conver] != undefined && check_conver == 1 && state_compile == 1) {
@@ -144,8 +149,8 @@ function actionOnClick() {
     if (current_conver >= 6) {
       press_back = 2
       $(document).ready(function () {
-        $("#integerLesson").modal()
-        $('#hint2').html(" <a href='#''><span id='hint2' class='badge badge-info' data-toggle='modal' data-target='#integerLesson'>คำใบ้ 2</span></a>")
+        $("#lesson1-hint-2").modal()
+        $('#hint2').html("<a href='#''><span id='hint2' class='badge badge-info' data-toggle='modal' data-target='#lesson1-hint-2'>คำใบ้ 2</span></a>")
       })
     }
   } else if (conver_3[current_conver] != undefined && check_conver == 2 && state_compile == 2) {
@@ -168,8 +173,6 @@ function actionOnClick() {
     }
   }
 }
-
-
 
 function backward() {
   if (current_conver > 1) {

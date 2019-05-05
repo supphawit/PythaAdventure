@@ -31,7 +31,7 @@ function resultCompile(responseTxt, originalCode) {
   if (responseTxt.length < 50) {
     txt = responseTxt.trim()
 
-    if ( originalCode.includes("if") || originalCode.includes("elif") || originalCode.includes("else") ) {
+    if ( originalCode.includes("if") || originalCode.includes("elif") || originalCode.includes("else") || originalCode.includes("print")) {
 
       if (press_back = 1) {
 
@@ -89,8 +89,8 @@ function resultCompile(responseTxt, originalCode) {
       self.showErrModal = game.add.button(690, 165, 'information', EOL, this)
       self.showErrModal.scale.setTo(0.7, 0.7)
     } else {
-      // self.showErrModal = game.add.button(690, 165, 'information', indent, this)
-      // self.showErrModal.scale.setTo(0.7, 0.7)
+      self.showErrModal = game.add.button(690, 165, 'information', otherError, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
       messageErr = "ผิดพลาด!!\nความผิดพลาดนี้อยู่นอกเหนือความคาดหมาย\nกด View Code Error เพื่อดู?"
     }
 
@@ -127,6 +127,9 @@ function actionOnClick() {
 
     if (current_conver >= 12) {
       press_back = 1
+      $(document).ready(function () {
+        $("#lesson2-hint-1").modal()
+      })
     }
 
   } else if (conver_2[current_conver] != undefined && check_conver == 1) {

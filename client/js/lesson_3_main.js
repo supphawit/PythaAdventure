@@ -8,7 +8,8 @@ var conver_1 = ["คนนี้คือพ่อค้า",
   "โดยใช้คำสั่ง for ในการวนลูปเอาค่าออกมา",
   "ยกตัวอย่าง",
   "for i in range(1,3):\n    print(i)",
-  "ไหนลองดู"
+  "จะได้การวนลูป 3 รอบ \nโดยมี i แทนเลขของจำนวนรอบ",
+  "จงเขียนการวนลูปให้วนไม่เกิน 5 รอบ"
 ]
 
 var conver_2 = ["เจ้าอยากจะซื้อแอปเปิ้ลงั้นเหรอ?",
@@ -24,11 +25,12 @@ var conver_3 = ["สามารถดูในกระเป๋า เพื�
 function resultCompile(responseTxt, n, originalCode, realCode) {
   finish_buy = n
 
+  tmpResponse = responseTxt
   if (responseTxt == 0) return
 
   if (responseTxt <= 5 && responseTxt >= 0) {
 
-    if (originalCode.includes("for")) {
+    if (originalCode.includes("for") || originalCode.includes("print")) {
 
       current_conver = 0
       check_conver = 2
@@ -77,7 +79,7 @@ function resultCompile(responseTxt, n, originalCode, realCode) {
       self.showErrModal = game.add.button(690, 165, 'information', EOL, this)
       self.showErrModal.scale.setTo(0.7, 0.7)
     } else {
-      self.showErrModal = game.add.button(690, 165, 'information', indent, this)
+      self.showErrModal = game.add.button(690, 165, 'information', otherError, this)
       self.showErrModal.scale.setTo(0.7, 0.7)
       messageErr = "ผิดพลาด!!\nความผิดพลาดนี้อยู่นอกเหนือความคาดหมาย\nกด View Code Error เพื่อดู?"
     }
@@ -99,8 +101,8 @@ function moveToPlayer() {
 
 function actionOnClick() {
 
-  console.log("check",check_conver)
-  console.log("curr",current_conver)
+  // console.log("check",check_conver)
+  // console.log("curr",current_conver)
   if (conver_1[current_conver] != undefined && check_conver == 0) {
 
     closeDialog()
@@ -118,9 +120,12 @@ function actionOnClick() {
     self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     current_conver++
 
-    if (current_conver == 6) {
+    if (current_conver == 9) {
       check_conver = 1
       current_conver = 0
+      $(document).ready(function () {
+        $("#lesson3-hint-1").modal()
+      })
     }
   } else if (conver_2[current_conver] != undefined && check_conver == 1) {
 
@@ -262,7 +267,7 @@ var mainState = {
     this.sound = game.add.button(1000, 28, 'speaker', music, this)
     this.sound.scale.setTo(0.9, 0.9)
     this.music = game.add.audio('music');
-    this.music.play();
+    // this.music.play();
 
 
     this.dealer = game.add.sprite(490, 150, 'dealer')
