@@ -203,7 +203,14 @@
           }).responseText;
           console.log(output_result)
 
-          resultCompile(output_result, code)
+          var compile = resultCompile(output_result, code)
+
+          if (compile == 1){
+            var Range = require("ace/range").Range
+            var row = editor.selection.lead.row
+            var newText = "\n" 
+            editor.session.replace(new Range(1, 0, 10, Number.MAX_VALUE), newText)
+          }
         } else {
           alert("จำเป็นต้องมีคำสั่ง print ในการแสดงผลด้วย")
         }

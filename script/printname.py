@@ -1,10 +1,5 @@
 # Write your code
 
-go = 2 
+age = 18 
 
-if (go == 1):
-    print ("left")
-elif (go == 2):
-    print ("right")
-else:
-    print ("fail")ฟดหกด
+print (age)

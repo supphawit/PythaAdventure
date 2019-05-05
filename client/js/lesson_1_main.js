@@ -44,6 +44,7 @@ function resultCompile(responseTxt,originalCode) {
         fontSize: '15px',
       })
       state_compile = 1
+      return (1)
     } else if (press_back == 2) {
       closeDialog()
 
@@ -57,6 +58,7 @@ function resultCompile(responseTxt,originalCode) {
         fontSize: '15px',
       })
       state_compile = 2
+      return (2)
     } else {
       closeDialog()
 
