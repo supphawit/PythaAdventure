@@ -1,5 +1,4 @@
 var finish_buy
-var item_inventory = []
 
 var conver_1 = ["คนนี้คือพ่อค้า",
   "เจ้าสามารถซื้อของจากเขาได้",

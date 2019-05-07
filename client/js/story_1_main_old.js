@@ -1,4 +1,13 @@
-
+var current_conver = 0
+var self
+var check_conver = 0
+var speedCharacter = 10
+var playerState = 0
+var wizardState = 0
+var stopState = 0
+var tmpResponse
+var checkState = 0
+var item_inventory = []
 var wear_check = 0
 var change_wear = 0
 
@@ -18,7 +27,7 @@ var conver_3 = ["ถูกต้อง !!",
   "ไปกันต่อเถอะ",
 ]
 
-function showInventoryStory() {
+function showInventory() {
 
   $(document).ready(function () {
     var data = $.ajax({
@@ -280,7 +289,7 @@ var mainState = {
 
     this.menu = game.add.image(800, 10, 'menu')
     this.menu.scale.setTo(2, 2)
-    this.backpack = game.add.button(1000, 25, 'backpack', showInventoryStory, this)
+    this.backpack = game.add.button(1000, 25, 'backpack', showInventory, this)
     this.backpack.scale.setTo(0.7, 0.7)
 
     this.player = game.add.sprite(-100, 150, 'playerStandRight')

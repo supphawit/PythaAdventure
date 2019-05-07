@@ -16,8 +16,8 @@
 
   <link rel="stylesheet" type="text/css" href="client/css/style.css">
   <script type="text/javascript" src="client/js/phaser.js"></script>
+  <script type="text/javascript" src="client/js/load.js"></script>
   <script type="text/javascript" src="client/js/story_1_main.js"></script>
-  <!-- <script type="text/javascript" src="client/js/load.js"></script> -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
 
@@ -42,15 +42,24 @@
         <div class="form-group">
           <div id="editor"># Write your code
 
-attack = "Attack"
-
-print ()
           </div>
         </div>
-        <input id="compile" type="submit" class="btn btn-primary" value="Compile">
-        <span id="nextEp"></span>
-        <a href="#"><img src="client/images/scroll.png" style="width: 75px;font-size: 30" align="right"
-            id="hint-popover"></a>
+
+        <div class="row">
+
+          <div class="col-3">
+            <input id="compile" type="submit" class="btn btn-primary" value="Compile">
+          </div>
+          <div class="col">
+            <a href="#">
+              <span class="badge badge-primary" data-toggle="modal" data-target="#intro">วิธีเล่น</span>
+            </a>
+            <a href="#" id="hint1" data-toggle="modal" data-target="#story1-hint-1"><span
+                class="badge badge-info">คำใบ้ 1</span></a>
+            <a href="#" id="hint2"><span class="badge badge-secondary">คำใบ้ 2</span></a>
+          </div>
+
+        </div>
 
       </div>
       <div class="col-9">
@@ -59,18 +68,59 @@ print ()
       </div>
     </div>
   </div>
+
+
+  <!-- Modal Hint 2 -->
+  <div class="modal fade" id="lesson1-hint-2" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"> <strong>How to play</strong></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+
+          <div id="lesson-1-hint-2-Carousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#lesson-1-hint-2-Carousel" data-slide-to="0" class="active"></li>
+              <li data-target="#lesson-1-hint-2-Carousel" data-slide-to="1"></li>
+            </ol>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <FONT SIZE="5">integer เป็นการเก็บข้อมูลแบบจำนวนเต็ม</FONT>
+                <img src="client/images/lesson1hint2_1.png" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <FONT SIZE="5">หลังจากประกาศตัวแปร Int ตามบรรทัดที่ 2 แล้ว ให้ Print ตามบรรทัดที่ 3</FONT>
+                <img src="client/images/lesson1hint2_2.png" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#lesson-1-hint-2-Carousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#lesson-1-hint-2-Carousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" id="answer02" data-dismiss="modal">Answer</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal -->
+
+
   <script>
     $(document).ready(function () {
 
       $("#navBar").load("client/navbar.html");
-
-      $('#hint-popover').popover({
-        container: 'body',
-        title: "คำใบ้",
-        content: 'สามารถเรียกใช้งานฟังก์ชันได้โดยเขียนชื่อฟังก์ชัน และ ฟังก์ชันจะมี return หรือไม่มีก็ได้',
-        placement: 'top',
-        html: true,
-      })
 
       var editor = ace.edit("editor");
       editor.setTheme("ace/theme/monokai");
@@ -115,7 +165,7 @@ print ()
         if (output_result.length < 50) {
           resultCompile(output_result)
 
-        } 
+        }
       })
     })
   </script>
