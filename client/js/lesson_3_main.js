@@ -267,7 +267,7 @@ var mainState = {
     this.sound = game.add.button(1000, 28, 'speaker', music, this)
     this.sound.scale.setTo(0.9, 0.9)
     this.music = game.add.audio('music')
-    // this.music.play()
+    this.music.play()
 
 
     this.dealer = game.add.sprite(490, 150, 'dealer')

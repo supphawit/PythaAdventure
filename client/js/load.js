@@ -12,9 +12,10 @@ var state_compile
 var press_back = 0
 var messageErr
 var checkState = 0
+var item_inventory = []
+
 
 var pause = 0
-
 function music() {
   if (pause == 0) {
     self.music.pause()
@@ -62,6 +63,10 @@ function showInventory() {
 
 
 function closeInventory() {
+  if (typeof self.item_apple !== "undefined") {
+    self.item_apple.destroy()
+    self.text_apple.destroy()
+  }
   self.inventory.destroy()
   self.xSign.destroy()
 }

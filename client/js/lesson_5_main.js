@@ -1,14 +1,6 @@
-var current_conver = 0
-var self
-var check_conver = 0
-var speedCharacter = 10
-var playerState = 0
-var wizardState = 0
-var stopState = 0
-var tmpResponse
 var c_compiler = 0
 var ex_compiler
-var item_inventory = []
+
 
 var conver_1 = ["ในบทนี้ เจ้าจะได้เรียนรู้\nเกี่ยวกับโครงสร้างข้อมูลแบบ List",
   "ข้าจะบอกการสร้างและใช้งาน List ในเบื้องต้น",
@@ -22,17 +14,17 @@ var conver_1 = ["ในบทนี้ เจ้าจะได้เรีย�
 ]
 
 var conver_2 = ["คราวนี้ใช้เมธอด append() \nเพิ่มสมาชิกให้กับ List ",
-  "ข้าจะยกตัวอย่างให้ดู \nex.append(10)",
-  "สมาชิกใน List ก็จะเพิ่มขึ้น",
-  "ลองใช้ฟังก์ชัน len() \nตรวจสอบจำนวนสมาชิกใน List ดูสิ",
+  "ข้าจะยกตัวอย่างให้ดูเช่นมีตัวแปร ex = [8,3]\nใช้คำสั่ง ex.append(10)",
+  "สมาชิกใน List ก็จะเพิ่มขึ้นเป็น [8,3,10]",
+  "และแสดงผลโดยใช้ฟังก์ชัน len() \nตรวจสอบจำนวนสมาชิกใน List",
 ]
 
 var conver_3 = ["การเข้าถึงข้อมูลภายใน List",
   "List นั้นใช้ Index สำหรับการเข้าถึงข้อมูล",
   "โดย Index ของ List จะเป็นจำนวนเต็ม\nที่เริ่มจาก 0 และเพิ่มขึ้นทีละ 1 ไปเรื่อยๆ",
-  "อ่านค่าได้โดย print (ex[0])",
-  "ก็จะได้ค่าภายใน List ลำดับแรกออกมา",
-  "ลองเอาค่าลำดับที่ 2 ออกมาให้ดูหน่อยซิ"
+  "ถ้าหาตัวแปรชื่อ ex \nจะอ่านค่าได้โดย print (ex[0])",
+  "ก็จะได้ค่าภายใน List ลำดับที่ 1 ออกมา",
+  "ข้าต้องการให้เจ้าแสดงผลลำดับที่ 2 ออกมา"
 ]
 
 var conver_4 = ["การอ่านค่าใน List ด้วยคำสัง For loop",
@@ -48,8 +40,8 @@ var conver_4 = ["การอ่านค่าใน List ด้วยคำส
 
 var conver_5 = ["ให้ซื้อชุดเกราะกับพ่อค้า",
   "โดยสร้าง List เก็บ string \nเป็นชนิดของอุปกรณ์แต่ละชิ้น",
-  "ซึ่งอุปกรณ์มีดังนี้\n\"helmet\" \"armor\" \"weapon\" \"boots\"",
-  "ให้แสดงค่าออกมาด้วยคำสั่ง for loop",
+  "ซึ่งอุปกรณ์มีดังนี้\n[\"helmet\",\"armor\",\"weapon\",\"boots\"]",
+  "และแสดงค่าออกมาด้วยคำสั่ง for loop \nคล้ายๆกับที่ข้าให้ทำก่อนหน้านี้แหละ",
 ]
 
 var conver_6 = ["ตอนนี้อุปกรณ์เจ้าพร้อมแล้ว",
@@ -57,335 +49,478 @@ var conver_6 = ["ตอนนี้อุปกรณ์เจ้าพร้อ
   "ไปปราบจอมมาร",
 ]
 
-var pause = 0
-function music() {
-  if (pause == 0) {
-    self.music.pause()
-    pause = 1
-    self.sound.destroy()
-    self.sound = game.add.button(1000, 28, 'mute', music, this)
-    self.sound.scale.setTo(0.9, 0.9)
-  } else if (pause == 1) {
-    self.music.resume()
-    pause = 0
-    self.sound.destroy()
-    self.sound = game.add.button(1000, 28, 'speaker', music, this)
-    self.sound.scale.setTo(0.9, 0.9)
-  }
-}
+function resultCompile(responseTxt, originalCode) {
+  tmpResponse = responseTxt
 
-function showInventory() {
+  if (responseTxt.length < 50 && originalCode.includes("[") && originalCode.includes("]")) {
+    if (checkState == 4) {
 
-  $(document).ready(function () {
-    var data = $.ajax({
-      url: '/getItem',
-      type: "GET",
-      async: false,
-    }).responseJSON
-
-    item_inventory.push([data[0].item_name, data[0].amount])
-    console.log(item_inventory[0][0])
-    self.item_apple = game.add.image(405, 300, 'item_' + item_inventory[0][0]);
-    self.item_apple.scale.setTo(0.1, 0.1)
-    self.text_apple = game.add.text(440, 320, item_inventory[0][1], {
-      fontSize: '15px',
-    })
-
-  })
-
-  if (typeof self.inventory !== "undefined") {
-    self.inventory.destroy()
-    self.xSign.destroy()
-  }
-  self.inventory = game.add.image(350, 50, 'inventory');
-  self.inventory.scale.setTo(0.6, 0.6)
-  self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
-  self.xSign.scale.setTo(0.8, 0.8)
-
-
-
-}
-
-function closeInventory() {
-  self.inventory.destroy()
-  self.xSign.destroy()
-}
-
-
-function resultCompile(responseTxt, n) {
-
-  if (responseTxt.length < 50) {
-
-    if (c_compiler == 4) {
-      var count = 0
-      var res = responseTxt.split("\n")
-      res = res.filter(function (str) {
-        return /\S/.test(str);
-      });
-      console.log("res", res)
-      var all = ['helmet', 'armor', 'weapon', 'boots']
-      for (var i = 0; i <= 3; i++) {
-        console.log("i", res[i])
-        for (var j = 0; j <= 3; j++) {
-          console.log("j", all[j])
-          if (res[i].trim() == all[j].trim()) {
-            count += 1
+      if (c_compiler == 4 && originalCode.includes("for") && originalCode.includes("in")) {
+        var count = 0
+        console.log(responseTxt)
+        var res = responseTxt.split("\n")
+        res = res.filter(function (str) {
+          return /\S/.test(str);
+        });
+        console.log("res", res)
+        var all = ['helmet', 'armor', 'weapon', 'boots']
+        for (var i = 0; i <= 3; i++) {
+          console.log("i", res[i])
+          for (var j = 0; j <= 3; j++) {
+            console.log("j", all[j])
+            if (res[i].trim() == all[j].trim()) {
+              count += 1
+            }
           }
         }
+
+        if (count != 4) {
+
+          closeDialog()
+
+          self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+          self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+          self.textInBox = game.add.text(630, 170, "อุปรกณ์ยังไม่ครบ !!", {
+            fontSize: '15px',
+          })
+          console.log(count)
+        } else {
+          check_conver = 5
+          current_conver = 0
+          stopState = 1
+          c_compiler = 5
+        }
       }
+    } else if (c_compiler == 4) {
+      closeDialog()
 
-      if (count != 4) {
-        self.textInBox.destroy()
-        self.dialogBox.destroy()
-        self.button.destroy()
-
-        self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-        self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-        self.textInBox = game.add.text(630, 170, "อุปรกณ์ยังไม่ครบ !!", {
-          fontSize: '15px',
-        })
-        console.log(count)
-      } else {
-        stopState = 1
-        c_compiler = 5
-      }
-    }
-    if (c_compiler == 3) {
-      var res = responseTxt.split("\n")
-      res = res.filter(function (str) {
-        return /\S/.test(str);
-      });
-
-      if (res.length != 8) {
-        self.textInBox.destroy()
-        self.dialogBox.destroy()
-        self.button.destroy()
-
-        self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-        self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-        self.textInBox = game.add.text(630, 170, "สมาชิกไม่ครบ 8 จำนวน!!", {
-          fontSize: '15px',
-        })
-      } else {
-        self.textInBox.destroy()
-        self.button.destroy()
-        self.dialogBox.destroy()
-
-        self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
-        self.button = game.add.button(410, 180, 'button', actionOnClick, this)
-        self.textInBox = game.add.text(110, 170, res, {
-          fontSize: '15px',
-        })
-        c_compiler = 4
-
-      }
+      position_dialog_x = 600
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
+        fontSize: '15px',
+      })
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     }
 
-    if (c_compiler == 2) {
-      if (responseTxt == 3) {
-        self.textInBox.destroy()
-        self.button.destroy()
-        self.dialogBox.destroy()
+    if (c_compiler == 3 && originalCode.includes("for") && originalCode.includes("append")) {
+      if (c_compiler == 3) {
+        var res = responseTxt.split("\n")
+        res = res.filter(function (str) {
+          return /\S/.test(str);
+        });
+
+        if (res.length > 8) {
+
+          closeDialog()
+
+          self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+          self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+          self.textInBox = game.add.text(630, 170, "สมาชิกเกิน 8 จำนวน!!", {
+            fontSize: '15px',
+          })
+        } else if (res.length < 8) {
+          closeDialog()
+
+          self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+          self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+          self.textInBox = game.add.text(630, 170, "สมาชิกไม่ครบ 8 จำนวน!!", {
+            fontSize: '15px',
+          })
+        } else if (res.length == 8) {
+
+          closeDialog()
+
+          self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
+          self.button = game.add.button(410, 180, 'button', actionOnClick, this)
+          self.textInBox = game.add.text(110, 170, "ค่าในอาร์เรย์คือ " + res[0].trim() + " " + res[1].trim() + " " + res[2].trim() + " " + res[3].trim() + " " + res[4].trim() + " " + res[5].trim() + " " + res[6].trim() + " " + res[7].trim(), {
+            fontSize: '15px',
+          })
+          c_compiler = 4
+          check_conver = 4
+          current_conver = 0
+        }
+      } else if (checkState == 3) {
+        closeDialog()
+
+        position_dialog_x = 600
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
+          fontSize: '15px',
+        })
+        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      }
+
+    }
+
+    if (c_compiler == 2 && originalCode.includes("[1]")) {
+      if (checkState == 2) {
+        closeDialog()
         self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
         self.button = game.add.button(410, 180, 'button', actionOnClick, this)
         self.textInBox = game.add.text(110, 170, "ค่าลำดับที่ 2 คือ " + responseTxt, {
           fontSize: '15px',
         })
         c_compiler = 3
+        check_conver = 3
+        current_conver = 0
       } else {
-        self.textInBox.destroy()
-        self.dialogBox.destroy()
-        self.button.destroy()
+        closeDialog()
 
-        self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-        self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-        self.textInBox = game.add.text(630, 170, "ยังไม่ใช่ค่าลำดับที่ 2 นะ", {
+        position_dialog_x = 600
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
           fontSize: '15px',
         })
+        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       }
+    } else if (c_compiler == 2) {
+      closeDialog()
+
+      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(630, 170, "ยังไม่ใช่ค่าลำดับที่ 2 นะ", {
+        fontSize: '15px',
+      })
     }
 
-    if (c_compiler == 1) {
-      if (responseTxt == ex_compiler) {
-        self.textInBox.destroy()
-        self.dialogBox.destroy()
-        self.button.destroy()
 
-        self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-        self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-        self.textInBox = game.add.text(630, 170, "เจ้ายังไม่ได้เพิ่มสมาชิก\nโดยใช้เมธอด append เลย", {
-          fontSize: '15px',
-        })
-      } else {
-        self.textInBox.destroy()
-        self.button.destroy()
-        self.dialogBox.destroy()
+    if (c_compiler == 1 && originalCode.includes("append")) {
+      if (checkState == 2) {
+        check_conver = 2
+        current_conver = 0
+
+        closeDialog()
         self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
         self.button = game.add.button(410, 180, 'button', actionOnClick, this)
         self.textInBox = game.add.text(110, 170, "จำนวนใน List เพิ่มเป็น " + responseTxt.trim() + " แล้ว", {
           fontSize: '15px',
         })
         c_compiler = 2
+      } else {
+        closeDialog()
+
+        position_dialog_x = 600
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
+          fontSize: '15px',
+        })
+        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       }
-    }
-    if (c_compiler == 0) {
-      self.textInBox.destroy()
-      self.button.destroy()
-      self.dialogBox.destroy()
-      self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
-      self.button = game.add.button(410, 180, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(110, 170, "จำนวนสมาชิกใน List คือ " + responseTxt, {
+    } else if (c_compiler == 1) {
+      position_dialog_x = 600
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ไม่ได้ใช้คำสั่ง append!! \nทำให้ถูกด้วย", {
         fontSize: '15px',
       })
-      c_compiler = 1
-      ex_compiler = responseTxt
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    }
+
+    if (c_compiler == 0 && originalCode.includes("len")) {
+      if (checkState == 1) {
+        check_conver = 1
+        current_conver = 0
+
+        closeDialog()
+        self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
+        self.button = game.add.button(410, 180, 'button', actionOnClick, this)
+        self.textInBox = game.add.text(110, 170, "จำนวนสมาชิกใน List คือ " + responseTxt, {
+          fontSize: '15px',
+        })
+        c_compiler = 1
+        ex_compiler = responseTxt
+      } else {
+        closeDialog()
+
+        position_dialog_x = 600
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
+          fontSize: '15px',
+        })
+        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      }
+
+    } else if (c_compiler == 0) {
+      position_dialog_x = 600
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ไม่ได้ใช้คำสั่ง len()`!! \nทำให้ถูกด้วย", {
+        fontSize: '15px',
+      })
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     }
   } else {
 
-    // self.dialogBox.destroy()
-    // self.button.destroy()
-    self.errorTextDialog = game.add.image(250, 50, 'errorText');
+    if (typeof self.errorTextDialog !== "undefined") {
+      deleteErrorButton()
+    }
+
+    self.errorTextDialog = game.add.image(250, 50, 'errorText')
     self.errorTextDialog.scale.setTo(5, 5)
 
-    self.textErrorInBox = game.add.text(280, 80, "มีข้อผิดพลาดในโค้ดของคุณ\nตรวจสอบและทำการแก้ไข\nและคอมไพล์ใหม่อีกครั้ง", {
-      fontSize: '30px',
-    })
+    if (tmpResponse.includes("indent")) {
+      messageErr = "ผิดพลาด!!\nบล็อคหรือระยะห่างของคำสั่งถูกต้องหรือเปล่า?"
+      self.showErrModal = game.add.button(690, 165, 'information', indent, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+    } else if (tmpResponse.includes("Missing parentheses") || tmpResponse.includes("unexpected EOF while parsing")) {
+      messageErr = "ผิดพลาด!!\nลืมใส่วงเล็บในตรงไหนหรือเปล่า?"
+      self.showErrModal = game.add.button(690, 165, 'information', parentheses, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+    } else if (tmpResponse.includes("EOL while scanning string literal")) {
+      messageErr = "ผิดพลาด!!\nสัญลักษณ์ \" (double quote) หายไปหรือเปล่า?"
+      self.showErrModal = game.add.button(690, 165, 'information', EOL, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+    } else {
+      self.showErrModal = game.add.button(690, 165, 'information', otherError, this)
+      self.showErrModal.scale.setTo(0.7, 0.7)
+      messageErr = "ผิดพลาด!!\nความผิดพลาดนี้อยู่นอกเหนือความคาดหมาย\nกด View Code Error เพื่อดู?"
+    }
 
-    self.errorButton = game.add.button(750, 140, 'errorButton', deleteErrorButton, this)
-    self.more = game.add.button(700, 140, 'more', viewMore, this)
+    self.textErrorInBox = game.add.text(280, 80, messageErr, {
+      fontSize: '20px',
+    })
+    self.textViewMore = game.add.text(725, 180, "View Code Error", {
+      fontSize: '10px',
+    })
+    self.more = game.add.button(750, 160, 'more', viewMore, this)
 
   }
-}
-
-function deleteErrorButton() {
-  self.errorButton.destroy()
-  self.errorTextDialog.destroy()
-  self.textErrorInBox.destroy()
-  self.more.destroy()
-
-  actionOnClick()
-}
-
-function viewMore() {
-  self.textErrorInBox.destroy()
-  self.textErrorInBox = game.add.text(280, 80, tmpResponse, {
-    fontSize: '15px',
-  })
 }
 
 function actionOnClick() {
 
   if (conver_1[current_conver] != undefined && check_conver == 0) {
-    self.textInBox.destroy()
-    self.dialogBox.destroy()
-    self.button.destroy()
+    closeDialog()
 
-    self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-    self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-    self.textInBox = game.add.text(630, 170, conver_1[current_conver], {
+    position_dialog_x = 600
+    position_dialog_y = 150
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
       fontSize: '15px',
     })
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+
     current_conver++
+    // 9
     if (current_conver == 9) {
-      check_conver = 1
-      current_conver = 0
+      checkState = 1
+      $(document).ready(function () {
+        $("#lesson5-hint-1").modal()
+      })
     }
   } else if (conver_2[current_conver] != undefined && check_conver == 1) {
     if (c_compiler == 1) {
-      self.textInBox.destroy()
-      self.dialogBox.destroy()
-      self.button.destroy()
+      closeDialog()
 
-      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(630, 170, conver_2[current_conver], {
+      position_dialog_x = 600
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver], {
         fontSize: '15px',
       })
+      self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+
       current_conver++
-      if (current_conver == 4) {
-        check_conver = 2
-        current_conver = 0
+      //4
+      if (current_conver == 3) {
+        console.log("SJDFJKSDFLK")
+        checkState = 2
+        $(document).ready(function () {
+          $("#lesson5-hint-2").modal()
+          $('#hint2').html("<a href='#' id='hint2'><span class='badge badge-info' data-toggle='modal' data-target='#lesson5-hint-2'>คำใบ้ 2</span></a>")
+        })
       }
     }
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
     if (c_compiler == 2) {
-      self.textInBox.destroy()
-      self.dialogBox.destroy()
-      self.button.destroy()
+      closeDialog()
 
-      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(630, 170, conver_3[current_conver], {
+      position_dialog_x = 600
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver], {
         fontSize: '15px',
       })
-      current_conver++
+      self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
 
+      current_conver++
+      //6
       if (current_conver == 6) {
-        check_conver = 3
-        current_conver = 0
+        checkState = 2
+        $(document).ready(function () {
+          $("#lesson5-hint-3").modal()
+          $('#hint3').html("<a href='#' id='hint3'><span class='badge badge-info' data-toggle='modal' data-target='#lesson5-hint-3'>คำใบ้ 3</span></a>")
+        })
+
       }
     }
   } else if (conver_4[current_conver] != undefined && check_conver == 3) {
     if (c_compiler == 3) {
-      self.textInBox.destroy()
-      self.dialogBox.destroy()
-      self.button.destroy()
+      closeDialog()
 
-      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(630, 170, conver_4[current_conver], {
+      position_dialog_x = 600
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_4[current_conver], {
         fontSize: '15px',
       })
+      self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+
       current_conver++
+      //9
       if (current_conver == 9) {
-        check_conver = 4
-        current_conver = 0
+
+        checkState = 3
+        $(document).ready(function () {
+          $("#lesson5-hint-4").modal()
+          $('#hint4').html("<a href='#' id='hint4'><span class='badge badge-info' data-toggle='modal' data-target='#lesson5-hint-4'>คำใบ้ 4</span></a>")
+        })
       }
     }
   } else if (conver_5[current_conver] != undefined && check_conver == 4) {
     if (c_compiler == 4) {
-      self.textInBox.destroy()
-      self.dialogBox.destroy()
-      self.button.destroy()
+      closeDialog()
 
-      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(630, 170, conver_5[current_conver], {
+      position_dialog_x = 600
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_5[current_conver], {
         fontSize: '15px',
       })
+      self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+
       current_conver++
+      //4
       if (current_conver == 4) {
-        check_conver = 5
-        current_conver = 0
+        checkState = 4
+        $(document).ready(function () {
+          $("#lesson5-hint-5").modal()
+          $('#hint5').html("<a href='#' id='hint5'><span class='badge badge-info' data-toggle='modal' data-target='#lesson5-hint-5'>คำใบ้ 5</span></a>")
+        })
       }
     }
   } else if (conver_6[current_conver] != undefined && check_conver == 5) {
     if (c_compiler == 5) {
-      self.textInBox.destroy()
-      self.dialogBox.destroy()
-      self.button.destroy()
+      closeDialog()
 
-      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(630, 170, conver_6[current_conver], {
+      position_dialog_x = 600
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_6[current_conver], {
         fontSize: '15px',
       })
+      self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+
       current_conver++
       if (current_conver == 3) {
         check_conver = 6
         current_conver = 0
         playerState = 3
         wizardState = 3
-        self.textInBox.destroy()
-        self.dialogBox.destroy()
-        self.button.destroy()
+
+        closeDialog()
       }
     }
-  } else {
-    current_conver--
   }
 }
 
+
+function backward() {
+  if (current_conver > 1) {
+    current_conver--
+    closeDialog()
+
+    position_dialog_x = 600
+    position_dialog_y = 150
+    if (check_conver == 0) {
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    } else {
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    }
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
+      fontSize: '15px',
+    })
+
+    switch (check_conver) {
+      case 0:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
+      case 1:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
+      case 2:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+      case 3:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_4[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+      case 4:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_5[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+      case 5:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_6[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+      case 6:
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_7[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+    }
+
+  }
+}
 
 var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne');
 
@@ -406,6 +541,7 @@ var mainState = {
     game.load.image('errorText', 'client/images/error.png')
     game.load.image('speaker', 'client/images/speaker.png')
     game.load.image('mute', 'client/images/mute.png')
+    game.load.image('information', 'client/images/information.png')
     game.load.spritesheet('button', 'client/images/button.png')
     game.load.spritesheet('back', 'client/images/back.png')
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
@@ -418,7 +554,7 @@ var mainState = {
     game.load.image('boots', 'client/images/armor-bottom.png')
     game.load.image('armor', 'client/images/armor-top.png')
     game.load.image('weapon', 'client/images/weapon.png')
-    game.load.audio('music', 'client/images/audio/Celestial.mp3')
+    game.load.audio('music', 'client/images/audio/Windless Slopes.mp3')
 
   },
 
@@ -499,25 +635,39 @@ var mainState = {
       if (this.wizard.x > 550) {
         this.wizard.x -= speedCharacter
       } else {
-        this.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-        this.textInBox = game.add.text(630, 170, conver_1[current_conver], {
+
+        position_dialog_x = 600
+        position_dialog_y = 150
+        this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
           fontSize: '15px',
         })
-        this.button = game.add.button(930, 180, 'button', actionOnClick, this)
+        this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+          fontSize: '15px',
+        })
+        this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+
         wizardState = 2
       }
     }
 
     if (stopState == 1) {
-      self.textInBox.destroy()
-      self.dialogBox.destroy()
-      self.button.destroy()
+      closeDialog()
+      position_dialog_x = 150
+      position_dialog_y = 50
 
-      self.dialogBox = game.add.image(150, 50, 'dialogBoxRight')
-      self.button = game.add.button(500, 80, 'button', actionOnClick, this)
-
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
+        fontSize: '15px',
+      })
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       stopState = 2
-      console.log(this.player.x)
+      // console.log(this.player.x)
     }
 
     if (stopState == 2) {
@@ -602,12 +752,12 @@ var mainState = {
       if (this.item_boots.y == 214 && this.item_boots.x == 400) {
         this.item_boots.destroy()
         stopState = 10
-        self.dialogBox.destroy()
-        self.button.destroy()
+        closeDialog()
       }
     }
 
     if (stopState == 10) {
+      closeDialog()
       self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
       self.button = game.add.button(930, 180, 'button', actionOnClick, this)
       self.textInBox = game.add.text(630, 170, conver_6[current_conver], {

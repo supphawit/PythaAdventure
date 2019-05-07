@@ -225,6 +225,7 @@ var mainState = {
     game.load.spritesheet('playerWalkingDown', 'client/images/player-walk-down.png', 128, 128)
     game.load.spritesheet('wizardLeft', 'client/images/npc-wizard-left.png', 128, 128)
     game.load.spritesheet('wizardRight', 'client/images/npc-wizard-right.png', 128, 128)
+    game.load.spritesheet('item_apple', 'client/images/apple.png', 370, 359)
     game.load.image('dialogBoxRight', 'client/images/text-box-right.png')
     game.load.image('dialogBoxLeft', 'client/images/text-box-left.png')
     game.load.image('backpack', 'client/images/backpack.png')
