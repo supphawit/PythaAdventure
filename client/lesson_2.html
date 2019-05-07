@@ -55,7 +55,7 @@
             <a href="#">
               <span class="badge badge-primary" data-toggle="modal" data-target="#intro">วิธีเล่น</span>
             </a>
-            <a href="#" id="hint1" data-toggle="modal" data-target="#teach"><span class="badge badge-info">คำใบ้ 1</span></a>
+            <a href="#" id="hint1" data-toggle="modal" data-target="#lesson2-hint-1"><span class="badge badge-info">คำใบ้ 1</span></a>
           </div>
 
         </div>
@@ -69,11 +69,11 @@
   </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="teach" role="dialog">
+    <div class="modal fade" id="lesson2-hint-1" role="dialog">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title"> <strong>วิธีเขียนโค้ดให้ผ่านบทเรียน</strong></h4>
+            <h4 class="modal-title"> <strong>เงื่อนไข if elif else</strong></h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
@@ -81,24 +81,13 @@
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  หากโค้ดที่เขียน ไม่มีชุดคำสั่งตามที่บทเรียนต้องการ ก็ไม่สามารถผ่านบทเรียนไปได้
-                </div>
-                <div class="carousel-item">
-                ตั้งใจอ่านที่ตัวละครพ่อมดบอก แล้วคุณจะผ่านไปได้
-                </div>
-                
+                  เงื่อนไข if elif else มีวิธีใช้คือเป็นคำสั่งในการแยก condition โดยแปลง่ายๆ ว่าเป็นคำว่า "ถ้า" "แล้ว"
+                   โดยในหมายเลข 1 คือเป็นสิ่งที่ต้องมีในเงื่อนไข หมายเลข 2 จะใช้ในกรณีที่มีมากกว่า 2 เงื่อนไข 
+                   และเงื่อนไขสุดท้ายจะปิดด้วยหมายเลข 3
+                  <img src="client/images/lesson2hint1_1.png" class="d-block w-100" alt="...">
+                </div>  
               </div>
-              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
             </div>
-
-
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-info" id="answer01">Answer</button>
@@ -108,12 +97,13 @@
       </div>
     </div>
   </div>
+<!-- End Modal -->
 
   <script>
 
     $(document).ready(function () {
 
-      $("#teach").modal()
+      $("#lesson2-hint-1").modal()
 
       $("#answer01").click(async (e) => {
         var Range = require("ace/range").Range
