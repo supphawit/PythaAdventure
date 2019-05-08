@@ -119,7 +119,7 @@
 
       <div class="card-deck">
         <div class="card">
-          <img class="card-img-top border border-primary" src="/client/images/map_lesson_01.png">
+          <img class="card-img-top border border-primary" src="/client/images/map_story_1.png">
           <div class="card-body">
             <h5 class="card-title">Begin</h5>
             <p class="card-text">เริ่มต้นออกเดินทาง สวมใส่ชุดเกราะพร้อมที่จะต่อสู้จะได้ลองต่อสู้กับมอนเตอร์</p>
@@ -135,7 +135,7 @@
         </div>
 
         <div class="card">
-          <img class="card-img-top border border-primary " src="/client/images/.png">
+          <img class="card-img-top border border-primary " src="/client/images/map_story_2.png">
           <div class="card-body">
             <h5 class="card-title">if else</h5>
             <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวกับการใช้คำสั่ง IF ELSE ในการทำเงื่อนไขต่างๆ ในภาษา Python
@@ -151,7 +151,7 @@
           </div>
         </div>
         <div class="card">
-          <img class="card-img-top border border-primary " src="/client/images/.png">
+          <img class="card-img-top border border-primary" src="/client/images/map_story_1.png">
           <div class="card-body">
             <h5 class="card-title">for loop</h5>
             <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวการใช้ For Loop เพื่อแสดงข้อความออกมาทางหน้าจอ
@@ -168,7 +168,7 @@
         </div>
 
         <div class="card">
-          <img class="card-img-top border border-primary " src="/client/images/.png">
+          <img class="card-img-top border border-primary" src="/client/images/map_story_1.png">
           <div class="card-body">
             <h5 class="card-title">function</h5>
             <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวการสร้าง Function
@@ -189,7 +189,7 @@
 
       <div class="card-deck">
         <div class="card">
-          <img class="card-img-top border border-primary" src="/client/images/.png">
+          <img class="card-img-top border border-primary" src="/client/images/map_story_1.png">
           <div class="card-body">
             <h5 class="card-title">Begin</h5>
             <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวกับการประกาศและสร้าง List รวมถึงเมธอดพื้นฐานและการใช้ For
@@ -206,7 +206,7 @@
         </div>
 
         <div class="card">
-          <img class="card-img-top border border-primary " src="/client/images/.png">
+          <img class="card-img-top border border-primary" src="/client/images/map_story_1.png">
           <div class="card-body">
             <h5 class="card-title">if else</h5>
             <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวกับการใช้คำสั่ง IF ELSE ในการทำเงื่อนไขต่างๆ ในภาษา Python
@@ -222,7 +222,7 @@
           </div>
         </div>
         <div class="card">
-          <img class="card-img-top border border-primary " src="/client/images/.png">
+          <img class="card-img-top border border-primary" src="/client/images/map_story_1.png">
           <div class="card-body">
             <h5 class="card-title">for loop</h5>
             <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวการใช้ For Loop เพื่อแสดงข้อความออกมาทางหน้าจอ
@@ -239,7 +239,7 @@
         </div>
 
         <div class="card">
-          <img class="card-img-top border border-primary " src="/client/images/.png">
+          <img class="card-img-top border border-primary" src="/client/images/map_story_1.png">
           <div class="card-body">
             <h5 class="card-title">function</h5>
             <p class="card-text">บทเรียนนี้จะเป็นการสอนเกี่ยวการสร้าง Function
@@ -272,8 +272,8 @@
         }).responseJSON
 
         data.forEach(element => {
-
-          if (element > 5) {
+          console.log(element)
+          if (element >= 5) {
             $('#lesson' + element).html(" <a href='/story_" + (element - 5) + "' class='btn btn-primary'>Learn</a>")
           } else {
             $('#lesson' + element).html(" <a href='/lesson_" + (element) + "' class='btn btn-primary'>Learn</a>")
@@ -283,7 +283,7 @@
           $('#s' + element).hide()
 
           if (data.length == element) {
-            if (element > 5) {
+            if (element >= 5) {
               $('#lesson' + (element + 1)).html(" <a href='/story_" + (element - 4) + "' class='btn btn-primary'>Learn</a>")
             } else {
               $('#lesson' + (element + 1)).html(" <a href='/lesson_" + (element + 1) + "' class='btn btn-primary'>Learn</a>")

@@ -27,7 +27,7 @@
 <body style="background-color:darkslategrey ">
 
   <span id="navBar"></span>
-
+  <span id="modalAll"></span>
 
   <div class="container-fluid">
     <div style="text-align:center">
@@ -121,6 +121,7 @@
     $(document).ready(function () {
 
       $("#navBar").load("client/navbar.html");
+      $("#modalAll").load("client/modal.html");
 
       var editor = ace.edit("editor");
       editor.setTheme("ace/theme/monokai");
@@ -148,12 +149,6 @@
           })
         }
 
-        var userSession = $.ajax({
-          url: '/getUser',
-          type: "GET",
-          async: false,
-        }).responseText
-        var userJson = JSON.parse(userSession);
 
         var output_result = $.ajax({
           url: '/run?file=' + namefile,
