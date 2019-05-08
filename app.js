@@ -26,7 +26,9 @@ con.connect(function (err) {
   console.log('Connected Success!')
 })
 
-app.use(session({ secret: 'somsristupid' }));
+app.use(session({
+  secret: 'somsristupid'
+}));
 
 app.get('/', function (req, res) {
   if (req.session.email) {
@@ -78,13 +80,13 @@ app.get('/getLesson', function (req, res) {
   con.query(lesson, function (err, row) {
     if (err) throw err;
 
-    for (l in row){
+    for (l in row) {
       // console.log( row[l] )
       dataArray.push(row[l].lesson_level)
-    } 
+    }
     // console.log(dataArray)
     res.send(dataArray)
-  }) 
+  })
 
 })
 
@@ -96,18 +98,18 @@ app.get('/getItem', function (req, res) {
   con.query(lesson, function (err, row) {
     if (err) throw err;
 
-    for (l in row){
+    for (l in row) {
       // console.log( row[l] )
       dataArray.push(row[l])
-    } 
+    }
     // console.log(dataArray)
     res.send(dataArray)
-  }) 
+  })
 
 })
 
 app.get('/signout', function (req, res) {
-  console.log(req.session.email,"left")
+  console.log(req.session.email, "left")
   req.session.destroy()
   res.redirect('/')
 })
@@ -162,7 +164,7 @@ app.post('/googleSign', function (req, res) {
     console.log(req.session.email, "enter")
   })
 
-}) 
+})
 
 
 app.post('/updateByQuery', function (req, res) {
@@ -205,24 +207,24 @@ app.get('/run', (req, res) => {
 
   const process = spawn('python', ["./script/" + req.query.file + ".py"])
 
-  if (process){
+  if (process) {
     process.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`)
       res.send(data.toString())
     })
-  
+
     process.stderr.on('data', (data) => {
       console.log(`stderr: ${data}`)
       res.send(data.toString())
     })
-  
+
     process.on('close', (code) => {
       if (code != 0) {
         console.log(`child process exited with code ${code}`)
-  
+
       }
     })
-  }else{
+  } else {
     res.send("error")
   }
 
@@ -231,7 +233,7 @@ app.get('/run', (req, res) => {
 
 app.post('/write-post', function (req, res) {
   var fs = require('fs')
-  console.log(req.body)
+  console.log( req.body.python)
 
   fs.writeFile("./script/" + req.body.namefile + ".py", req.body.python, function (err) {
     if (err) {
@@ -270,10 +272,10 @@ app.get('/profile', function (req, res) {
 
 app.get('/lesson', function (req, res) {
 
-    res.sendFile(__dirname + '/client/lesson.html')
+  res.sendFile(__dirname + '/client/lesson.html')
 
-  })
- 
+})
+
 
 app.get('/lesson_1', function (req, res) {
   if (req.session.email && req.session.pre != 0) {

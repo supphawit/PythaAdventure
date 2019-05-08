@@ -25,11 +25,11 @@ var conver_3 = ["เอาล่ะ พอจะเข้าใจบ้าง�
   "ให้เจ้าเรียนรู้เกี่ยวกับ Python",
 ]
 
-function resultCompile(responseTxt,originalCode) {
+function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
-  console.log("original",originalCode)
+  console.log("original", originalCode)
 
-  if (responseTxt.length < 50 && originalCode.includes("print")) {
+  if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
     if (press_back == 1) {
       closeDialog()
@@ -83,15 +83,15 @@ function resultCompile(responseTxt,originalCode) {
     if (tmpResponse.includes("indent")) {
       messageErr = "ผิดพลาด!!\nบล็อคหรือระยะห่างของคำสั่งถูกต้องหรือเปล่า?"
       self.showErrModal = game.add.button(690, 165, 'information', indent, this)
-      self.showErrModal.scale.setTo(0.7,0.7)
+      self.showErrModal.scale.setTo(0.7, 0.7)
     } else if (tmpResponse.includes("Missing parentheses") || tmpResponse.includes("unexpected EOF while parsing")) {
       messageErr = "ผิดพลาด!!\nลืมใส่วงเล็บในตรงไหนหรือเปล่า?"
       self.showErrModal = game.add.button(690, 165, 'information', parentheses, this)
-      self.showErrModal.scale.setTo(0.7,0.7)
+      self.showErrModal.scale.setTo(0.7, 0.7)
     } else if (tmpResponse.includes("EOL while scanning string literal")) {
       messageErr = "ผิดพลาด!!\nสัญลักษณ์ \" (double quote) หายไปหรือเปล่า?"
       self.showErrModal = game.add.button(690, 165, 'information', EOL, this)
-      self.showErrModal.scale.setTo(0.7,0.7)
+      self.showErrModal.scale.setTo(0.7, 0.7)
     } else {
       self.showErrModal = game.add.button(690, 165, 'information', otherError, this)
       self.showErrModal.scale.setTo(0.7, 0.7)

@@ -24,7 +24,7 @@ var conver_2 = ["การเขียนฟังก์ชันสามาร
 
 var conver_3 = ["ง่ายๆแค่นี้เอง",
   "ถ้าอยากจะผ่านไปล่ะก็",
-"ทำตามที่ข้าบอก",
+  "ทำตามที่ข้าบอก",
   "ให้สร้างฟังก์ชันและ return ค่าออกมาเป็น string \nเป็นคำว่า \"I want to go\"",
 
 ]
@@ -37,44 +37,15 @@ var conver_10 = ["ถูกต้อง !!",
 
 
 
-function showInventory() {
-
-  $(document).ready(function () {
-    var data = $.ajax({
-      url: '/getItem',
-      type: "GET",
-      async: false,
-    }).responseJSON
-
-    item_inventory.push([data[0].item_name, data[0].amount])
-    console.log(item_inventory[0][0])
-    self.item_apple = game.add.image(405, 300, 'item_' + item_inventory[0][0])
-    self.item_apple.scale.setTo(0.1, 0.1)
-    self.text_apple = game.add.text(440, 320, item_inventory[0][1], {
-      fontSize: '15px',
-    })
-
-  })
-
-  if (typeof self.inventory !== "undefined") {
-    self.inventory.destroy()
-    self.xSign.destroy()
-  }
-  self.inventory = game.add.image(350, 50, 'inventory')
-  self.inventory.scale.setTo(0.6, 0.6)
-  self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
-  self.xSign.scale.setTo(0.8, 0.8)
-}
-
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
-  // console.log(check_conver)
-  if (responseTxt.length < 50) {
+
+  if (!(responseTxt.includes("script")) && !(responseTxt.includes("File")) ) {
 
     if (responseTxt.trim() == "None") {
       alert("return ค่าบางอย่างด้วยนะ")
 
-    } else if (responseTxt.trim() == "I want to go" && check_conver == 2) {
+    } else if (responseTxt.trim() == "I want to go" && check_conver == 2 && responseTxt.includes("def")) {
       checkState = 10
       check_conver = 10
       stopState = 1
@@ -213,7 +184,7 @@ function actionOnClick() {
     self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     current_conver++
 
-    if (current_conver == 2) {
+    if (current_conver == 11) {
       tmpX = 1
       $(document).ready(function () {
         $("#lesson4-hint-1").modal()
@@ -271,7 +242,7 @@ function actionOnClick() {
 
 
   } else if (conver_10[current_conver] != undefined && check_conver == 10) {
-    console.log("10",current_conver)
+    console.log("10", current_conver)
     if (checkState == 10) {
 
       if (current_conver == 0 && stopState != 2) {
@@ -285,13 +256,13 @@ function actionOnClick() {
       self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_10[current_conver], {
         fontSize: '15px',
       })
-      self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1 , {
+      self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
         fontSize: '15px',
       })
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
       self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       current_conver++
-      console.log("10",current_conver)
+      console.log("10", current_conver)
       if (current_conver == 4) {
         stopState = 3
 
@@ -468,7 +439,7 @@ var mainState = {
     if (stopState == 1 && playerState == 3 && wizardState == 3 && x == 1) {
 
       closeDialog()
-      current_conver --
+      current_conver--
 
       position_dialog_x = 400
       position_dialog_y = 100
@@ -481,7 +452,7 @@ var mainState = {
       })
       this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
       this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-      current_conver ++
+      current_conver++
       stopState = 2
     }
 

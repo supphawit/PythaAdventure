@@ -56,7 +56,8 @@
             <a href="#">
               <span class="badge badge-primary" data-toggle="modal" data-target="#intro">วิธีเล่น</span>
             </a>
-            <a href="#" id="hint1" data-toggle="modal" data-target="#lesson3-hint-1"><span class="badge badge-info">คำใบ้
+            <a href="#" id="hint1" data-toggle="modal" data-target="#lesson3-hint-1"><span
+                class="badge badge-info">คำใบ้
                 1</span></a>
           </div>
 
@@ -69,53 +70,59 @@
     </div>
   </div>
 
-  
+
   <!-- Modal Hint 1 -->
   <div class="modal fade" id="lesson3-hint-1" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title"> <strong>How to play</strong></h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-          <div class="modal-body">
-  
-            <div id="lesson-1-hint-2-Carousel" class="carousel slide" data-ride="carousel">
-              <ol class="carousel-indicators">
-                <li data-target="#lesson-1-hint-2-Carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#lesson-1-hint-2-Carousel" data-slide-to="1"></li>
-              </ol>
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <FONT SIZE="5">integer เป็นการเก็บข้อมูลแบบจำนวนเต็ม</FONT>
-                  <img src="client/images/lesson1hint2_1.png" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <FONT SIZE="5">หลังจากประกาศตัวแปร Int ตามบรรทัดที่ 2 แล้ว ให้ Print ตามบรรทัดที่ 3</FONT>
-                  <img src="client/images/lesson1hint2_2.png" class="d-block w-100" alt="...">
-                </div>
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"> <strong>How to play</strong></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+
+          <div id="lesson-3-hint-1-Carousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#lesson-3-hint-1-Carousel" data-slide-to="0" class="active"></li>
+              <li data-target="#lesson-3-hint-1-Carousel" data-slide-to="1"></li>
+              <li data-target="#lesson-3-hint-1-Carousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <FONT SIZE="5">ก่อนจะเข้า For Loop จะต้องมีการประกาศจำนวน Apple ที่อยากได้ก่อน</FONT>
+                <img src="client/images/lesson3hint1_1.png" class="d-block w-100" alt="...">
               </div>
-              <a class="carousel-control-prev" href="#lesson-1-hint-2-Carousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#lesson-1-hint-2-Carousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
+              <div class="carousel-item">
+                <FONT SIZE="5">และใน Loop จะต้องมีตัวแปร 1 ตัวที่เอาไว้สำหรับการวนค่าภายใน Loop</FONT>
+                <img src="client/images/lesson3hint1_2.png" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <FONT SIZE="5">การประกาศ For Loop ให้อยู่ภายในระยะ a ถึง b จะสามารถทำได้โดยใส่ function range ดังภาพ
+                  และภายในวงเล็บคือจุดเริ่มต้นและจุดสิ้นสุดของ Loop โดยนับเป็นจำนวนครั้ง</FONT>
+                <img src="client/images/lesson3hint1_3.png" class="d-block w-100" alt="...">
+              </div>
             </div>
-  
-  
+            <a class="carousel-control-prev" href="#lesson-3-hint-1-Carousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#lesson-3-hint-1-Carousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
           </div>
-          <div class="modal-footer">
-            ดูเฉลยได้ที่นี่ => 
-            <button type="button" class="btn btn-info" id="answer01" data-dismiss="modal">Answer</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          ดูเฉลยได้ที่นี่ =>
+          <button type="button" class="btn btn-info" id="answer01" data-dismiss="modal">Answer</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
-    <!-- End Modal -->
+  </div>
+  <!-- End Modal -->
 
   <script>
     $(document).ready(function () {
@@ -135,7 +142,7 @@
         var Range = require("ace/range").Range
         var row = editor.selection.lead.row
         var newText = "apple = 2 \n\n" +
-          "for i in range(1,apple):\n"+
+          "for i in range(1,apple):\n" +
           "    print (i)\n"
         editor.session.replace(new Range(1, 0, 10, Number.MAX_VALUE), newText)
       })
@@ -170,20 +177,19 @@
           type: "GET",
           async: false,
         }).responseText;
-        console.log("item: " + output_result)
+        console.log("item: " + userJson.email)
 
         if (code.includes("print")) {
 
-          if (output_result.length < 50) {
-            resultCompile(output_result.split("\n").length, 1, code, output_result)
+          if (!(output_result.includes("script")) && !(output_result.includes("File"))) {
             var updateUser = $.ajax({
               type: "POST",
               url: '/updateByQuery',
               data: {
-                query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'boots' , " + output_result.split("\n").length + ") AS tmp WHERE NOT EXISTS (SELECT item_name FROM inventory WHERE item_name = 'boots' ) LIMIT 1",
+                query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'apple' , " + output_result.split("\n").length + ") AS tmp WHERE NOT EXISTS (SELECT item_name,email_user FROM inventory WHERE item_name = 'apple' AND email_user ='" + userJson.email + "') LIMIT 1",
               }
             })
-
+            resultCompile(output_result.split("\n").length, 1, code, output_result)
           } else {
             resultCompile(99, 1, code, output_result)
           }

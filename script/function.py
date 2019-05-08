@@ -1,6 +1,5 @@
 # Write your code
+def go(): 
+    return "I want to go"
 
-attack = "Attack"
-
-print (attack)
-          
+print (go())

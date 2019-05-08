@@ -52,210 +52,222 @@ var conver_6 = ["ตอนนี้อุปกรณ์เจ้าพร้อ
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
 
-  if (responseTxt.length < 50 && originalCode.includes("[") && originalCode.includes("]")) {
-    if (checkState == 4) {
+  if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
-      if (c_compiler == 4 && originalCode.includes("for") && originalCode.includes("in")) {
-        var count = 0
-        console.log(responseTxt)
-        var res = responseTxt.split("\n")
-        res = res.filter(function (str) {
-          return /\S/.test(str);
-        });
-        console.log("res", res)
-        var all = ['helmet', 'armor', 'weapon', 'boots']
-        for (var i = 0; i <= 3; i++) {
-          console.log("i", res[i])
-          for (var j = 0; j <= 3; j++) {
-            console.log("j", all[j])
-            if (res[i].trim() == all[j].trim()) {
-              count += 1
+    if (originalCode.includes("[") && originalCode.includes("]")) {
+      if (checkState == 4) {
+
+        if (c_compiler == 4 && originalCode.includes("for") && originalCode.includes("in")) {
+          var count = 0
+          console.log(responseTxt)
+          var res = responseTxt.split("\n")
+          res = res.filter(function (str) {
+            return /\S/.test(str);
+          });
+          console.log("res", res)
+          var all = ['helmet', 'armor', 'weapon', 'boots']
+          for (var i = 0; i <= 3; i++) {
+            console.log("i", res[i])
+            for (var j = 0; j <= 3; j++) {
+              console.log("j", all[j])
+              if (res[i].trim() == all[j].trim()) {
+                count += 1
+              }
             }
           }
+
+          if (count != 4) {
+
+            closeDialog()
+
+            self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+            self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+            self.textInBox = game.add.text(630, 170, "อุปรกณ์ยังไม่ครบ !!", {
+              fontSize: '15px',
+            })
+            console.log(count)
+          } else {
+            check_conver = 5
+            current_conver = 0
+            stopState = 1
+            c_compiler = 5
+          }
         }
+      } else if (c_compiler == 4) {
+        closeDialog()
 
-        if (count != 4) {
-
-          closeDialog()
-
-          self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-          self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-          self.textInBox = game.add.text(630, 170, "อุปรกณ์ยังไม่ครบ !!", {
-            fontSize: '15px',
-          })
-          console.log(count)
-        } else {
-          check_conver = 5
-          current_conver = 0
-          stopState = 1
-          c_compiler = 5
-        }
+        position_dialog_x = 600
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
+          fontSize: '15px',
+        })
+        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       }
-    } else if (c_compiler == 4) {
-      closeDialog()
 
-      position_dialog_x = 600
-      position_dialog_y = 150
-      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
-        fontSize: '15px',
-      })
-      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-      self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-    }
+      if (c_compiler == 3 && originalCode.includes("for") && originalCode.includes("append")) {
+        if (c_compiler == 3) {
+          var res = responseTxt.split("\n")
+          res = res.filter(function (str) {
+            return /\S/.test(str);
+          });
 
-    if (c_compiler == 3 && originalCode.includes("for") && originalCode.includes("append")) {
-      if (c_compiler == 3) {
-        var res = responseTxt.split("\n")
-        res = res.filter(function (str) {
-          return /\S/.test(str);
-        });
+          if (res.length > 8) {
 
-        if (res.length > 8) {
+            closeDialog()
 
+            self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+            self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+            self.textInBox = game.add.text(630, 170, "สมาชิกเกิน 8 จำนวน!!", {
+              fontSize: '15px',
+            })
+          } else if (res.length < 8) {
+            closeDialog()
+
+            self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+            self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+            self.textInBox = game.add.text(630, 170, "สมาชิกไม่ครบ 8 จำนวน!!", {
+              fontSize: '15px',
+            })
+          } else if (res.length == 8) {
+
+            closeDialog()
+
+            self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
+            self.button = game.add.button(410, 180, 'button', actionOnClick, this)
+            self.textInBox = game.add.text(110, 170, "ค่าในอาร์เรย์คือ " + res[0].trim() + " " + res[1].trim() + " " + res[2].trim() + " " + res[3].trim() + " " + res[4].trim() + " " + res[5].trim() + " " + res[6].trim() + " " + res[7].trim(), {
+              fontSize: '15px',
+            })
+            c_compiler = 4
+            check_conver = 4
+            current_conver = 0
+          }
+        } else if (checkState == 3) {
           closeDialog()
 
-          self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-          self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-          self.textInBox = game.add.text(630, 170, "สมาชิกเกิน 8 จำนวน!!", {
+          position_dialog_x = 600
+          position_dialog_y = 150
+          self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+          self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
             fontSize: '15px',
           })
-        } else if (res.length < 8) {
+          self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+          self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+        }
+
+      }
+
+      if (c_compiler == 2 && originalCode.includes("[1]")) {
+        if (checkState == 2) {
           closeDialog()
-
-          self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-          self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-          self.textInBox = game.add.text(630, 170, "สมาชิกไม่ครบ 8 จำนวน!!", {
-            fontSize: '15px',
-          })
-        } else if (res.length == 8) {
-
-          closeDialog()
-
           self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
           self.button = game.add.button(410, 180, 'button', actionOnClick, this)
-          self.textInBox = game.add.text(110, 170, "ค่าในอาร์เรย์คือ " + res[0].trim() + " " + res[1].trim() + " " + res[2].trim() + " " + res[3].trim() + " " + res[4].trim() + " " + res[5].trim() + " " + res[6].trim() + " " + res[7].trim(), {
+          self.textInBox = game.add.text(110, 170, "ค่าลำดับที่ 2 คือ " + responseTxt, {
             fontSize: '15px',
           })
-          c_compiler = 4
-          check_conver = 4
+          c_compiler = 3
+          check_conver = 3
           current_conver = 0
+        } else {
+          closeDialog()
+
+          position_dialog_x = 600
+          position_dialog_y = 150
+          self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+          self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
+            fontSize: '15px',
+          })
+          self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+          self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
         }
-      } else if (checkState == 3) {
+      } else if (c_compiler == 2) {
         closeDialog()
 
+        self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
+        self.button = game.add.button(930, 180, 'button', actionOnClick, this)
+        self.textInBox = game.add.text(630, 170, "ยังไม่ใช่ค่าลำดับที่ 2 นะ", {
+          fontSize: '15px',
+        })
+      }
+
+
+      if (c_compiler == 1 && originalCode.includes("append")) {
+        if (checkState == 2) {
+          check_conver = 2
+          current_conver = 0
+
+          closeDialog()
+          self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
+          self.button = game.add.button(410, 180, 'button', actionOnClick, this)
+          self.textInBox = game.add.text(110, 170, "จำนวนใน List เพิ่มเป็น " + responseTxt.trim() + " แล้ว", {
+            fontSize: '15px',
+          })
+          c_compiler = 2
+        } else {
+          closeDialog()
+
+          position_dialog_x = 600
+          position_dialog_y = 150
+          self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+          self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
+            fontSize: '15px',
+          })
+          self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+          self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+        }
+      } else if (c_compiler == 1) {
         position_dialog_x = 600
         position_dialog_y = 150
         self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ไม่ได้ใช้คำสั่ง append!! \nทำให้ถูกด้วย", {
           fontSize: '15px',
         })
         self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
         self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       }
 
-    }
+      if (c_compiler == 0 && originalCode.includes("len")) {
+        if (checkState == 1) {
+          check_conver = 1
+          current_conver = 0
 
-    if (c_compiler == 2 && originalCode.includes("[1]")) {
-      if (checkState == 2) {
-        closeDialog()
-        self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
-        self.button = game.add.button(410, 180, 'button', actionOnClick, this)
-        self.textInBox = game.add.text(110, 170, "ค่าลำดับที่ 2 คือ " + responseTxt, {
-          fontSize: '15px',
-        })
-        c_compiler = 3
-        check_conver = 3
-        current_conver = 0
-      } else {
-        closeDialog()
+          closeDialog()
+          self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
+          self.button = game.add.button(410, 180, 'button', actionOnClick, this)
+          self.textInBox = game.add.text(110, 170, "จำนวนสมาชิกใน List คือ " + responseTxt, {
+            fontSize: '15px',
+          })
+          c_compiler = 1
+          ex_compiler = responseTxt
+        } else {
+          closeDialog()
 
+          position_dialog_x = 600
+          position_dialog_y = 150
+          self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+          self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
+            fontSize: '15px',
+          })
+          self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+          self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+        }
+
+      } else if (c_compiler == 0) {
         position_dialog_x = 600
         position_dialog_y = 150
         self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ไม่ได้ใช้คำสั่ง len()`!! \nทำให้ถูกด้วย", {
           fontSize: '15px',
         })
         self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
         self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       }
-    } else if (c_compiler == 2) {
-      closeDialog()
-
-      self.dialogBox = game.add.image(600, 150, 'dialogBoxLeft')
-      self.button = game.add.button(930, 180, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(630, 170, "ยังไม่ใช่ค่าลำดับที่ 2 นะ", {
-        fontSize: '15px',
-      })
-    }
-
-
-    if (c_compiler == 1 && originalCode.includes("append")) {
-      if (checkState == 2) {
-        check_conver = 2
-        current_conver = 0
-
-        closeDialog()
-        self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
-        self.button = game.add.button(410, 180, 'button', actionOnClick, this)
-        self.textInBox = game.add.text(110, 170, "จำนวนใน List เพิ่มเป็น " + responseTxt.trim() + " แล้ว", {
-          fontSize: '15px',
-        })
-        c_compiler = 2
-      } else {
-        closeDialog()
-
-        position_dialog_x = 600
-        position_dialog_y = 150
-        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
-          fontSize: '15px',
-        })
-        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-      }
-    } else if (c_compiler == 1) {
+    } else {
       position_dialog_x = 600
       position_dialog_y = 150
       self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ไม่ได้ใช้คำสั่ง append!! \nทำให้ถูกด้วย", {
-        fontSize: '15px',
-      })
-      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-      self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-    }
-
-    if (c_compiler == 0 && originalCode.includes("len")) {
-      if (checkState == 1) {
-        check_conver = 1
-        current_conver = 0
-
-        closeDialog()
-        self.dialogBox = game.add.image(80, 150, 'dialogBoxRight')
-        self.button = game.add.button(410, 180, 'button', actionOnClick, this)
-        self.textInBox = game.add.text(110, 170, "จำนวนสมาชิกใน List คือ " + responseTxt, {
-          fontSize: '15px',
-        })
-        c_compiler = 1
-        ex_compiler = responseTxt
-      } else {
-        closeDialog()
-
-        position_dialog_x = 600
-        position_dialog_y = 150
-        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
-          fontSize: '15px',
-        })
-        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-      }
-
-    } else if (c_compiler == 0) {
-      position_dialog_x = 600
-      position_dialog_y = 150
-      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ไม่ได้ใช้คำสั่ง len()`!! \nทำให้ถูกด้วย", {
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ไม่ได้มีตัวแปร list!! \nทำให้ถูกด้วย", {
         fontSize: '15px',
       })
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
@@ -342,8 +354,8 @@ function actionOnClick() {
 
       current_conver++
       //4
-      if (current_conver == 3) {
-        console.log("SJDFJKSDFLK")
+      if (current_conver == 4) {
+        // console.log("SJDFJKSDFLK")
         checkState = 2
         $(document).ready(function () {
           $("#lesson5-hint-2").modal()
@@ -657,13 +669,7 @@ var mainState = {
       position_dialog_x = 150
       position_dialog_y = 50
 
-      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
-        fontSize: '15px',
-      })
-      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
-        fontSize: '15px',
-      })
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
       this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
       this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       stopState = 2
@@ -794,7 +800,7 @@ var mainState = {
           type: "POST",
           url: '/updateByQuery',
           data: {
-            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) SELECT * FROM  (SELECT '" + userJson.email + "', 5 ,'list' ) AS tmp WHERE NOT EXISTS (SELECT lesson_level FROM lesson WHERE lesson_level = 5  AND email_user = '" + userJson.email + "') LIMIT 1",
+            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) SELECT * FROM  (SELECT '" + userJson.email + "', 5 ,'list' ) AS tmp WHERE NOT EXISTS (SELECT lesson_level FROM lesson WHERE lesson_level = 5 ) LIMIT 1",
           }
         })
 
@@ -802,7 +808,7 @@ var mainState = {
           type: "POST",
           url: '/updateByQuery',
           data: {
-            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'armor' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name FROM inventory WHERE item_name = 'armor' ) LIMIT 1",
+            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'armor' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name,email_user FROM inventory WHERE item_name = 'armor' AND email_user ='" + userJson.email + "' ) LIMIT 1",
           }
         })
 
@@ -810,7 +816,7 @@ var mainState = {
           type: "POST",
           url: '/updateByQuery',
           data: {
-            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'helmet' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name FROM inventory WHERE item_name = 'helmet' ) LIMIT 1",
+            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'helmet' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name,email_user FROM inventory WHERE item_name = 'helmet' AND email_user ='" + userJson.email + "') LIMIT 1",
           }
         })
 
@@ -818,7 +824,7 @@ var mainState = {
           type: "POST",
           url: '/updateByQuery',
           data: {
-            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'weapon' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name FROM inventory WHERE item_name = 'weapon' ) LIMIT 1",
+            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'weapon' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name,email_user FROM inventory WHERE item_name = 'weapon' AND email_user ='" + userJson.email + "') LIMIT 1",
           }
         })
 
@@ -826,7 +832,7 @@ var mainState = {
           type: "POST",
           url: '/updateByQuery',
           data: {
-            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'boots' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name FROM inventory WHERE item_name = 'boots' ) LIMIT 1",
+            query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'boots' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name,email_user FROM inventory WHERE item_name = 'boots' AND email_user ='" + userJson.email + "') LIMIT 1",
           }
         })
 

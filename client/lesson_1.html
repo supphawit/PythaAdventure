@@ -183,7 +183,6 @@
         e.preventDefault();
         var code = editor.getValue();
         if (code != '') {
-
           var write = $.ajax({
             type: "POST",
             url: '/write-post',
@@ -194,21 +193,19 @@
           })
 
         }
-
         if (code.includes("print")) {
           var output_result = $.ajax({
             url: '/run?file=printname',
             type: "GET",
             async: false,
           }).responseText;
-          console.log(output_result)
 
           var compile = resultCompile(output_result, code)
 
-          if (compile == 1){
+          if (compile == 1) {
             var Range = require("ace/range").Range
             var row = editor.selection.lead.row
-            var newText = "\n" 
+            var newText = "\n"
             editor.session.replace(new Range(1, 0, 10, Number.MAX_VALUE), newText)
           }
         } else {

@@ -1,3 +1,4 @@
 # Write your code
-ex = [1,3,5]
-print (len(ex))
+setArmors = ["helmet","armor","weapon","boots"]
+for i in setArmors:
+    print (i)
