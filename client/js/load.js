@@ -13,6 +13,8 @@ var press_back = 0
 var messageErr
 var checkState = 0
 var item_inventory = []
+var monsterState = 0
+var skill = 0
 
 
 var pause = 0
@@ -99,6 +101,43 @@ function viewMore(errCode) {
   self.showErrModal.destroy()
 }
 
+function fireFunc() {
+  self.fireDialog = game.add.image(805, 75, 'errorText')
+  self.fireDialog.scale.setTo(2.5, 2.5)
+  self.deleteFireButton = game.add.button(1050, 80, 'xSign', deleteFire, this)
+  self.deleteFireButton.scale.setTo(0.75, 0.75)
+  self.fire_symDialog = game.add.image(820, 90, 'fire_sym')
+  self.textFire = game.add.text(860, 87, "สามารถโจมตีด้วยลูกไฟ\nได้ผลดีกับมอนสเตอร์ไม้", {
+    fontSize: '15px',
+  })
+
+}
+
+function deleteFire() {
+  self.fireDialog.destroy()
+  self.deleteFireButton.destroy()
+  self.fire_symDialog.destroy()
+  self.textFire.destroy()
+}
+
+function iceFunc() {
+  self.iceDialog = game.add.image(805, 75, 'errorText')
+  self.iceDialog.scale.setTo(2.5, 2.5)
+  self.deleteIceButton = game.add.button(1050, 80, 'xSign', deleteFire, this)
+  self.deleteIceButton.scale.setTo(0.75, 0.75)
+  self.ice_symDialog = game.add.image(820, 90, 'fire_sym')
+  self.textIce = game.add.text(860, 87, "สามารถโจมตีด้วยน้ำแข็ง\nได้ผลดีกับมอนสเตอร์หุ่นยนต์", {
+    fontSize: '15px',
+  })
+
+}
+
+function deleteIce() {
+  self.iceDialog.destroy()
+  self.deleteIceButton.destroy()
+  self.ice_symDialog.destroy()
+  self.textIce.destroy()
+}
 
 function indent() {
   $(document).ready(function () {

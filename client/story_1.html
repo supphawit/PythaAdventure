@@ -54,8 +54,8 @@
             <a href="#">
               <span class="badge badge-primary" data-toggle="modal" data-target="#intro">วิธีเล่น</span>
             </a>
-            <a href="#" id="hint1" data-toggle="modal" data-target="#story1-hint-1"><span
-                class="badge badge-info">คำใบ้ 1</span></a>
+            <a href="#" id="hint1" data-toggle="modal" data-target="#story1-hint-1"><span class="badge badge-info">คำใบ้
+                1</span></a>
             <a href="#" id="hint2"><span class="badge badge-secondary">คำใบ้ 2</span></a>
           </div>
 
@@ -71,7 +71,7 @@
 
 
   <!-- Modal Hint 2 -->
-  <div class="modal fade" id="lesson1-hint-2" role="dialog">
+  <div class="modal fade" id="story1-hint-1" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -108,7 +108,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info" id="answer02" data-dismiss="modal">Answer</button>
+          <button type="button" class="btn btn-info" id="answer01" data-dismiss="modal">Answer</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -131,11 +131,18 @@
         displayIndentGuides: true,
       })
 
+      $("#answer01").click(async (e) => {
+        var Range = require("ace/range").Range
+        var row = editor.selection.lead.row
+        var newText = "\nprint (\"name\") \n\n"
+        editor.session.replace(new Range(1, 0, 5, Number.MAX_VALUE), newText)
+      })
+
       $("#compile").click(async (e) => {
         // No redirect
         e.preventDefault();
         var code = editor.getValue();
-        var namefile = 'function'
+        var namefile = 'story_1'
         if (code != '') {
 
           var write = $.ajax({
@@ -149,18 +156,26 @@
           })
         }
 
+        if (code.includes("print")) {
+          var output_result = $.ajax({
+            url: '/run?file=' + namefile,
+            type: "GET",
+            async: false,
+          }).responseText;
 
-        var output_result = $.ajax({
-          url: '/run?file=' + namefile,
-          type: "GET",
-          async: false,
-        }).responseText;
-        console.log("item: " + output_result)
+          var compile = resultCompile(output_result, code)
 
-        if (output_result.length < 50) {
-          resultCompile(output_result)
-
+          if (compile == 1) {
+            var Range = require("ace/range").Range
+            var row = editor.selection.lead.row
+            var newText = "\n"
+            editor.session.replace(new Range(1, 0, 10, Number.MAX_VALUE), newText)
+          }
+        } else {
+          alert("จำเป็นต้องมีคำสั่ง print ในการแสดงผลด้วย")
         }
+
+
       })
     })
   </script>

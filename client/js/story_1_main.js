@@ -3,29 +3,24 @@ var change_wear = 0
 
 var conver_1 = ["เรียนรู้พื้นฐานไปจนหมดละนะ\nต่อจากนี้ต้องเดินทางด้วยตัวเอง",
   "เจ้าจะพบกับมอนสเตอร์มาขัดขวางการเดินทาง\nใช้ความรู้ Python ผ่านมันไปให้ได้",
-  "จากบทเรียนที่แล้ว ได้รับชุดเพราะมาแล้ว",
-  "ลองสวมใส่ดูสิ คลิกที่กระเป๋าเพื่อเปิดดู ",
-  "โดยใช้คำสั่ง print",
-  "หากข้าต้องการแสดงผลเป็นคำว่า HELLO",
-  "ข้าก็จะเขียนแบบนี้ print(\"HELLO\")",
-  "ทีนี้ข้าต้องการจะรู้ชื่อของเจ้า",
-  "ลองใช้คำสั่ง print แสดงผลชื่อของเจ้ามา",
+  "จากบทเรียนที่แล้ว ได้รับอุปกรณ์มาแล้ว",
+  "ดูได้จากกระเป๋าของเจ้า",
+  "วิธีสวมใส่คือ ใช้คำสั่ง print()\n ",
+  "จะ print ค่าอะไรออกมาก็ได้",
 ]
 
-var conver_2 = ["เอาล่ะไปบทเรียนถัดไป",
-  "ให้สร้างตัวแปรเป็น Integer ",
-  "อย่างข้าต้องการให้ a เท่ากับ 2",
-  "ข้าก็เขียน a = 2",
-  "แล้วใช้คำสั่ง print ออกมา",
-  "เอ้า ไหนลองดูซิ",
+var conver_2 = ["ตอนนี้เจ้ามีอาวุธแล้วเป็นคฑาเวทมนต์",
+  "ยิ่งเจ้ามีประสบการณ์ต่อสู้เยอะ\nจะยิ่งมีความสามารถเพิ่มขึ้น",
+  "หมดหน้าที่ของข้าแล้ว\nหลังจากนี้เจ้าจะต้องไปตัวคนเดียวแล้ว",
+  "หากกำจัดมอนสเตอร์ได้เจ้าจะแข็งแกร่งขึ้น\nจำเอาไว้",
 ]
 
 
-var conver_3 = ["เอาล่ะ พอจะเข้าใจบ้างใช่มั้ย",
-  "นี่เป็นเพียงเบื้องต้น ",
-  "ตามข้ามาสิ ",
-  "ยังมีอะไรอีกเยอะ",
-  "ให้เจ้าเรียนรู้เกี่ยวกับ Python",
+var conver_3 = ["มอนสเตอร์ !!",
+  "พอดีเลย ข้าจะให้เจ้าจัดการมอนสเตอร์ตัวนั้น ",
+  "ตอนนี้เจ้ามีอยู่แค่ความสามารถเดียว ",
+  "นั่นคือเวทมนต์ลูกไฟ",
+  "ดูที่เมนูสิ จะเห็นสกิลที่เจ้ามี ",
 ]
 
 function showInventoryStory() {
@@ -52,16 +47,24 @@ function showInventoryStory() {
     })
 
     if (wear_check == 0) {
-      self.item_armor = game.add.button(530, 250, item_inventory[1][0], wear, this)
+      self.item_armor = game.add.image(530, 250, item_inventory[1][0])
       self.item_armor.scale.setTo(0.5, 0.5)
-      self.item_helmet = game.add.button(465, 293, item_inventory[2][0], wear, this)
+      self.item_helmet = game.add.image(465, 293, item_inventory[2][0])
       self.item_helmet.scale.setTo(0.35, 0.35)
-      self.item_weapon = game.add.button(355, 310, item_inventory[3][0], wear, this)
+      self.item_weapon = game.add.image(355, 310, item_inventory[3][0])
       self.item_weapon.scale.setTo(0.5, 0.5)
-      self.item_boots = game.add.button(445, 280, item_inventory[4][0], wear, this)
+      self.item_boots = game.add.image(445, 280, item_inventory[4][0])
       self.item_boots.scale.setTo(0.5, 0.5)
     } else {
-      wear()
+      self.item_armor = game.add.image(507, 58, item_inventory[1][0])
+      self.item_armor.scale.setTo(0.5, 0.5)
+      self.item_helmet = game.add.image(392, 105, item_inventory[2][0])
+      self.item_helmet.scale.setTo(0.35, 0.35)
+      self.item_weapon = game.add.image(374, 162, item_inventory[3][0])
+      self.item_weapon.scale.setTo(0.5, 0.5)
+      self.item_boots = game.add.image(507, 130, item_inventory[4][0])
+      self.item_boots.scale.setTo(0.5, 0.5)
+
     }
   })
 
@@ -114,28 +117,8 @@ function closeInventoryStory() {
 }
 
 
-function wear() {
-  wear_check = 1
-  // console.log("workd")
-  self.item_armor.destroy()
-  self.item_helmet.destroy()
-  self.item_weapon.destroy()
-  self.item_boots.destroy()
-
-  self.item_armor = game.add.image(507, 58, item_inventory[1][0])
-  self.item_armor.scale.setTo(0.5, 0.5)
-  self.item_helmet = game.add.image(392, 105, item_inventory[2][0])
-  self.item_helmet.scale.setTo(0.35, 0.35)
-  self.item_weapon = game.add.image(374, 162, item_inventory[3][0])
-  self.item_weapon.scale.setTo(0.5, 0.5)
-  self.item_boots = game.add.image(507, 130, item_inventory[4][0])
-  self.item_boots.scale.setTo(0.5, 0.5)
-
-}
-
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
-  console.log("original", originalCode)
 
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
@@ -144,34 +127,35 @@ function resultCompile(responseTxt, originalCode) {
 
       current_conver = 0
       check_conver = 1
-      position_dialog_x = 100
-      position_dialog_y = 200
+      position_dialog_x = 300
+      position_dialog_y = 50
       self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "เราชื่อว่า " + responseTxt.trim(), {
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, responseTxt.trim() + " !!", {
         fontSize: '15px',
       })
       state_compile = 1
+      wear_check = 1
+      skill = 1
       return (1)
+
     } else if (press_back == 2) {
       closeDialog()
 
-      current_conver = 0
-      check_conver = 2
-      position_dialog_x = 100
-      position_dialog_y = 200
+      position_dialog_x = 300
+      position_dialog_y = 50
       self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
       self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ตอนนี้ผมอายุ " + responseTxt.trim() + " ปี", {
         fontSize: '15px',
       })
-      state_compile = 2
+      // state_compile = 2
       return (2)
     } else {
       closeDialog()
 
-      position_dialog_x = 100
-      position_dialog_y = 200
+      position_dialog_x = 300
+      position_dialog_y = 50
       self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
       self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, responseTxt.trim(), {
@@ -234,7 +218,7 @@ function actionOnClick() {
       fontSize: '15px',
     })
     current_conver++
-    if (current_conver >= 9) {
+    if (current_conver >= 5) {
       press_back = 1
       $(document).ready(function () {
         $("#story1-hint-1").modal()
@@ -244,9 +228,9 @@ function actionOnClick() {
   } else if (conver_2[current_conver] != undefined && check_conver == 1 && state_compile == 1) {
     closeDialog()
 
-    position_dialog_x = 100
-    position_dialog_y = 200
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    position_dialog_x = 400
+    position_dialog_y = 50
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
     self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
@@ -256,19 +240,20 @@ function actionOnClick() {
       fontSize: '15px',
     })
     current_conver++
-    if (current_conver >= 6) {
-      press_back = 2
+    if (current_conver >= 4) {
+
+      stopState = 1
       $(document).ready(function () {
-        $("#lesson1-hint-2").modal()
-        $('#hint2').html("<a href='#''><span id='hint2' class='badge badge-info' data-toggle='modal' data-target='#lesson1-hint-2'>คำใบ้ 2</span></a>")
+        $("#story1-hint-2").modal()
+        $('#hint2').html("<a href='#''><span id='hint2' class='badge badge-info' data-toggle='modal' data-target='#story1-hint-2'>คำใบ้ 2</span></a>")
       })
     }
-  } else if (conver_3[current_conver] != undefined && check_conver == 2 && state_compile == 2) {
+  } else if (conver_3[current_conver] != undefined && check_conver == 2) {
     closeDialog()
 
-    position_dialog_x = 100
-    position_dialog_y = 200
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    position_dialog_x = 400
+    position_dialog_y = 50
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
     self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
@@ -278,8 +263,8 @@ function actionOnClick() {
       fontSize: '15px',
     })
     current_conver++
-    if (current_conver == 5) {
-      playerState = 1
+    if (current_conver == 4) {
+      // skill = 1
     }
   }
 }
@@ -323,6 +308,7 @@ function backward() {
 }
 
 
+
 var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne')
 
 var mainState = {
@@ -336,7 +322,6 @@ var mainState = {
     game.load.spritesheet('playerWalkingDown', 'client/images/player-walk-down.png', 128, 128)
     game.load.spritesheet('wizardLeft', 'client/images/npc-wizard-left.png', 128, 128)
     game.load.spritesheet('wizardRight', 'client/images/npc-wizard-right.png', 128, 128)
-    game.load.spritesheet('monster1', 'client/images/monster-1.png', 128, 128)
     game.load.spritesheet('item_apple', 'client/images/apple.png', 370, 359)
     game.load.image('dialogBoxRight', 'client/images/text-box-right.png')
     game.load.image('dialogBoxLeft', 'client/images/text-box-left.png')
@@ -352,13 +337,16 @@ var mainState = {
     game.load.image('inventory', 'client/images/inventory.png')
     game.load.image('xSign', 'client/images/xSign.png')
     game.load.image('information', 'client/images/information.png')
-    game.load.spritesheet('fire', 'client/images/fire.png', 64, 64)
-    game.load.spritesheet('bomb', 'client/images/bomb.png', 64, 64)
     game.load.image('helmet', 'client/images/helmet-font.png')
     game.load.image('boots', 'client/images/armor-bottom.png')
     game.load.image('armor', 'client/images/armor-top.png')
     game.load.image('weapon', 'client/images/weapon.png')
     game.load.audio('music', 'client/images/audio/Windless Slopes.mp3')
+
+    game.load.spritesheet('monster1', 'client/images/monster-1.png', 128, 128)
+    game.load.image('fire_sym', 'client/images/fire_sym.png')
+    game.load.spritesheet('fire', 'client/images/fire.png', 64, 64)
+    game.load.spritesheet('bomb', 'client/images/bomb.png', 64, 64)
   },
 
   create: function () {
@@ -382,18 +370,43 @@ var mainState = {
     this.player = game.add.sprite(-100, 150, 'playerStandRight')
     this.player.smoothed = false
 
-    this.wizard = game.add.sprite(-10 , 150, 'wizardLeft')
+    this.wizard = game.add.sprite(-10, 150, 'wizardLeft')
     this.wizard.animations.add('left', [0, 1, 2, 3], 5, true)
 
     this.player.animations.add('right', [0, 1, 2, 3], 5, true)
 
     this.player.animations.play('right')
     this.wizard.animations.play('left')
-
+    // this.fire_sym = game.add.button(825, 29, 'fire_sym', fireFunc, this)
+    // this.fire_sym.scale.setTo(0.9, 0.9)
 
   },
 
   update: function () {
+
+    if (skill == 1) {
+      this.fire_sym = game.add.button(825, 29, 'fire_sym', fireFunc, this)
+      this.fire_sym.scale.setTo(0.9, 0.9)
+      skill = 2
+    }
+
+    if (wear_check == 1) {
+      this.player.destroy()
+
+      this.player = game.add.sprite(this.player.x, this.player.y, 'playerStandRightWearing')
+      this.player.animations.add('right', [0, 1, 2, 3], 5, true)
+      this.player.animations.play('right')
+      wear_check = 2
+    }
+
+    if (stopState == 1) {
+
+      this.monster1 = game.add.sprite(1200, 250, 'monster1')
+      this.monster1.animations.add('right', [0, 1, 2, 3], 5, true)
+      this.monster1.animations.play('right')
+      stopState = 2
+      monsterState = 1
+    }
 
     if (this.player.x < 250 && playerState == 0) {
       this.player.x += speedCharacter
@@ -401,12 +414,13 @@ var mainState = {
 
     if (this.wizard.x < 350 && wizardState == 0) {
       this.wizard.x += speedCharacter
-    }else if (wizardState < 1){
+    } else if (wizardState < 1) {
       wizardState = 1
       playerState = 1
     }
 
-    if (wizardState == 1 && playerState == 1){
+    if (wizardState == 1 && playerState == 1) {
+
       position_dialog_x = 400
       position_dialog_y = 50
       this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
@@ -422,8 +436,45 @@ var mainState = {
 
       wizardState = 2
       playerState = 2
- 
+
     }
+
+    if (monsterState == 1) {
+      this.monster1.x -= 5
+      if (this.monster1.x == 800) {
+        monsterState = 2
+        wizardState = 3
+        playerState = 2
+      }
+    }
+
+    if (wizardState == 3) {
+      this.wizard.destroy()
+      this.wizard = game.add.sprite(this.wizard.x, this.wizard.y, 'wizardRight')
+      this.wizard.animations.add('right', [0, 1, 2, 3], 5, true)
+      this.wizard.animations.play('right')
+
+      closeDialog()
+      current_conver = 0
+      position_dialog_x = 400
+      position_dialog_y = 50
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver], {
+        fontSize: '15px',
+      })
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      current_conver++
+
+      wizardState = 4
+      check_conver = 2
+      press_back = 2
+    }
+
+
 
 
     if (this.player.y == 8500) {
