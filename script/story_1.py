@@ -1,4 +1,4 @@
 # Write your code
-
-print ("name") 
-
+def fire():
+    return "fire"
+print (fire())

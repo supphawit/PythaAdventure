@@ -18,9 +18,22 @@ var conver_2 = ["ตอนนี้เจ้ามีอาวุธแล้ว
 
 var conver_3 = ["มอนสเตอร์ !!",
   "พอดีเลย ข้าจะให้เจ้าจัดการมอนสเตอร์ตัวนั้น ",
+  "ยืนบื้ออะไรล่ะ!! ไปจัดการซะสิ",
   "ตอนนี้เจ้ามีอยู่แค่ความสามารถเดียว ",
-  "นั่นคือเวทมนต์ลูกไฟ",
-  "ดูที่เมนูสิ จะเห็นสกิลที่เจ้ามี ",
+  "นั่นคือเวทมนต์ลูกไฟ\nดูที่เมนูสิ จะเห็นสกิลที่เจ้ามี",
+  "สามารถใช้ได้ด้วยการเขียนฟังก์ชัน\nreturn เป็นคำว่า fire",
+  "และแสดงผลด้วยคำสั่ง print()",
+
+]
+
+var conver_4 = ["ทำได้ดีมาก !!",
+  "ข้าไปก่อนล่ะ ต้องกลับไปดูแลหมู่บ้าน ",
+  "หลังจากนี้ดูแลตัวเองด้วยล่ะ ",
+]
+
+var conver_5 = ["จากนี้ต้องเดินทางคนเดียวแล้ว !!",
+  "ใช้ความรู้ Python ฝ่าฝันอุปสรรคไปให้ได้ ",
+  "ไปต่อกันเลย ",
 ]
 
 function showInventoryStory() {
@@ -139,26 +152,28 @@ function resultCompile(responseTxt, originalCode) {
       skill = 1
       return (1)
 
-    } else if (press_back == 2) {
+    } else if (press_back == 2 && originalCode.includes("def") && originalCode.includes("return")) {
       closeDialog()
 
-      position_dialog_x = 300
-      position_dialog_y = 50
+      position_dialog_x = 530
+      position_dialog_y = 150
       self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ตอนนี้ผมอายุ " + responseTxt.trim() + " ปี", {
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "โจมตีด้วย " + responseTxt.toUpperCase() + " !!", {
         fontSize: '15px',
       })
-      // state_compile = 2
+      playerState = 8
       return (2)
+    } else if (press_back == 99) {
+      console.log("Nothing")
     } else {
       closeDialog()
 
-      position_dialog_x = 300
+      position_dialog_x = 400
       position_dialog_y = 50
       self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, responseTxt.trim(), {
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ใช้สกิลผิดพลาด จำให้ได้ว่าเขียนฟังก์ชันยังไง\nลองดูใหม่", {
         fontSize: '15px',
       })
     }
@@ -218,7 +233,7 @@ function actionOnClick() {
       fontSize: '15px',
     })
     current_conver++
-    if (current_conver >= 5) {
+    if (current_conver >= 6) {
       press_back = 1
       $(document).ready(function () {
         $("#story1-hint-1").modal()
@@ -241,12 +256,7 @@ function actionOnClick() {
     })
     current_conver++
     if (current_conver >= 4) {
-
       stopState = 1
-      $(document).ready(function () {
-        $("#story1-hint-2").modal()
-        $('#hint2').html("<a href='#''><span id='hint2' class='badge badge-info' data-toggle='modal' data-target='#story1-hint-2'>คำใบ้ 2</span></a>")
-      })
     }
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
     closeDialog()
@@ -263,10 +273,59 @@ function actionOnClick() {
       fontSize: '15px',
     })
     current_conver++
-    if (current_conver == 4) {
-      // skill = 1
+    if (current_conver == 3) {
+      playerState = 6
     }
+
+    if (current_conver == 7) {
+      $(document).ready(function () {
+        $("#story1-hint-2").modal()
+        $('#hint2').html("<a href='#''><span id='hint2' class='badge badge-info' data-toggle='modal' data-target='#story1-hint-2'>คำใบ้ 2</span></a>")
+      })
+    }
+  } else if (conver_4[current_conver] != undefined && check_conver == 3) {
+    closeDialog()
+
+    position_dialog_x = 400
+    position_dialog_y = 50
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_4[current_conver], {
+      fontSize: '15px',
+    })
+    current_conver++
+    if (current_conver == 3) {
+      wizardState = 5
+      self.bomb.destroy()
+      closeDialog()
+    }
+
+  } else if (conver_5[current_conver] != undefined && check_conver == 4) {
+    closeDialog()
+
+    position_dialog_x = 530
+    position_dialog_y = 150
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_5[current_conver], {
+      fontSize: '15px',
+    })
+    current_conver++
+    if (current_conver == 3) {
+      playerState = 20
+      closeDialog()
+    }
+
   }
+
 }
 
 function backward() {
@@ -275,33 +334,77 @@ function backward() {
     current_conver--
     closeDialog()
 
-    position_dialog_x = 400
-    position_dialog_y = 50
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
-      fontSize: '15px',
-    })
+
 
     switch (check_conver) {
       case 0:
+        position_dialog_x = 400
+        position_dialog_y = 50
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+        self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
+          fontSize: '15px',
+        })
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver - 1], {
           fontSize: '15px',
         })
         break
 
       case 1:
+        position_dialog_x = 400
+        position_dialog_y = 50
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+        self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
+          fontSize: '15px',
+        })
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver - 1], {
           fontSize: '15px',
         })
         break
 
       case 2:
+        position_dialog_x = 400
+        position_dialog_y = 50
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+        self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
+          fontSize: '15px',
+        })
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver - 1], {
           fontSize: '15px',
         })
         break
+      case 3:
+        position_dialog_x = 400
+        position_dialog_y = 50
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+        self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
+          fontSize: '15px',
+        })
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+      case 4:
+        position_dialog_x = 530
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+        self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver, {
+          fontSize: '15px',
+        })
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
     }
 
   }
@@ -474,10 +577,79 @@ var mainState = {
       press_back = 2
     }
 
+    if (playerState == 6) {
+      this.player.x += 2
+      if (this.player.x > 380) {
+        this.player.y += 2
+        if (this.player.y > 250) {
+          playerState = 7
+        }
+      }
+    }
+
+    if (playerState == 8) {
+      this.fireAttack = game.add.sprite(this.player.x + 110, this.player.y + 30, 'fire')
+      this.fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8], 5, true)
+      this.fireAttack.animations.play('play')
+      playerState = 9
+    } else if (playerState == 9) {
+      this.fireAttack.x += 5
+      press_back = 99
+      if (this.fireAttack.x >= this.monster1.x) {
+        playerState = 10
+      }
+    } else if (playerState == 10) {
+      if (typeof this.bomb !== "undefined") {
+        this.bomb.destroy()
+      }
+      this.bomb = game.add.sprite(this.monster1.x + 20, this.monster1.y + 50, 'bomb')
+      this.bomb.animations.add('play', [0, 1, 2, 3], 5, true)
+      this.bomb.animations.play('play')
+      this.monster1.destroy()
+      this.fireAttack.destroy()
+      press_back = 2
+      playerState = 11
+      check_conver = 3
+      current_conver = 0
+    }
+
+    if (wizardState == 5) {
+      this.wizard.destroy()
+      this.wizard = game.add.sprite(this.wizard.x, this.wizard.y, 'wizardLeft')
+      this.wizard.animations.add('right', [0, 1, 2, 3], 5, true)
+      this.wizard.animations.play('right')
+      wizardState = 6
+    } else if (wizardState == 6) {
+      this.wizard.x -= speedCharacter
+      if (this.wizard.x <= -250) {
+        wizardState = 7
+        check_conver = 4
+        current_conver = 0
+      }
+    } else if (wizardState == 7) {
+      position_dialog_x = 530
+      position_dialog_y = 150
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_5[current_conver], {
+        fontSize: '15px',
+      })
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      current_conver++
+
+      wizardState = 8
+    }
+
+    if (playerState == 20) {
+      this.player.x += speedCharacter
+      console.log(this.player.x)
+    }
 
 
-
-    if (this.player.y == 8500) {
+    if (this.player.x >= 1402) {
 
       $(document).ready(function () {
 
@@ -493,11 +665,11 @@ var mainState = {
           type: "POST",
           url: '/updateByQuery',
           data: {
-            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) SELECT * FROM  (SELECT '" + userJson.email + "', 1 ,'print' ) AS tmp WHERE NOT EXISTS (SELECT lesson_level FROM lesson WHERE lesson_level = 1 AND email_user = '" + userJson.email + "') LIMIT 1",
+            query: "INSERT INTO lesson ( email_user, lesson_level, lesson_detail) SELECT * FROM  (SELECT '" + userJson.email + "', 6 ,'firs kill' ) AS tmp WHERE NOT EXISTS (SELECT lesson_level FROM lesson WHERE lesson_level = 6 AND email_user = '" + userJson.email + "') LIMIT 1",
           }
         })
         console.log("pass")
-        window.location.href = "/lesson_2"
+        window.location.href = "/story_2"
       })
 
     }
