@@ -18,7 +18,7 @@ var conver_3 = ["สำเร็จ !!",
   "สามารถกำจัดมอนสเตอร์ได้หมดแล้ว ",
   "รีบไปต่อดีกว่า\n",
   "มีลางสังหรณ์ ไม่ดีจากทางข้างหน้า",
-
+""
 ]
 
 var conver_4 = ["ทำได้ดีมาก !!",
@@ -188,7 +188,7 @@ function actionOnClick() {
       fontSize: '15px',
     })
     current_conver++
-    if (current_conver == 4) {
+    if (current_conver == 5) {
       playerState = 20
     }
 
