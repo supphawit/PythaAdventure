@@ -1,5 +1,6 @@
 # Write your code
 def fire():
     return "FIRE"
-for i in range(1,3):
-    print (fire())
+attack = fire()
+if (attack == "FIRE"):
+    print (attack)

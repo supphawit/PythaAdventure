@@ -342,3 +342,11 @@ app.get('/story_3', function (req, res) {
     res.redirect('/')
   }
 })
+
+app.get('/story_4', function (req, res) {
+  if (req.session.email && req.session.pre != 0) {
+    res.sendFile(__dirname + '/client/story_4.html')
+  } else {
+    res.redirect('/')
+  }
+})

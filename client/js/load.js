@@ -1,7 +1,7 @@
 var current_conver = 0
 var self
 var check_conver = 0
-var speedCharacter = 5
+var speedCharacter = 10
 var playerState = 0
 var wizardState = 0
 var stopState = 0
@@ -119,7 +119,7 @@ function showInventoryStory() {
     // console.log(item_inventory)
 
     item_inventory.forEach(element => {
-      console.log(element)
+      // console.log(element)
       switch (element[0]) {
         case 'apple':
           self.item_apple = game.add.image(405, 300, 'item_apple')
