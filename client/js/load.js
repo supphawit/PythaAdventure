@@ -19,6 +19,7 @@ var skill = 0
 
 
 var pause = 0
+
 function music() {
   if (pause == 0) {
     self.music.pause()
@@ -211,6 +212,12 @@ function viewMore(errCode) {
 }
 
 function fireFunc() {
+  if (typeof self.fireDialog !== "undefined") {
+    self.fireDialog.destroy()
+    self.deleteFireButton.destroy()
+    self.fire_symDialog.destroy()
+    self.textFire.destroy()
+  }
   self.fireDialog = game.add.image(805, 75, 'errorText')
   self.fireDialog.scale.setTo(2.5, 2.5)
   self.deleteFireButton = game.add.button(1050, 80, 'xSign', deleteFire, this)
@@ -229,16 +236,22 @@ function deleteFire() {
   self.textFire.destroy()
 }
 
-function delBomb(){
+function delBomb() {
   this.bomb.destroy()
 }
 
 function iceFunc() {
+  if (typeof self.iceDialog !== "undefined") {
+    self.iceDialog.destroy()
+    self.deleteIceButton.destroy()
+    self.ice_symDialog.destroy()
+    self.textIce.destroy()
+  }
   self.iceDialog = game.add.image(805, 75, 'errorText')
   self.iceDialog.scale.setTo(2.5, 2.5)
-  self.deleteIceButton = game.add.button(1050, 80, 'xSign', deleteFire, this)
+  self.deleteIceButton = game.add.button(1050, 80, 'xSign', deleteIce, this)
   self.deleteIceButton.scale.setTo(0.75, 0.75)
-  self.ice_symDialog = game.add.image(820, 90, 'fire_sym')
+  self.ice_symDialog = game.add.image(820, 90, 'ice_sym')
   self.textIce = game.add.text(860, 87, "สามารถโจมตีด้วยน้ำแข็ง\nได้ผลดีกับมอนสเตอร์หุ่นยนต์", {
     fontSize: '15px',
   })
