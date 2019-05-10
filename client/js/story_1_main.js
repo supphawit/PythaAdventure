@@ -21,9 +21,8 @@ var conver_3 = ["มอนสเตอร์ !!",
   "ยืนบื้ออะไรล่ะ!! ไปจัดการซะสิ",
   "ตอนนี้เจ้ามีอยู่แค่ความสามารถเดียว ",
   "นั่นคือเวทมนต์ลูกไฟ\nดูที่เมนูสิ จะเห็นสกิลที่เจ้ามี",
-  "สามารถใช้ได้ด้วยการเขียนฟังก์ชัน\nreturn เป็นคำว่า fire",
+  "สามารถใช้ได้ด้วยการเขียนฟังก์ชัน\nreturn เป็นคำว่า FIRE",
   "และแสดงผลด้วยคำสั่ง print()",
-
 ]
 
 var conver_4 = ["ทำได้ดีมาก !!",
@@ -36,50 +35,8 @@ var conver_5 = ["จากนี้ต้องเดินทางคนเด
   "ไปต่อกันเลย ",
 ]
 
-function showInventoryStory() {
+function showInventoryStory1() {
 
-  $(document).ready(function () {
-    var data = $.ajax({
-      url: '/getItem',
-      type: "GET",
-      async: false,
-    }).responseJSON
-
-    // console.log(data)
-
-    item_inventory.push([data[0].item_name, data[0].amount])
-    item_inventory.push([data[1].item_name, data[1].amount])
-    item_inventory.push([data[2].item_name, data[2].amount])
-    item_inventory.push([data[3].item_name, data[3].amount])
-    item_inventory.push([data[4].item_name, data[4].amount])
-    // console.log(item_inventory)
-    self.item_apple = game.add.image(405, 300, 'item_' + item_inventory[0][0])
-    self.item_apple.scale.setTo(0.1, 0.1)
-    self.text_apple = game.add.text(440, 320, item_inventory[0][1], {
-      fontSize: '15px',
-    })
-
-    if (wear_check == 0) {
-      self.item_armor = game.add.image(530, 250, item_inventory[1][0])
-      self.item_armor.scale.setTo(0.5, 0.5)
-      self.item_helmet = game.add.image(465, 293, item_inventory[2][0])
-      self.item_helmet.scale.setTo(0.35, 0.35)
-      self.item_weapon = game.add.image(355, 310, item_inventory[3][0])
-      self.item_weapon.scale.setTo(0.5, 0.5)
-      self.item_boots = game.add.image(445, 280, item_inventory[4][0])
-      self.item_boots.scale.setTo(0.5, 0.5)
-    } else {
-      self.item_armor = game.add.image(507, 58, item_inventory[1][0])
-      self.item_armor.scale.setTo(0.5, 0.5)
-      self.item_helmet = game.add.image(392, 105, item_inventory[2][0])
-      self.item_helmet.scale.setTo(0.35, 0.35)
-      self.item_weapon = game.add.image(374, 162, item_inventory[3][0])
-      self.item_weapon.scale.setTo(0.5, 0.5)
-      self.item_boots = game.add.image(507, 130, item_inventory[4][0])
-      self.item_boots.scale.setTo(0.5, 0.5)
-
-    }
-  })
 
   if (typeof self.inventory !== "undefined") {
     self.inventory.destroy()
@@ -101,10 +58,100 @@ function showInventoryStory() {
   if (typeof self.item_boots !== "undefined") {
     self.item_boots.destroy()
   }
+
   self.inventory = game.add.image(350, 50, 'inventory')
   self.inventory.scale.setTo(0.6, 0.6)
   self.xSign = game.add.button(625, 65, 'xSign', closeInventoryStory, this)
   self.xSign.scale.setTo(0.8, 0.8)
+
+  $(document).ready(function () {
+    var data = $.ajax({
+      url: '/getItem',
+      type: "GET",
+      async: false,
+    }).responseJSON
+    // console.log(data)
+
+    item_inventory.push([data[0].item_name, data[0].amount])
+    item_inventory.push([data[1].item_name, data[1].amount])
+    item_inventory.push([data[2].item_name, data[2].amount])
+    item_inventory.push([data[3].item_name, data[3].amount])
+    item_inventory.push([data[4].item_name, data[4].amount])
+    // console.log(item_inventory)
+
+    if (wear_check == 0) {
+      item_inventory.forEach(element => {
+        console.log(element)
+        switch (element[0]) {
+          case 'apple':
+            self.item_apple = game.add.image(405, 300, 'item_apple')
+            self.item_apple.scale.setTo(0.1, 0.1)
+            self.text_apple = game.add.text(440, 320, element[1], {
+              fontSize: '15px',
+            })
+            break
+
+          case 'armor':
+            self.item_armor = game.add.image(530, 250, 'armor')
+            self.item_armor.scale.setTo(0.5, 0.5)
+            break
+
+          case 'boots':
+            self.item_boots = game.add.image(445, 280, 'boots')
+            self.item_boots.scale.setTo(0.5, 0.5)
+            break
+
+          case 'helmet':
+            self.item_helmet = game.add.image(465, 293, 'helmet')
+            self.item_helmet.scale.setTo(0.35, 0.35)
+            break
+
+          case 'weapon':
+            self.item_weapon = game.add.image(355, 310, 'weapon')
+            self.item_weapon.scale.setTo(0.5, 0.5)
+            break
+        }
+      });
+
+    } else {
+
+      item_inventory.forEach(element => {
+        console.log(element)
+        switch (element[0]) {
+          case 'apple':
+            self.item_apple = game.add.image(405, 300, 'item_apple')
+            self.item_apple.scale.setTo(0.1, 0.1)
+            self.text_apple = game.add.text(440, 320, element[1], {
+              fontSize: '15px',
+            })
+            break
+
+          case 'armor':
+            self.item_armor = game.add.image(507, 58, 'armor')
+            self.item_armor.scale.setTo(0.5, 0.5)
+            break
+
+          case 'boots':
+            self.item_boots = game.add.image(507, 130, 'boots')
+            self.item_boots.scale.setTo(0.5, 0.5)
+            break
+
+          case 'helmet':
+            self.item_helmet = game.add.image(392, 105, 'helmet')
+            self.item_helmet.scale.setTo(0.35, 0.35)
+            break
+
+          case 'weapon':
+            self.item_weapon = game.add.image(374, 162, 'weapon')
+            self.item_weapon.scale.setTo(0.5, 0.5)
+            break
+        }
+      });
+
+    }
+  })
+
+  item_inventory = []
 }
 
 function closeInventoryStory() {
@@ -152,14 +199,14 @@ function resultCompile(responseTxt, originalCode) {
       skill = 1
       return (1)
 
-    } else if (press_back == 2 && originalCode.includes("def") && originalCode.includes("return")) {
+    } else if (press_back == 2 && originalCode.includes("def") && originalCode.includes("return") && responseTxt.includes("FIRE")) {
       closeDialog()
 
       position_dialog_x = 530
       position_dialog_y = 150
       self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "โจมตีด้วย " + responseTxt.toUpperCase() + " !!", {
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "โจมตีด้วย " + responseTxt.toUpperCase() , {
         fontSize: '15px',
       })
       playerState = 8
@@ -417,12 +464,9 @@ var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne')
 var mainState = {
   preload: function () {
     game.load.image('background', 'client/images/map_story_1.png')
-    game.load.spritesheet('playerWalkRight', 'client/images/player-walk-right.png', 128, 128)
-    game.load.spritesheet('playerWalkLeft', 'client/images/player-walk-left.png', 128, 128)
     game.load.spritesheet('playerStandLeft', 'client/images/player-standing-left.png', 128, 128)
     game.load.spritesheet('playerStandRight', 'client/images/player-standing-right.png', 128, 128)
     game.load.spritesheet('playerStandRightWearing', 'client/images/player-standing-right-wearing.png', 128, 128)
-    game.load.spritesheet('playerWalkingDown', 'client/images/player-walk-down.png', 128, 128)
     game.load.spritesheet('wizardLeft', 'client/images/npc-wizard-left.png', 128, 128)
     game.load.spritesheet('wizardRight', 'client/images/npc-wizard-right.png', 128, 128)
     game.load.spritesheet('item_apple', 'client/images/apple.png', 370, 359)
@@ -440,6 +484,7 @@ var mainState = {
     game.load.image('inventory', 'client/images/inventory.png')
     game.load.image('xSign', 'client/images/xSign.png')
     game.load.image('information', 'client/images/information.png')
+
     game.load.image('helmet', 'client/images/helmet-font.png')
     game.load.image('boots', 'client/images/armor-bottom.png')
     game.load.image('armor', 'client/images/armor-top.png')
@@ -463,7 +508,7 @@ var mainState = {
 
     this.menu = game.add.image(800, 10, 'menu')
     this.menu.scale.setTo(2, 2)
-    this.backpack = game.add.button(950, 25, 'backpack', showInventoryStory, this)
+    this.backpack = game.add.button(950, 25, 'backpack', showInventoryStory1, this)
     this.backpack.scale.setTo(0.7, 0.7)
     this.sound = game.add.button(1000, 28, 'speaker', music, this)
     this.sound.scale.setTo(0.9, 0.9)

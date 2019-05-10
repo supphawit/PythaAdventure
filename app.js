@@ -325,3 +325,12 @@ app.get('/story_1', function (req, res) {
     res.redirect('/')
   }
 })
+
+
+app.get('/story_2', function (req, res) {
+  if (req.session.email && req.session.pre != 0) {
+    res.sendFile(__dirname + '/client/story_2.html')
+  } else {
+    res.redirect('/')
+  }
+})

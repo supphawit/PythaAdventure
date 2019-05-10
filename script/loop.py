@@ -1,3 +1,6 @@
 # Write your code
+apple = 2
 
-print (1)
+for i in range(1,apple):
+    print (i)
+ prnt

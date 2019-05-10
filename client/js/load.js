@@ -5,6 +5,7 @@ var speedCharacter = 10
 var playerState = 0
 var wizardState = 0
 var stopState = 0
+var attackState = 0
 var tmpResponse
 var position_dialog_x
 var position_dialog_y
@@ -73,6 +74,114 @@ function closeInventory() {
   self.xSign.destroy()
 }
 
+function showInventoryStory() {
+
+
+  if (typeof self.inventory !== "undefined") {
+    self.inventory.destroy()
+    self.xSign.destroy()
+  }
+  if (typeof self.item_apple !== "undefined") {
+    self.item_apple.destroy()
+    self.text_apple.destroy()
+  }
+  if (typeof self.item_armor !== "undefined") {
+    self.item_armor.destroy()
+  }
+  if (typeof self.item_helmet !== "undefined") {
+    self.item_helmet.destroy()
+  }
+  if (typeof self.item_weapon !== "undefined") {
+    self.item_weapon.destroy()
+  }
+  if (typeof self.item_boots !== "undefined") {
+    self.item_boots.destroy()
+  }
+
+  self.inventory = game.add.image(350, 50, 'inventory')
+  self.inventory.scale.setTo(0.6, 0.6)
+  self.xSign = game.add.button(625, 65, 'xSign', closeInventoryStory, this)
+  self.xSign.scale.setTo(0.8, 0.8)
+
+  $(document).ready(function () {
+    var data = $.ajax({
+      url: '/getItem',
+      type: "GET",
+      async: false,
+    }).responseJSON
+    // console.log(data)
+
+    item_inventory.push([data[0].item_name, data[0].amount])
+    item_inventory.push([data[1].item_name, data[1].amount])
+    item_inventory.push([data[2].item_name, data[2].amount])
+    item_inventory.push([data[3].item_name, data[3].amount])
+    item_inventory.push([data[4].item_name, data[4].amount])
+    // console.log(item_inventory)
+
+    item_inventory.forEach(element => {
+      console.log(element)
+      switch (element[0]) {
+        case 'apple':
+          self.item_apple = game.add.image(405, 300, 'item_apple')
+          self.item_apple.scale.setTo(0.1, 0.1)
+          self.text_apple = game.add.text(440, 320, element[1], {
+            fontSize: '15px',
+          })
+          break
+
+        case 'armor':
+          self.item_armor = game.add.image(507, 58, 'armor')
+          self.item_armor.scale.setTo(0.5, 0.5)
+          break
+
+        case 'boots':
+          self.item_boots = game.add.image(507, 130, 'boots')
+          self.item_boots.scale.setTo(0.5, 0.5)
+          break
+
+        case 'helmet':
+          self.item_helmet = game.add.image(392, 105, 'helmet')
+          self.item_helmet.scale.setTo(0.35, 0.35)
+          break
+
+        case 'weapon':
+          self.item_weapon = game.add.image(374, 162, 'weapon')
+          self.item_weapon.scale.setTo(0.5, 0.5)
+          break
+      }
+    });
+
+
+  })
+
+  item_inventory = []
+}
+
+
+function closeInventoryStory() {
+
+  if (typeof self.item_apple !== "undefined") {
+    self.item_apple.destroy()
+    self.text_apple.destroy()
+  }
+  if (typeof self.item_armor !== "undefined") {
+    self.item_armor.destroy()
+  }
+  if (typeof self.item_helmet !== "undefined") {
+    self.item_helmet.destroy()
+  }
+  if (typeof self.item_weapon !== "undefined") {
+    self.item_weapon.destroy()
+  }
+  if (typeof self.item_boots !== "undefined") {
+    self.item_boots.destroy()
+  }
+  self.inventory.destroy()
+  self.xSign.destroy()
+}
+
+
+
 function closeDialog() {
   self.textInBox.destroy()
   self.dialogBox.destroy()
@@ -107,7 +216,7 @@ function fireFunc() {
   self.deleteFireButton = game.add.button(1050, 80, 'xSign', deleteFire, this)
   self.deleteFireButton.scale.setTo(0.75, 0.75)
   self.fire_symDialog = game.add.image(820, 90, 'fire_sym')
-  self.textFire = game.add.text(860, 87, "สามารถโจมตีด้วยลูกไฟ\nได้ผลดีกับมอนสเตอร์ไม้", {
+  self.textFire = game.add.text(860, 95, "ใช้ได้โดยเขียนฟังก์ชันและ\nreturn คำว่า \"FIRE\"", {
     fontSize: '15px',
   })
 
@@ -118,6 +227,10 @@ function deleteFire() {
   self.deleteFireButton.destroy()
   self.fire_symDialog.destroy()
   self.textFire.destroy()
+}
+
+function delBomb(){
+  this.bomb.destroy()
 }
 
 function iceFunc() {
@@ -137,6 +250,10 @@ function deleteIce() {
   self.deleteIceButton.destroy()
   self.ice_symDialog.destroy()
   self.textIce.destroy()
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function indent() {

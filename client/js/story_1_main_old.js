@@ -28,7 +28,26 @@ var conver_3 = ["ถูกต้อง !!",
 ]
 
 function showInventory() {
-
+  if (typeof self.inventory !== "undefined") {
+    self.inventory.destroy()
+    self.xSign.destroy()
+  }
+  if (typeof self.item_apple !== "undefined") {
+    self.item_apple.destroy()
+    self.text_apple.destroy()
+  }
+  if (typeof self.item_armor !== "undefined") {
+    self.item_armor.destroy()
+  }
+  if (typeof self.item_helmet !== "undefined") {
+    self.item_helmet.destroy()
+  }
+  if (typeof self.item_weapon !== "undefined") {
+    self.item_weapon.destroy()
+  }
+  if (typeof self.item_boots !== "undefined") {
+    self.item_boots.destroy()
+  }
   $(document).ready(function () {
     var data = $.ajax({
       url: '/getItem',
@@ -64,26 +83,7 @@ function showInventory() {
     }
   })
 
-  if (typeof self.inventory !== "undefined") {
-    self.inventory.destroy()
-    self.xSign.destroy()
-  }
-  if (typeof self.item_apple !== "undefined") {
-    self.item_apple.destroy()
-    self.text_apple.destroy()
-  }
-  if (typeof self.item_armor !== "undefined") {
-    self.item_armor.destroy()
-  }
-  if (typeof self.item_helmet !== "undefined") {
-    self.item_helmet.destroy()
-  }
-  if (typeof self.item_weapon !== "undefined") {
-    self.item_weapon.destroy()
-  }
-  if (typeof self.item_boots !== "undefined") {
-    self.item_boots.destroy()
-  }
+
   self.inventory = game.add.image(350, 50, 'inventory')
   self.inventory.scale.setTo(0.6, 0.6)
   self.xSign = game.add.button(625, 65, 'xSign', closeInventory, this)
@@ -108,6 +108,8 @@ function closeInventory() {
   if (typeof self.item_boots !== "undefined") {
     self.item_boots.destroy()
   }
+  self.item_apple.destroy()
+  self.text_apple.destroy()
   self.inventory.destroy()
   self.xSign.destroy()
 }

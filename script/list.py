@@ -1,2 +1,4 @@
 # Write your code
-a = ["DD"]
+setArmors = ["helmet","armor","weapon","boots"]
+for i in setArmors:
+    print (i)

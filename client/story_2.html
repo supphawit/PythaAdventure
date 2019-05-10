@@ -17,7 +17,7 @@
   <link rel="stylesheet" type="text/css" href="client/css/style.css">
   <script type="text/javascript" src="client/js/phaser.js"></script>
   <script type="text/javascript" src="client/js/load.js"></script>
-  <script type="text/javascript" src="client/js/story_1_main.js"></script>
+  <script type="text/javascript" src="client/js/story_2_main.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
 
@@ -41,7 +41,10 @@
       <div class="col">
         <div class="form-group">
           <div id="editor"># Write your code
-
+def fire():
+    return "FIRE"
+print (fire())
+        
           </div>
         </div>
 
@@ -54,7 +57,7 @@
             <a href="#">
               <span class="badge badge-primary" data-toggle="modal" data-target="#intro">วิธีเล่น</span>
             </a>
-            <a href="#" id="hint1" data-toggle="modal" data-target="#story1-hint-1"><span class="badge badge-info">คำใบ้
+            <a href="#" id="hint1" data-toggle="modal" data-target="#story2-hint-1"><span class="badge badge-info">คำใบ้
                 1</span></a>
             <a href="#" id="hint2"><span class="badge badge-secondary">คำใบ้ 2</span></a>
           </div>
@@ -71,7 +74,7 @@
 
 
   <!-- Modal Hint 1 -->
-  <div class="modal fade" id="story1-hint-1" role="dialog">
+  <div class="modal fade" id="story2-hint-1" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -119,7 +122,7 @@
 
 
   <!-- Modal Hint 2 -->
-  <div class="modal fade" id="story1-hint-2" role="dialog">
+  <div class="modal fade" id="story2-hint-2" role="dialog">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -181,22 +184,23 @@
       $("#answer01").click(async (e) => {
         var Range = require("ace/range").Range
         var row = editor.selection.lead.row
-        var newText = "\nprint (\"name\") \n\n"
-        editor.session.replace(new Range(1, 0, 5, Number.MAX_VALUE), newText)
+        var newText = "def fire():\n    return \"FIRE\"\nprint (fire())\n"
+        editor.session.replace(new Range(1, 0, 15, Number.MAX_VALUE), newText)
       })
 
       $("#answer02").click(async (e) => {
         var Range = require("ace/range").Range
         var row = editor.selection.lead.row
-        var newText = "\def fire():\n    return \"FIRE\"\nprint (fire())\n"
-        editor.session.replace(new Range(1, 0, 5, Number.MAX_VALUE), newText)
+        var newText = "def fire():\n    return \"FIRE\"\n"+
+        "for i in range(1,3):\n"+
+        "    print (fire())"
+        editor.session.replace(new Range(1, 0, 15, Number.MAX_VALUE), newText)
       })
-
       $("#compile").click(async (e) => {
         // No redirect
         e.preventDefault();
         var code = editor.getValue();
-        var namefile = 'story_1'
+        var namefile = 'story_2'
         if (code != '') {
 
           var write = $.ajax({
@@ -216,7 +220,7 @@
             type: "GET",
             async: false,
           }).responseText;
-
+          console.log(output_result)
           var compile = resultCompile(output_result, code)
 
           if (compile == 1) {

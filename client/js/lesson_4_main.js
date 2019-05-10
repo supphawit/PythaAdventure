@@ -40,12 +40,14 @@ var conver_10 = ["ถูกต้อง !!",
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
 
-  if (!(responseTxt.includes("script")) && !(responseTxt.includes("File")) ) {
+  console.log(responseTxt.trim())
+
+  if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
     if (responseTxt.trim() == "None") {
       alert("return ค่าบางอย่างด้วยนะ")
 
-    } else if (responseTxt.trim() == "I want to go" && check_conver == 2 && responseTxt.includes("def")) {
+    } else if (responseTxt.trim() == "I want to go" && check_conver == 2 && originalCode.includes("def")) {
       checkState = 10
       check_conver = 10
       stopState = 1
@@ -53,9 +55,6 @@ function resultCompile(responseTxt, originalCode) {
       wizardState = 3
       current_conver = 0
 
-      var x = 0
-
-      console.log("jakfsdjkflsdlk")
       closeDialog()
       self.dialogBox = game.add.image(300, 100, 'dialogBoxLeft')
       self.textInBox = game.add.text(330, 120, responseTxt.trim(), {
@@ -107,13 +106,13 @@ function resultCompile(responseTxt, originalCode) {
           self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
         }
 
-      } else {
+      }  else {
         closeDialog()
 
         position_dialog_x = 400
         position_dialog_y = 100
         self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ฟังข้าพูดให้จบก่อนสิ!! \nรีบจังเลย", {
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "อ่านกล่องข้อความให้หมดก่อนสิ!! \nรีบจังเลย", {
           fontSize: '15px',
         })
         self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
@@ -234,6 +233,7 @@ function actionOnClick() {
       current_conver++
     }
     if (current_conver == 4) {
+      tmpX = 3
       $(document).ready(function () {
         $("#lesson4-hint-3").modal()
         $('#hint3').html("<a href='#' id='hint3'><span class='badge badge-info' data-toggle='modal' data-target='#lesson4-hint-3'>คำใบ้ 3</span></a>")
