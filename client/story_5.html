@@ -102,8 +102,6 @@ print (fire())
   </div>
   <!-- End Modal -->
 
-
-
   <!-- Modal Hint 2 -->
   <div class="modal fade" id="story5-hint-2" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -179,19 +177,14 @@ print (fire())
       $("#answer02").click(async (e) => {
         var Range = require("ace/range").Range
         var row = editor.selection.lead.row
-        var newText = "def fire():\n    return \"FIRE\"\n" +
-          "attack = [fire(),fire(),fire()]\n" +
-          "attack.append(fire())\n" +
-          "attack.append(fire())\n" +
-          "for i in attack:\n" +
-          "    print (i)"
+        var newText = "def ice():\n    return \"ICE\"\nprint (ice())\n"
         editor.session.replace(new Range(1, 0, 15, Number.MAX_VALUE), newText)
       })
       $("#compile").click(async (e) => {
         // No redirect
         e.preventDefault();
         var code = editor.getValue();
-        var namefile = 'story_2'
+        var namefile = 'story_5'
         if (code != '') {
 
           var write = $.ajax({

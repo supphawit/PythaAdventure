@@ -2,5 +2,3 @@
 def fire():
     return "FIRE"
 print (fire())
-
-          

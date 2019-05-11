@@ -273,6 +273,9 @@ app.get('/profile', function (req, res) {
   }
 })
 
+app.get('/online_python_compiler', function (req, res) {
+    res.sendFile(__dirname + '/client/online_python_compiler.html')
+})
 
 app.get('/lesson', function (req, res) {
   if (req.session.pre != 0 && req.session.pre != 'undefined') {
@@ -280,7 +283,6 @@ app.get('/lesson', function (req, res) {
   }else{
     res.redirect('/pre_test')
   }
-
 
 })
 
