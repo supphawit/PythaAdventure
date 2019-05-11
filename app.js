@@ -144,22 +144,22 @@ app.post('/googleSign', function (req, res) {
           0,
         ]
       ]
-
       con.query(sql, [values], function (err, row) {
         if (err) throw err
       })
 
       getUser = "SELECT * FROM users where email = '" + req.body.email + "'"
-      
       con.query(getUser, function (err, row) {
         if (err) throw err;
 
         req.session.name = row[0].name
         req.session.email = row[0].email
         req.session.imgURL = row[0].imgURL
-        req.session.pre = row[0].pre_test_score
+        // req.session.pre = row[0].pre_test_score
         req.session.post = row[0].post_test_score
         res.end('done')
+
+
       })
     }
 
@@ -181,7 +181,9 @@ app.post('/updateByQuery', function (req, res) {
 app.post('/updateQuestionScore', function (req, res) {
 
   var preScore = req.body.score_pre_test
+  req.session.pre = preScore
   console.log("from /updateDB: " + preScore)
+  console.log("update pre", req.session.pre)
   var updateSCore = "UPDATE users SET pre_test_score=" + preScore + " WHERE email = '" + req.session.email + "'"
 
   con.query(updateSCore, function (err, row) {
@@ -235,7 +237,7 @@ app.get('/run', (req, res) => {
 
 app.post('/write-post', function (req, res) {
   var fs = require('fs')
-  console.log( req.body.python)
+  console.log(req.body.python)
 
   fs.writeFile("./script/" + req.body.namefile + ".py", req.body.python, function (err) {
     if (err) {
@@ -280,7 +282,7 @@ app.get('/lesson', function (req, res) {
 
 
 app.get('/lesson_1', function (req, res) {
-  if (req.session.email && req.session.pre != 0) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
     res.sendFile(__dirname + '/client/lesson_1.html')
   } else {
     res.redirect('/')
@@ -288,7 +290,7 @@ app.get('/lesson_1', function (req, res) {
 })
 
 app.get('/lesson_2', function (req, res) {
-  if (req.session.email && req.session.pre != 0) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
     res.sendFile(__dirname + '/client/lesson_2.html')
   } else {
     res.redirect('/')
@@ -297,7 +299,7 @@ app.get('/lesson_2', function (req, res) {
 })
 
 app.get('/lesson_3', function (req, res) {
-  if (req.session.email && req.session.pre != 0) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
     res.sendFile(__dirname + '/client/lesson_3.html')
   } else {
     res.redirect('/')
@@ -305,7 +307,7 @@ app.get('/lesson_3', function (req, res) {
 })
 
 app.get('/lesson_4', function (req, res) {
-  if (req.session.email && req.session.pre != 0) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
     res.sendFile(__dirname + '/client/lesson_4.html')
   } else {
     res.redirect('/')
@@ -313,7 +315,7 @@ app.get('/lesson_4', function (req, res) {
 })
 
 app.get('/lesson_5', function (req, res) {
-  if (req.session.email && req.session.pre != 0) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
     res.sendFile(__dirname + '/client/lesson_5.html')
   } else {
     res.redirect('/')
@@ -321,7 +323,7 @@ app.get('/lesson_5', function (req, res) {
 })
 
 app.get('/story_1', function (req, res) {
-  if (req.session.email && req.session.pre != 0) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
     res.sendFile(__dirname + '/client/story_1.html')
   } else {
     res.redirect('/')
@@ -330,7 +332,7 @@ app.get('/story_1', function (req, res) {
 
 
 app.get('/story_2', function (req, res) {
-  if (req.session.email && req.session.pre != 0) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
     res.sendFile(__dirname + '/client/story_2.html')
   } else {
     res.redirect('/')
@@ -338,7 +340,7 @@ app.get('/story_2', function (req, res) {
 })
 
 app.get('/story_3', function (req, res) {
-  if (req.session.email && req.session.pre != 0) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
     res.sendFile(__dirname + '/client/story_3.html')
   } else {
     res.redirect('/')
@@ -346,7 +348,7 @@ app.get('/story_3', function (req, res) {
 })
 
 app.get('/story_4', function (req, res) {
-  if (req.session.email && req.session.pre != 0) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
     res.sendFile(__dirname + '/client/story_4.html')
   } else {
     res.redirect('/')
@@ -354,7 +356,7 @@ app.get('/story_4', function (req, res) {
 })
 
 app.get('/story_5', function (req, res) {
-  if (req.session.email && req.session.pre != 0) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
     res.sendFile(__dirname + '/client/story_5.html')
   } else {
     res.redirect('/')
