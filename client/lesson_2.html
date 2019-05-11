@@ -102,9 +102,13 @@
   <script>
 
     $(document).ready(function () {
+      $("#navBar").load("client/navbar.html");
+      $("#modalAll").load("client/modal.html");
 
-      $("#lesson2-hint-1").modal()
 
+      $("#noPrint").modal()
+
+      
       $("#answer01").click(async (e) => {
         var Range = require("ace/range").Range
         var row = editor.selection.lead.row
@@ -118,8 +122,7 @@
         editor.session.replace(new Range(1, 0, 10, Number.MAX_VALUE), newText)
       })
 
-      $("#navBar").load("client/navbar.html");
-      $("#modalAll").load("client/modal.html");
+
 
       var editor = ace.edit("editor");
       editor.setTheme("ace/theme/monokai");
@@ -156,7 +159,7 @@
 
           resultCompile(output_result, code)
         } else {
-          alert("จำเป็นต้องมีคำสั่ง print ในการแสดงผลด้วย")
+          $("#noPrint").modal()
         }
         // if (output_result.length < 50) {
         //   test(output_result)

@@ -275,8 +275,12 @@ app.get('/profile', function (req, res) {
 
 
 app.get('/lesson', function (req, res) {
+  if (req.session.pre != 0 && req.session.pre != 'undefined') {
+    res.sendFile(__dirname + '/client/lesson.html')
+  }else{
+    res.redirect('/pre_test')
+  }
 
-  res.sendFile(__dirname + '/client/lesson.html')
 
 })
 
