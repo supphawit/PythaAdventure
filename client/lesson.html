@@ -275,7 +275,7 @@
         }).responseJSON
 
         data.forEach(element => {
-          console.log(element)
+          // console.log(element)
           if (element >= 5) {
             $('#lesson' + element).html(" <a href='/story_" + (element - 5) + "' class='btn btn-primary'>Learn</a>")
           } else {

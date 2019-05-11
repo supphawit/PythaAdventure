@@ -149,6 +149,8 @@ app.post('/googleSign', function (req, res) {
         if (err) throw err
       })
 
+      getUser = "SELECT * FROM users where email = '" + req.body.email + "'"
+      
       con.query(getUser, function (err, row) {
         if (err) throw err;
 
@@ -346,6 +348,14 @@ app.get('/story_3', function (req, res) {
 app.get('/story_4', function (req, res) {
   if (req.session.email && req.session.pre != 0) {
     res.sendFile(__dirname + '/client/story_4.html')
+  } else {
+    res.redirect('/')
+  }
+})
+
+app.get('/story_5', function (req, res) {
+  if (req.session.email && req.session.pre != 0) {
+    res.sendFile(__dirname + '/client/story_5.html')
   } else {
     res.redirect('/')
   }

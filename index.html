@@ -41,8 +41,8 @@
         <h5 class="card-title">Sign up and Sign in </h5>
 
         <div class="row">
-          <div class="col-2">
-            <span class="badge badge-Danger" style="padding:10px">
+          <div id="loginButton" class="col-2">
+            <span class="badge badge-Danger"  style="padding:10px">
               <span id="LoginGoogle" class="g-signin2" data-onsuccess="onSignIn"></span>
             </span>
           </div>
@@ -124,6 +124,8 @@
       }
       createUserFunction()
       document.getElementById("checkLogin").style = "display: visible"
+      document.getElementById("loginButton").style = "display: none"
+      
     }
 
   </script>

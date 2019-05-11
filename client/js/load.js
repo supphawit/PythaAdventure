@@ -252,7 +252,7 @@ function iceFunc() {
   self.deleteIceButton = game.add.button(1050, 80, 'xSign', deleteIce, this)
   self.deleteIceButton.scale.setTo(0.75, 0.75)
   self.ice_symDialog = game.add.image(820, 90, 'ice_sym')
-  self.textIce = game.add.text(860, 87, "สามารถโจมตีด้วยน้ำแข็ง\nได้ผลดีกับมอนสเตอร์หุ่นยนต์", {
+  self.textIce = game.add.text(860, 95, "ใช้ได้โดยเขียนฟังก์ชันและ\nreturn คำว่า \"ICE\"", {
     fontSize: '15px',
   })
 
