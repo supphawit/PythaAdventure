@@ -291,7 +291,7 @@ function ice_fireFunc() {
   self.ice_fireDialog.scale.setTo(3.2, 3.2)
   self.deleteIceFireButton = game.add.button(1075, 80, 'xSign', deleteIceFire, this)
   self.deleteIceFireButton.scale.setTo(0.75, 0.75)
-  self.ice_fire_symDialog = game.add.image(775, 90, 'ice_sym')
+  self.ice_fire_symDialog = game.add.image(775, 90, 'ice_fire_sym')
   self.textIce_Fire = game.add.text(815, 95, "ใช้โดยการเขียนฟังก์ชันไฟและน้ำแข็ง\nโดยมี list เก็บค่าและใช้ for \nแสดงค่าออกมาว่า ICE FIRE ", {
     fontSize: '15px',
   })

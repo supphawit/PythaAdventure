@@ -1,4 +1,6 @@
 # Write your code
 def fire():
     return "FIRE"
-print (fire())
+attack = fire()
+if (attack == "FIRE"):
+    print (attack)

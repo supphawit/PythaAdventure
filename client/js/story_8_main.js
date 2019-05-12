@@ -28,18 +28,6 @@ var conver_6 = ["หึ้ย จอมมารช่างร้ายกา�
   "ใช้เวทมนต์โจมตีซ้ำอีก"
 ]
 
-var conver_7 = ["ร้ายกาจเหมือนกันหนิ่",
-  "พลังเวทมนต์ของข้าตอนนี้มีไม่มาก",
-  "กลับไปตั้งหลักดีกว่า",
-  ""
-]
-
-var conver_8 = ["เห้ย อย่าหนีสิ",
-  "ขี้โกงนี่หว่า หนีไปตั้งหลักดื้อเลย",
-  "รีบตามไปเร็ว",
-  ""
-]
-
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
 
@@ -254,61 +242,8 @@ function actionOnClick() {
       })
     }
 
-  } else if (conver_6[current_conver] != undefined && check_conver == 5) {
-    closeDialog()
-    position_dialog_x = 350
-    position_dialog_y = 250
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
-      fontSize: '15px',
-    })
-    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_6[current_conver], {
-      fontSize: '15px',
-    })
-    current_conver++
-    if (current_conver == 2) {
-
-    }
-
-  } else if (conver_7[current_conver] != undefined && check_conver == 6) {
-    closeDialog()
-    position_dialog_x = 550
-    position_dialog_y = 250
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
-    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
-      fontSize: '15px',
-    })
-    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_7[current_conver], {
-      fontSize: '15px',
-    })
-    current_conver++
-    if (current_conver == 4) {
-      count = 5
-    }
-
-  } else if (conver_8[current_conver] != undefined && check_conver == 7) {
-    closeDialog()
-    position_dialog_x = 350
-    position_dialog_y = 250
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
-      fontSize: '15px',
-    })
-    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_8[current_conver], {
-      fontSize: '15px',
-    })
-    current_conver++
-    if (current_conver == 4) {
-      playerState = 50
-    }
-
-  }
+  } 
+  
 
 
 }
@@ -380,25 +315,6 @@ function backward() {
         })
         break
 
-      case 6:
-        closeDialog()
-        position_dialog_x = 550
-        position_dialog_y = 250
-        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_7[current_conver - 1], {
-          fontSize: '15px',
-        })
-        break
-
-      case 7:
-        closeDialog()
-        position_dialog_x = 350
-        position_dialog_y = 250
-        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_8[current_conver - 1], {
-          fontSize: '15px',
-        })
-        break
     }
 
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
@@ -415,7 +331,7 @@ var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne')
 
 var mainState = {
   preload: function () {
-    game.load.image('background', 'client/images/map_story_7.png')
+    game.load.image('background', 'client/images/map_story_8.png')
     game.load.image('dialogBoxRight', 'client/images/text-box-right.png')
     game.load.image('dialogBoxLeft', 'client/images/text-box-left.png')
     game.load.image('errorText', 'client/images/error.png')
@@ -481,13 +397,13 @@ var mainState = {
     this.ice_fire_sym = game.add.button(905, 29, 'ice_fire_sym', ice_fireFunc, this)
     this.ice_fire_sym.scale.setTo(0.9, 0.9)
 
-    this.player = game.add.sprite(-150, 350, 'playerStandRightWearing')
+    this.player = game.add.sprite(480, 600, 'playerStandRightWearing')
     this.player.animations.add('right', [0, 1, 2, 3], 5, true)
     this.player.animations.play('right')
 
-    this.villian = game.add.sprite(830, -150, 'villian-left')
-    this.villian.animations.add('play', [0, 1, 2, 3], 5, true)
-    this.villian.animations.play('play')
+    // this.villian = game.add.sprite(830, -150, 'villian-left')
+    // this.villian.animations.add('play', [0, 1, 2, 3], 5, true)
+    // this.villian.animations.play('play')
 
 
 
@@ -496,25 +412,11 @@ var mainState = {
   update: function () {
 
     if (playerState == 0) {
-      this.player.x += speedCharacter
-      if (this.player.x >= 200) {
+      this.player.y -= speedCharacter
+      if (this.player.y <= 450) {
         playerState = 1
       }
-    } else if (playerState == 1) {
-      position_dialog_x = 250
-      position_dialog_y = 250
-      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
-        fontSize: '15px',
-      })
-      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
-        fontSize: '15px',
-      })
-      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-      current_conver++
-      playerState = 2
-    }
+    } 
 
     if (this.player.y <= -200) {
       // console.log(this.player.x)
