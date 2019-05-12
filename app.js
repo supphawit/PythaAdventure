@@ -384,3 +384,11 @@ app.get('/story_7', function (req, res) {
     res.redirect('/')
   }
 })
+
+app.get('/story_8', function (req, res) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
+    res.sendFile(__dirname + '/client/story_8.html')
+  } else {
+    res.redirect('/')
+  }
+})
