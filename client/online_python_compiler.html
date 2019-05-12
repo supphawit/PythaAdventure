@@ -35,7 +35,7 @@
             <li class="list-group-item"><input id="compile" type="submit" class="btn btn-primary btn-lg btn-block"
                 value="Compile"></li>
             <li class="list-group-item">
-              ตัวอย่างคำสั่ง
+              <h5 style="text-align:center">ตัวอย่างคำสั่ง</h5>
               <button id="print" type="button" class="btn btn-dark btn-block">print()</button>
               <button id="if" type="button" class="btn btn-dark btn-block">if else</button>
               <button id="for" type="button" class="btn btn-dark btn-block">for loop</button>
@@ -44,6 +44,21 @@
             </li>
           </ul>
         </div>
+        <br>
+        <div class="card text-black bg-dark" style="width: auto;">
+          <ul class="list-group list-group-flush">
+
+            <li class="list-group-item">
+              <h5 style="text-align:center">โจทย์ปัญหา Python</h5>
+              <button id="fibo" type="button" class="btn btn-dark btn-block">Fibonacci</button>
+              <button id="merge" type="button" class="btn btn-dark btn-block">Merge Sort</button>
+              <button id="quick" type="button" class="btn btn-dark btn-block">Quick Sort</button>
+              <button id="parentheses" type="button" class="btn btn-dark btn-block">Balanced Parentheses</button>
+
+            </li>
+          </ul>
+        </div>
+
       </div>
 
       <div class="col">
@@ -81,7 +96,7 @@
         var Range = require("ace/range").Range
         var row = editor.selection.lead.row
         var newText = "\nprint (\"\") \n\n"
-        editor.session.replace(new Range(0, 0, 15, Number.MAX_VALUE), newText)
+        editor.session.replace(new Range(0, 0, 100, Number.MAX_VALUE), newText)
       })
 
       $("#if").click(async (e) => {
@@ -94,7 +109,7 @@
           "    print (\"x = 2\")\n" +
           "else:\n" +
           "    print (\"x =\", x)"
-        editor.session.replace(new Range(0, 0, 10, Number.MAX_VALUE), newText)
+        editor.session.replace(new Range(0, 0, 100, Number.MAX_VALUE), newText)
       })
 
 
@@ -103,7 +118,7 @@
         var row = editor.selection.lead.row
         var newText = "\nfor i in range(0,10):\n" +
           "    print (\"i = \", i)\n"
-        editor.session.replace(new Range(0, 0, 10, Number.MAX_VALUE), newText)
+        editor.session.replace(new Range(0, 0, 100, Number.MAX_VALUE), newText)
       })
 
       $("#function").click(async (e) => {
@@ -113,7 +128,7 @@
           "    return x\n\n" +
           "y = example(\"hello\")\n" +
           "print (y)"
-        editor.session.replace(new Range(0, 0, 10, Number.MAX_VALUE), newText)
+        editor.session.replace(new Range(0, 0, 100, Number.MAX_VALUE), newText)
       })
 
       function getRandomInt(max) {
@@ -126,9 +141,130 @@
         var newText = "exampleList = [" + getRandomInt(10) + "," + getRandomInt(10) + "," + getRandomInt(10) + "," + getRandomInt(10) + "," + getRandomInt(10) + "," + getRandomInt(10) + "]\n\n"
           + "for i in exampleList:\n"
           + "    print (i)"
-        editor.session.replace(new Range(0, 0, 10, Number.MAX_VALUE), newText)
+        editor.session.replace(new Range(0, 0, 100, Number.MAX_VALUE), newText)
       })
 
+      $("#parentheses").click(async (e) => {
+        var Range = require("ace/range").Range
+        var row = editor.selection.lead.row
+        var newText = `# โจทย์คือให้หาคำตอบของทุกความเป็นไปได้ที่ทำให้วงเล็บเปิด-ปิดมีจำนวน n ทั้งเปิด-ปิด และต้องให้วงเล็บหันเข้าหากัน
+def parentheses(n,start,close,string):
+    if( n == close):
+        print (string)
+        return
+    
+    else:
+        if (start > close):
+            parentheses(n,start,close+1,string+(")"))
+        if (start < n):
+            parentheses(n,start+1,close,string+("("))
+
+# วงเล็บเปิด 3 ตัว ปิด 3 ตัว
+parentheses(3,0,0,'')`
+        editor.session.replace(new Range(0, 0, 100, Number.MAX_VALUE), newText)
+      })
+
+      $("#merge").click(async (e) => {
+        var Range = require("ace/range").Range
+        var row = editor.selection.lead.row
+        var newText = `# Merge sort เป็นการ sort ข้อมูล ด้วยการแบ่ง ข้อมูลออกเป็นสองส่วนแล้วจึง sort ข้อมูลในแต่ละส่วน 
+# หลังจากนั้นจึงเอาข้อมูลทั้งสองส่วนมารวมกันตามตำแหน่งที่เหมาะสมของข้อมูลแต่ละตัว (merge) 
+# ทำการแบ่งและ merge ไปจนกว่าข้อมูลอยู่ในตำแหน่งที่ถูกต้อง
+def mergeSort(alist):
+    if len(alist) == 1:
+        return alist
+    
+    if len(alist) > 1:
+        mid = len(alist)//2
+        leftList = alist[:mid]
+        rightList = alist[mid:]
+        
+        mergeLeft = mergeSort(leftList)
+        mergeRight = mergeSort(rightList)
+    
+        resultMerge = popmin(mergeLeft,mergeRight)
+
+        return resultMerge
+
+def popmin(left,right):
+    result = []
+    while left or right:
+
+        if not left:
+            result.append(right[0])
+            right.pop(0)
+
+        elif not right:
+            result.append(left[0])
+            left.pop(0)
+
+        elif left[0] >= right[0]:
+            result.append(right[0])
+            right.pop(0)
+
+        elif right[0] >= left[0]:
+            result.append(left[0])
+            left.pop(0)
+
+    return result
+
+listNumber = [6,5,3,1,8,7,2,4]
+print (mergeSort(listNumber))`
+        editor.session.replace(new Range(0, 0, 100, Number.MAX_VALUE), newText)
+      })
+
+      $("#quick").click(async (e) => {
+        var Range = require("ace/range").Range
+        var row = editor.selection.lead.row
+        var newText = `# Quick Sort ก็คือแบ่งข้อมูลออกเป็นสองส่วนแล้วเรียกตัวเองขึ้นมา sort ข้อมูลสองส่วนนี้ Quick sort จะเลือกข้อมูลหนึ่งตัว (pivot)  
+# สำหรับใช้ในการแบ่งข้อมูล ถ้าข้อมูลตัวหนึ่งซึ่งเมื่อนำมาเปรียบเทียบข้อมูลที่เลือกไว้นี้มีค่าน้อยกว่าเราจะเก็บข้อมูลนี้ไว้ใน sub-array ตัวหนึ่ง (left)
+# แต่ถ้ามากกว่าเราก็เก็บไว้อีกตัวหนึ่ง (right) แล้วก็ sort ข้อมูลเหล่านี้จนกว่าข้อมูลใน sub-array ทุกตัวอยู่ในตำแหน่งที่เหมาะสม
+def quickSort(alist,low,high):
+    if low < high:
+        
+        pivot = partition(alist,low,high)
+
+        quickSort(alist,low,pivot-1)
+        quickSort(alist,pivot+1,high)
+
+    return alist    
+
+def partition(alist,low,high):
+    i = -1
+    pivot = alist[high]
+    for j in range(0,len(alist)):
+        if alist[j] <= pivot:
+            i += 1
+            # swap
+            alist[i],alist[j] =  alist[j],alist[i]
+            # initial new pivot
+            new_pivot = alist.index(pivot) 
+    return new_pivot
+
+listNumber = [10,80,30,90,40,50,70]
+lengthList = len(listNumber)
+
+print (quickSort(listNumber,0,lengthList-1))
+`
+        editor.session.replace(new Range(0, 0, 100, Number.MAX_VALUE), newText)
+      })
+
+      $("#fibo").click(async (e) => {
+        var Range = require("ace/range").Range
+        var row = editor.selection.lead.row
+        var newText = `def fibo_re(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fibo_re(n-1) + fibo_re(n-2)
+
+# ผลลัพธ์ของ Fibonacci ที่ n = 10ค่า factorial ของเลขจำนวน
+print (fibo_re(10))
+`
+        editor.session.replace(new Range(0, 0, 100, Number.MAX_VALUE), newText)
+      })
       $("#compile").click(async (e) => {
         // No redirect
         e.preventDefault();

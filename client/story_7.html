@@ -214,8 +214,8 @@
             url: '/run?file=' + namefile,
             type: "GET",
             async: false,
-          }).responseText;
-          console.log(output_result)
+          }).responseText
+          console.log("output",output_result)
           var compile = resultCompile(output_result, code)
 
           if (compile == 1) {

@@ -238,7 +238,7 @@ function fireFunc() {
   self.deleteFireButton = game.add.button(1050, 80, 'xSign', deleteFire, this)
   self.deleteFireButton.scale.setTo(0.75, 0.75)
   self.fire_symDialog = game.add.image(820, 90, 'fire_sym')
-  self.textFire = game.add.text(860, 95, "ใช้ได้โดยเขียนฟังก์ชันและ\nreturn คำว่า \"FIRE\"", {
+  self.textFire = game.add.text(860, 95, "ใช้ได้โดยเขียนฟังก์ชันและ\nreturn คำว่า FIRE", {
     fontSize: '15px',
   })
 
@@ -267,7 +267,7 @@ function iceFunc() {
   self.deleteIceButton = game.add.button(1050, 80, 'xSign', deleteIce, this)
   self.deleteIceButton.scale.setTo(0.75, 0.75)
   self.ice_symDialog = game.add.image(820, 90, 'ice_sym')
-  self.textIce = game.add.text(860, 95, "ใช้ได้โดยเขียนฟังก์ชันและ\nreturn คำว่า \"ICE\"", {
+  self.textIce = game.add.text(860, 95, "ใช้ได้โดยเขียนฟังก์ชันและ\nreturn คำว่า ICE", {
     fontSize: '15px',
   })
 
@@ -279,6 +279,33 @@ function deleteIce() {
   self.ice_symDialog.destroy()
   self.textIce.destroy()
 }
+
+function ice_fireFunc() {
+  if (typeof self.ice_fireDialog !== "undefined") {
+    self.ice_fireDialog.destroy()
+    self.deleteIceFireButton.destroy()
+    self.ice_fire_symDialog.destroy()
+    self.textIce_Fire.destroy()
+  }
+  self.ice_fireDialog = game.add.image(760, 75, 'errorText')
+  self.ice_fireDialog.scale.setTo(3.2, 3.2)
+  self.deleteIceFireButton = game.add.button(1075, 80, 'xSign', deleteIceFire, this)
+  self.deleteIceFireButton.scale.setTo(0.75, 0.75)
+  self.ice_fire_symDialog = game.add.image(775, 90, 'ice_sym')
+  self.textIce_Fire = game.add.text(815, 95, "ใช้โดยการเขียนฟังก์ชันไฟและน้ำแข็ง\nโดยมี list เก็บค่าและใช้ for \nแสดงค่าออกมาว่า ICE FIRE ", {
+    fontSize: '15px',
+  })
+
+}
+
+function deleteIceFire() {
+  self.ice_fireDialog.destroy()
+  self.deleteIceFireButton.destroy()
+  self.ice_fire_symDialog.destroy()
+  self.textIce_Fire.destroy()
+}
+
+
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

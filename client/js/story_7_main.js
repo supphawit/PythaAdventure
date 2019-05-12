@@ -124,9 +124,8 @@ function actionOnClick() {
   console.log("actionOnClick current_conver:", current_conver)
   if (conver_1[current_conver] != undefined && check_conver == 0) {
     closeDialog()
-
-    position_dialog_x = 150
-    position_dialog_y = 100
+    position_dialog_x = 250
+    position_dialog_y = 250
     self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
     self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
@@ -223,8 +222,8 @@ function backward() {
     switch (check_conver) {
       case 0:
         closeDialog()
-        position_dialog_x = 150
-        position_dialog_y = 100
+        position_dialog_x = 250
+        position_dialog_y = 250
         self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver - 1], {
           fontSize: '15px',
@@ -278,7 +277,7 @@ var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne')
 
 var mainState = {
   preload: function () {
-    game.load.image('background', 'client/images/map_story_6.png')
+    game.load.image('background', 'client/images/map_story_7.png')
     game.load.image('dialogBoxRight', 'client/images/text-box-right.png')
     game.load.image('dialogBoxLeft', 'client/images/text-box-left.png')
     game.load.image('errorText', 'client/images/error.png')
@@ -305,6 +304,7 @@ var mainState = {
     game.load.spritesheet('bluefire', 'client/images/blue_fire.png', 128, 128)
     game.load.image('fire_sym', 'client/images/fire_sym.png')
     game.load.image('ice_sym', 'client/images/ice_sym.png')
+    game.load.image('ice_fire_sym', 'client/images/ice_fire_sym.png')
     game.load.spritesheet('fire', 'client/images/fire.png', 64, 64)
     game.load.spritesheet('ice', 'client/images/ice.png', 128, 128)
     game.load.spritesheet('bomb', 'client/images/bomb.png', 64, 64)
@@ -337,7 +337,10 @@ var mainState = {
     this.ice_sym = game.add.button(865, 29, 'ice_sym', iceFunc, this)
     this.ice_sym.scale.setTo(0.9, 0.9)
 
-    this.player = game.add.sprite(-150, 200, 'playerStandRightWearing')
+    this.ice_fire_sym = game.add.button(905, 29, 'ice_fire_sym', ice_fireFunc, this)
+    this.ice_fire_sym.scale.setTo(0.9, 0.9)
+
+    this.player = game.add.sprite(-150, 350, 'playerStandRightWearing')
     this.player.animations.add('right', [0, 1, 2, 3], 5, true)
     this.player.animations.play('right')
 
@@ -353,24 +356,12 @@ var mainState = {
 
     if (playerState == 0) {
       this.player.x += speedCharacter
-      if (this.player.x >= 100) {
+      if (this.player.x >= 200) {
         playerState = 1
       }
-    }
-
-    if (stopState == 0) {
-      this.monster1.x -= 10
-      if (this.monster1.x <= 600) {
-        stopState = 1
-      }
-    } else if (stopState == 1) {
-      this.bomb = game.add.sprite(this.monster1.x - 40, this.monster1.y - 90, 'mixbomb')
-      this.bomb.scale.setTo(3, 3)
-      this.bomb.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 8, false)
-      this.bomb.animations.play('play')
-
-      position_dialog_x = 150
-      position_dialog_y = 100
+    } else if (playerState == 1) {
+      position_dialog_x = 250
+      position_dialog_y = 250
       this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
       this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
         fontSize: '15px',
@@ -381,137 +372,11 @@ var mainState = {
       this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
       this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       current_conver++
-      stopState = 2
-    }
-
-
-    if (attackState == 10) {
-      this.fireAttack = game.add.sprite(this.player.x + 100, this.player.y + 30, 'bigfire')
-      this.fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8], 5, true)
-      this.fireAttack.animations.play('play')
-      attackState = 12
-    } else if (attackState == 12) {
-      this.fireAttack.x += 4
-      this.fireAttack.y -= 0.3
-      press_back = 99
-      if (this.fireAttack.x >= this.monster1.x) {
-        attackState = 13
-      }
-    } else if (attackState == 13) {
-      this.fireAttack.destroy()
-
-      closeDialog()
-      position_dialog_x = 150
-      position_dialog_y = 100
-      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
-        fontSize: '15px',
-      })
-      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver], {
-        fontSize: '15px',
-      })
-      current_conver++
-
-      attackState = 14
-    }
-
-
-    if (attackState == 20) {
-      this.iceAttack = game.add.sprite(this.player.x + 60, this.player.y, 'ice')
-      this.iceAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
-      this.iceAttack.animations.play('play')
-
-      attackState = 21
-    } else if (attackState == 21) {
-      this.iceAttack.x += 4
-      this.iceAttack.y -= 0.3
-      press_back = 99
-      if (this.iceAttack.x >= this.monster1.x) {
-        attackState = 22
-      }
-    } else if (attackState == 22) {
-      this.iceAttack.destroy()
-
-      attackState = 23
-    } else if (attackState == 23) {
-
-
-      closeDialog()
-      position_dialog_x = 150
-      position_dialog_y = 100
-      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
-        fontSize: '15px',
-      })
-      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver], {
-        fontSize: '15px',
-      })
-      current_conver++
-      attackState = 24
+      playerState = 2
     }
 
 
 
-    if (attackState == 30) {
-      this.ice_fireAttack = game.add.sprite(this.player.x + 60, this.player.y, 'ice_fire')
-      this.ice_fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
-      this.ice_fireAttack.animations.play('play')
-
-      attackState = 31
-    } else if (attackState == 31) {
-      this.ice_fireAttack.x += 4
-      this.ice_fireAttack.y -= 0.3
-      press_back = 99
-      if (this.ice_fireAttack.x >= (this.monster1.x - 50)) {
-        attackState = 32
-      }
-    } else if (attackState == 32) {
-      this.ice_fireAttack.destroy()
-
-      attackState = 33
-    } else if (attackState == 33) {
-
-      if (typeof this.bomb !== "undefined") {
-        this.bomb.destroy()
-      }
-      this.bomb = game.add.sprite(this.monster1.x - 40, this.monster1.y - 90, 'mixbomb')
-      this.bomb.scale.setTo(3, 3)
-      this.bomb.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 8, false)
-      this.bomb.animations.play('play')
-
-      sleep(1500).then(() => {
-        this.bomb.destroy()
-        this.monster1.destroy()
-      })
-      closeDialog()
-
-      attackState = 34
-    } else if (attackState == 34) {
-      position_dialog_x = 150
-      position_dialog_y = 100
-      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
-      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
-        fontSize: '15px',
-      })
-      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver], {
-        fontSize: '15px',
-      })
-      current_conver++
-      attackState = 35
-    }
-
-    if (playerState == 40) {
-      closeDialog()
-      playerState = 41
-    } else if (playerState == 41) {
-      this.player.x += speedCharacter
-    }
     if (this.player.x >= 1600) {
       // console.log(this.player.x)
       $(document).ready(function () {
@@ -532,7 +397,7 @@ var mainState = {
           }
         })
         // console.log("pass")
-        window.location.href = "/story_7"
+        window.location.href = "/story_8"
       })
     }
 

@@ -13,8 +13,8 @@ var conver_3 = ["เวทของเจ้าแรงใช้ได้ !! ",
 ]
 
 var conver_4 = ["สำเร็จ !!\nเวทมนต์ใหม่ใช้ได้ผล",
-  "วิธีใช้ซับซ้อนแต่รุนแรงเหลือเกิน \n",
-  "จากนี้ไปก็ไม่ต้องกลัวอะไรแล้ว",
+  "วิธีใช้ซับซ้อนแต่ก็รุนแรง\n",
+  "ครั้งหน้าถ้าจะใช้ก็ใช้คำสั่งประมาณนี้สินะ",
   ""
 ]
 
@@ -305,6 +305,7 @@ var mainState = {
     game.load.spritesheet('bluefire', 'client/images/blue_fire.png', 128, 128)
     game.load.image('fire_sym', 'client/images/fire_sym.png')
     game.load.image('ice_sym', 'client/images/ice_sym.png')
+    game.load.image('ice_fire_sym', 'client/images/ice_fire_sym.png')
     game.load.spritesheet('fire', 'client/images/fire.png', 64, 64)
     game.load.spritesheet('ice', 'client/images/ice.png', 128, 128)
     game.load.spritesheet('bomb', 'client/images/bomb.png', 64, 64)
@@ -364,11 +365,6 @@ var mainState = {
         stopState = 1
       }
     } else if (stopState == 1) {
-      this.bomb = game.add.sprite(this.monster1.x - 40, this.monster1.y - 90, 'mixbomb')
-      this.bomb.scale.setTo(3, 3)
-      this.bomb.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 8, false)
-      this.bomb.animations.play('play')
-
       position_dialog_x = 150
       position_dialog_y = 100
       this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
@@ -491,6 +487,9 @@ var mainState = {
 
       attackState = 34
     } else if (attackState == 34) {
+      this.ice_fire_sym = game.add.button(905, 29, 'ice_fire_sym', ice_fireFunc, this)
+      this.ice_fire_sym.scale.setTo(0.9, 0.9)
+
       position_dialog_x = 150
       position_dialog_y = 100
       this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
@@ -499,7 +498,7 @@ var mainState = {
       this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
         fontSize: '15px',
       })
-      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver], {
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_4[current_conver], {
         fontSize: '15px',
       })
       current_conver++
@@ -508,6 +507,7 @@ var mainState = {
 
     if (playerState == 40) {
       closeDialog()
+
       playerState = 41
     } else if (playerState == 41) {
       this.player.x += speedCharacter
