@@ -17,7 +17,7 @@
   <link rel="stylesheet" type="text/css" href="client/css/style.css">
   <script type="text/javascript" src="client/js/phaser.js"></script>
   <script type="text/javascript" src="client/js/load.js"></script>
-  <script type="text/javascript" src="client/js/story_5_main.js"></script>
+  <script type="text/javascript" src="client/js/story_7_main.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
 
@@ -41,9 +41,7 @@
       <div class="col">
         <div class="form-group">
           <div id="editor"># Write your code
-def fire():
-    return "FIRE"
-print (fire())
+
           </div>
         </div>
 
@@ -56,7 +54,7 @@ print (fire())
             <a href="#">
               <span class="badge badge-primary" data-toggle="modal" data-target="#intro">วิธีเล่น</span>
             </a>
-            <a href="#" id="hint1" data-toggle="modal" data-target="#story5-hint-1"><span class="badge badge-info">คำใบ้
+            <a href="#" id="hint1" data-toggle="modal" data-target="#story6-hint-1"><span class="badge badge-info">คำใบ้
                 1</span></a>
             <a href="#" id="hint2"><span class="badge badge-secondary">คำใบ้ 2</span></a>
           </div>
@@ -72,8 +70,8 @@ print (fire())
   </div>
 
 
-<!-- Modal Hint 1 -->
-<div class="modal fade" id="story5-hint-1" role="dialog">
+  <!-- Modal Hint 1 -->
+  <div class="modal fade" id="story6-hint-1" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -81,20 +79,21 @@ print (fire())
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <div id="story5-hint-1-Carousel" class="carousel slide" data-ride="carousel">
+          <div id="story6-hint-1-Carousel" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-              <li data-target="#story5-hint-1-Carousel" data-slide-to="0" class="active"></li>
+              <li data-target="#story6-hint-1-Carousel" data-slide-to="0" class="active"></li>
             </ol>
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <FONT SIZE="5">ประกาศและเรียกใช้ Function ไฟวิเศษดังหมายเลข 1 และ 2 ดังภาพ</FONT>
-                <img src="client/images/story5hint1_1.png" class="d-block w-100" alt="...">
+                <img src="client/images/story6hint1_1.png" class="d-block w-100" alt="...">
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info" id="answer01" data-dismiss="modal">Answer</button>
+          <button type="button" class="btn btn-danger" id="answer01" data-dismiss="modal">Answer FIRE</button>
+          <button type="button" class="btn btn-primary" id="answer02" data-dismiss="modal">Answer ICE</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -103,7 +102,7 @@ print (fire())
   <!-- End Modal -->
 
   <!-- Modal Hint 2 -->
-  <div class="modal fade" id="story5-hint-2" role="dialog">
+  <div class="modal fade" id="story6-hint-2" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -112,31 +111,31 @@ print (fire())
         </div>
         <div class="modal-body">
 
-          <div id="story5-hint-2-Carousel" class="carousel slide" data-ride="carousel">
+          <div id="story6-hint-2-Carousel" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-              <li data-target="#story5-hint-2-Carousel" data-slide-to="0" class="active"></li>
-              <li data-target="#story5-hint-2-Carousel" data-slide-to="1"></li>
-              <li data-target="#story5-hint-2-Carousel" data-slide-to="2"></li>
+              <li data-target="#story6-hint-2-Carousel" data-slide-to="0" class="active"></li>
+              <li data-target="#story6-hint-2-Carousel" data-slide-to="1"></li>
+              <li data-target="#story6-hint-2-Carousel" data-slide-to="2"></li>
             </ol>
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <FONT SIZE="5">ประกาศ Function ไฟวิเศษดังภาพ</FONT>
-                <img src="client/images/story5hint2_1.png" class="d-block w-100" alt="...">
+                <img src="client/images/story6hint2_1.png" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
                 <FONT SIZE="5">ประกาศ List ขึ้นมาพร้อมกับนำ Function ไฟใส่ให้ครบ 5 ตัวตามโจทย์กำหนด</FONT>
-                <img src="client/images/story5hint2_2.png" class="d-block w-100" alt="...">
+                <img src="client/images/story6hint2_2.png" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
                 <FONT SIZE="5">ใช้ For Loop แสดงผลค่าภายใน List ให้ครบทุกตัว</FONT>
-                <img src="client/images/story5hint2_3.png" class="d-block w-100" alt="...">
+                <img src="client/images/story6hint2_3.png" class="d-block w-100" alt="...">
               </div>
             </div>
-            <a class="carousel-control-prev" href="#story5-hint-2-Carousel" role="button" data-slide="prev">
+            <a class="carousel-control-prev" href="#story6-hint-2-Carousel" role="button" data-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="sr-only">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#story5-hint-2-Carousel" role="button" data-slide="next">
+            <a class="carousel-control-next" href="#story6-hint-2-Carousel" role="button" data-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="sr-only">Next</span>
             </a>
@@ -145,7 +144,7 @@ print (fire())
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info" id="answer02" data-dismiss="modal">Answer</button>
+          <button type="button" class="btn btn-info" id="answer03" data-dismiss="modal">Answer</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -180,11 +179,23 @@ print (fire())
         var newText = "def ice():\n    return \"ICE\"\nprint (ice())\n"
         editor.session.replace(new Range(1, 0, 15, Number.MAX_VALUE), newText)
       })
+
+      $("#answer03").click(async (e) => {
+        var Range = require("ace/range").Range
+        var row = editor.selection.lead.row
+        var newText = "def ice():\n    return \"ICE\"\n\n"
+          + "def fire():\n    return \"FIRE\"\nprint (fire())\n"
+          + "magicMix = [fire(),ice()]\n" 
+          +"for i in magicMix:\n"
+          +"    print (i)"
+
+        editor.session.replace(new Range(1, 0, 15, Number.MAX_VALUE), newText)
+      })
       $("#compile").click(async (e) => {
         // No redirect
         e.preventDefault();
         var code = editor.getValue();
-        var namefile = 'story_5'
+        var namefile = 'dino'
         if (code != '') {
 
           var write = $.ajax({

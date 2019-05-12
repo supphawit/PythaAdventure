@@ -368,3 +368,19 @@ app.get('/story_5', function (req, res) {
     res.redirect('/')
   }
 })
+
+app.get('/story_6', function (req, res) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
+    res.sendFile(__dirname + '/client/story_6.html')
+  } else {
+    res.redirect('/')
+  }
+})
+
+app.get('/story_7', function (req, res) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
+    res.sendFile(__dirname + '/client/story_7.html')
+  } else {
+    res.redirect('/')
+  }
+})
