@@ -186,7 +186,7 @@ function actionOnClick() {
       press_back = 2
       $(document).ready(function () {
         $("#story6-hint-2").modal()
-        $('#hint2').html("<a href='#''><span id='hint2' class='badge badge-info' data-toggle='modal' data-target='#story5-hint-2'>คำใบ้ 2</span></a>")
+        $('#hint2').html("<a href='#''><span id='hint2' class='badge badge-info' data-toggle='modal' data-target='#story6-hint-2'>คำใบ้ 2</span></a>")
 
       })
     }
