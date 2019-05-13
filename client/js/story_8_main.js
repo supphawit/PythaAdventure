@@ -1,45 +1,65 @@
 var count = 0
+var hp = 4
+var chancePlayer = 5
+// stopState = 80
+// skill = 100
 
 var conver_1 = ["ปราสาทของจอมมาร\nน้องสาวของเธอคนนั้นต้องอยู่ในนั้นแน่ๆ ",
   "คงต้องบุกเข้าไปชิงตัวกลับมาสินะ",
   ""
 ]
 
-var conver_2 = ["ฮั่นแน่ !! ",
-  "มาที่นี่มีธุระอะไร?\n",
-
+var conver_2 = ["มอนสเตอร์ขอนไม้เน่า !! ",
+  "มาขวาทางงั้นเหรอ?\n",
+  "กำจัดด้วยเวทมนซะ",
 ]
-var conver_3 = ["เด็กผู้หญิงที่แกเอาไป คืนมาเดี๋ยวนี้ !! ",
-  "แกไม่มีสิทธิกักขังใครไว้ทั้งนั้น",
+var conver_3 = ["มอนสเตอร์ปลาหมึกม่วง",
+  "ครั้งก่อนต้องเขียนคำสั่งที่ซับซ้อน\nแต่ตอนนี้พลังเวทมนต์ได้เพิ่มขึ้นแล้ว",
+  "สามารถใช้เวทมนต์จัดการได้เลย",
 ]
 
-var conver_4 = ["แกเป็นพี่ชายหรือยังไง",
-  "ไม่คืนหรอก \nอยากได้ก็เอาชนะข้าให้ได้ซะก่อนสิ",
-  "ก็มาดิครับ",
+var conver_4 = ["มอนสเตอร์มังกร",
+  "เจ้าตัวนี้ต้องกำจัดด้วยเวทมนต์แบบผสมเท่านั้น",
+  "ใช้เวทมนต์นั้นซะ",
+]
+
+var conver_5 = ["ทำไมถึงได้ตื้อนักนะ",
+  "จะต้องการอะไรกับแค่เด็กสาวคนเดียว",
+  "ใช่คนนี้มั้ยสาวที่แกต้องการ",
   ""
 ]
 
-var conver_5 = ["ไม่ยอมอ่อนข้อให้แบบนี้",
-  "ก็มีแต่ต้องใช้กำลังเท่านั้นแหละ",
-  "ใช้เวทมนต์ซักอย่างใส่จอมมารซะ !!",
+var conver_6 = ["ช่วยด้วยค่าาาาาาาาาาา",
+  "หนูโดนลักพาตัวมา พาหนูกลับบ้านที",
+  ""
 ]
 
-var conver_6 = ["หึ้ย จอมมารช่างร้ายกาจ",
-  "ใช้เวทมนต์โจมตีซ้ำอีก"
+var conver_7 = ["อยากจะลองของใช่มั้ย",
+  "มีอะไรก็ใส่เข้ามา ข้าพร้อมแล้ว ",
+  ""
 ]
+
+var conver_8 = ["โจมตีด้วยเวทมนต์ซักอย่าง !!",
+  "โจมตีด้วยเวทมนต์ซักอย่าง !!"
+]
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
 
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
+
     if (press_back == 1 && originalCode.includes("def") && originalCode.includes("return") && originalCode.includes("for") && originalCode.includes("[") && originalCode.includes("]") && responseTxt.includes("FIRE") && responseTxt.includes("ICE")) {
 
       closeDialog()
       // alert("mix")
-      position_dialog_x = 350
-      position_dialog_y = 250
-      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      position_dialog_x = 500
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
       self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "FIRE and ICE  !!", {
         fontSize: '15px',
@@ -52,9 +72,9 @@ function resultCompile(responseTxt, originalCode) {
       if (responseTxt.trim() == "FIRE") {
         // alert("FIRE")
         closeDialog()
-        position_dialog_x = 350
-        position_dialog_y = 250
-        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        position_dialog_x = 500
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
         self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "FIRE !!", {
           fontSize: '15px',
@@ -63,9 +83,9 @@ function resultCompile(responseTxt, originalCode) {
       } else if (responseTxt.trim() == "ICE") {
         closeDialog()
         // alert("ice")
-        position_dialog_x = 350
-        position_dialog_y = 250
-        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        position_dialog_x = 500
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
         self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ICE !!", {
           fontSize: '15px',
@@ -73,23 +93,93 @@ function resultCompile(responseTxt, originalCode) {
         attackState = 20
       }
 
+    } else if (press_back == 3) {
+      // alert("JKJSKDL:FK")
+      if (originalCode.includes("def") && originalCode.includes("return") && originalCode.includes("for") && originalCode.includes("[") && originalCode.includes("]") && responseTxt.includes("FIRE") && responseTxt.includes("ICE")) {
+
+        closeDialog()
+        position_dialog_x = 500
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+        self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "FIRE and ICE  !!", {
+          fontSize: '15px',
+        })
+
+        if (chancePlayer > getRandomInt(10)) {
+          skill = 10
+        } else {
+          skill = 100
+          console.log("BSJKDFJKS")
+        }
+
+      } else if (originalCode.includes("def") && originalCode.includes("return") && (responseTxt.includes("FIRE") || responseTxt.includes("ICE"))) {
+
+        if (responseTxt.trim() == "FIRE") {
+          closeDialog()
+          position_dialog_x = 500
+          position_dialog_y = 150
+          self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+          self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+          self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "FIRE !!", {
+            fontSize: '15px',
+          })
+          if (chancePlayer > getRandomInt(10)) {
+            skill = 20
+          } else {
+            skill = 200
+          }
+        } else if (responseTxt.trim() == "ICE") {
+          closeDialog()
+          position_dialog_x = 500
+          position_dialog_y = 150
+          self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+          self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+          self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ICE !!", {
+            fontSize: '15px',
+          })
+          if (chancePlayer > getRandomInt(10)) {
+            skill = 30
+          } else {
+            skill = 300
+          }
+        }
+
+      }
+
+
+
     } else if (press_back == 0) {
       closeDialog()
 
-      position_dialog_x = 250
-      position_dialog_y = 250
-      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      position_dialog_x = 500
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
       self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ยังไม่พร้อมโจมตี !!", {
         fontSize: '15px',
       })
       self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+
+    } else if (press_back == 2 && originalCode.includes("def") && originalCode.includes("return") && originalCode.includes("for") && originalCode.includes("[") && originalCode.includes("]") && responseTxt.includes("FIRE") && responseTxt.includes("ICE")) {
+
+      closeDialog()
+      // alert("mix")
+      position_dialog_x = 500
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+      self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "FIRE and ICE  !!", {
+        fontSize: '15px',
+      })
+
+      attackState = 30
     } else {
       closeDialog()
 
-      position_dialog_x = 350
-      position_dialog_y = 250
-      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      position_dialog_x = 500
+      position_dialog_y = 150
+      self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
       self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "ใช้สกิลผิดพลาดซะได้\nลองใหม่อีกที !!", {
         fontSize: '15px',
@@ -138,7 +228,7 @@ function resultCompile(responseTxt, originalCode) {
 
 function actionOnClick() {
 
-  console.log("actionOnClick current_conver:", current_conver)
+  // console.log("actionOnClick current_conver:", current_conver)
   if (conver_1[current_conver] != undefined && check_conver == 0) {
     closeDialog()
     position_dialog_x = 500
@@ -161,10 +251,9 @@ function actionOnClick() {
 
   } else if (conver_2[current_conver] != undefined && check_conver == 1) {
     closeDialog()
-
-    position_dialog_x = 550
-    position_dialog_y = 250
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    position_dialog_x = 500
+    position_dialog_y = 150
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
     self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
@@ -174,16 +263,19 @@ function actionOnClick() {
       fontSize: '15px',
     })
     current_conver++
-    if (current_conver >= 2) {
-      stopState = 10
+    if (current_conver >= 3) {
+      $(document).ready(function () {
+        $("#story8-hint-1").modal()
+      })
+      press_back = 1
     }
 
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
     closeDialog()
 
-    position_dialog_x = 250
-    position_dialog_y = 250
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    position_dialog_x = 500
+    position_dialog_y = 150
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
     self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
@@ -193,17 +285,18 @@ function actionOnClick() {
       fontSize: '15px',
     })
     current_conver++
-    if (current_conver == 2) {
-      check_conver = 3
-      current_conver = 0
-
+    if (current_conver == 3) {
+      $(document).ready(function () {
+        $("#story8-hint-1").modal()
+        press_back = 1
+      })
     }
 
   } else if (conver_4[current_conver] != undefined && check_conver == 3) {
     closeDialog()
-    position_dialog_x = 550
-    position_dialog_y = 250
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    position_dialog_x = 500
+    position_dialog_y = 150
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
     self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
@@ -213,14 +306,17 @@ function actionOnClick() {
       fontSize: '15px',
     })
     current_conver++
-    if (current_conver == 4) {
-      stopState = 10
+    if (current_conver == 3) {
+      $(document).ready(function () {
+        $("#story8-hint-1").modal()
+        press_back = 2
+      })
     }
 
   } else if (conver_5[current_conver] != undefined && check_conver == 4) {
     closeDialog()
-    position_dialog_x = 350
-    position_dialog_y = 250
+    position_dialog_x = 205
+    position_dialog_y = 150
     self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
     self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
@@ -231,17 +327,65 @@ function actionOnClick() {
       fontSize: '15px',
     })
     current_conver++
-    if (current_conver == 3) {
-      press_back = 1
-      $(document).ready(function () {
-        $("#story7-hint-1").modal()
-        // $('#hint2').html("<a href='#''><span id='hint2' class='badge badge-info' data-toggle='modal' data-target='#story7-hint-2'>คำใบ้ 2</span></a>")
+    if (current_conver == 4) {
+      stopState = 60
+    }
 
-      })
+  } else if (conver_6[current_conver] != undefined && check_conver == 5) {
+    closeDialog()
+    position_dialog_x = 120
+    position_dialog_y = 150
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_6[current_conver], {
+      fontSize: '15px',
+    })
+    current_conver++
+    if (current_conver == 3) {
+      stopState = 70
+    }
+
+  } else if (conver_7[current_conver] != undefined && check_conver == 6) {
+    closeDialog()
+    position_dialog_x = 60
+    position_dialog_y = 150
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_7[current_conver], {
+      fontSize: '15px',
+    })
+    current_conver++
+    if (current_conver == 3) {
+      stopState = 80
+    }
+
+  } else if (conver_8[current_conver] != undefined && check_conver == 7) {
+    closeDialog()
+    position_dialog_x = 500
+    position_dialog_y = 150
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_8[current_conver], {
+      fontSize: '15px',
+    })
+    current_conver++
+    if (current_conver == 1) {
+      press_back = 3
     }
 
   }
-
 
 
 }
@@ -265,9 +409,9 @@ function backward() {
 
       case 1:
         closeDialog()
-        position_dialog_x = 550
-        position_dialog_y = 250
-        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        position_dialog_x = 500
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver - 1], {
           fontSize: '15px',
         })
@@ -275,9 +419,9 @@ function backward() {
 
       case 2:
         closeDialog()
-        position_dialog_x = 250
-        position_dialog_y = 250
-        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        position_dialog_x = 500
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver - 1], {
           fontSize: '15px',
         })
@@ -285,9 +429,9 @@ function backward() {
 
       case 3:
         closeDialog()
-        position_dialog_x = 550
-        position_dialog_y = 250
-        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        position_dialog_x = 500
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_4[current_conver - 1], {
           fontSize: '15px',
         })
@@ -295,8 +439,8 @@ function backward() {
 
       case 4:
         closeDialog()
-        position_dialog_x = 350
-        position_dialog_y = 250
+        position_dialog_x = 205
+        position_dialog_y = 150
         self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_5[current_conver - 1], {
           fontSize: '15px',
@@ -305,10 +449,30 @@ function backward() {
 
       case 5:
         closeDialog()
-        position_dialog_x = 350
-        position_dialog_y = 250
+        position_dialog_x = 120
+        position_dialog_y = 150
         self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_6[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
+      case 6:
+        closeDialog()
+        position_dialog_x = 60
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_7[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
+      case 7:
+        closeDialog()
+        position_dialog_x = 500
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_8[current_conver - 1], {
           fontSize: '15px',
         })
         break
@@ -355,6 +519,7 @@ var mainState = {
     game.load.spritesheet('playerStandLeftWearing', 'client/images/player-standing-left-wearing.png', 128, 128)
     game.load.spritesheet('villian-left', 'client/images/villian-left.png', 128, 128)
     game.load.spritesheet('villian-right', 'client/images/villian-right.png', 128, 128)
+    game.load.spritesheet('lilgirl', 'client/images/lilgirl-right.png', 128, 128)
     game.load.spritesheet('bluefire', 'client/images/blue_fire.png', 128, 128)
     game.load.image('fire_sym', 'client/images/fire_sym.png')
     game.load.image('ice_sym', 'client/images/ice_sym.png')
@@ -364,9 +529,17 @@ var mainState = {
     game.load.spritesheet('bomb', 'client/images/bomb.png', 64, 64)
     game.load.spritesheet('bigfire', 'client/images/bigfire.png', 100, 100)
     game.load.spritesheet('ice_fire', 'client/images/fire_ice.png', 128, 128)
-    game.load.spritesheet('mixbomb', 'client/images/mix_bomb.png', 128, 126)
+    game.load.spritesheet('mixbomb', 'client/images/mix_explosion.png', 128, 126)
     game.load.spritesheet('spawn', 'client/images/spawn.png', 128, 126)
     game.load.spritesheet('defend', 'client/images/defend.png', 192, 192)
+    game.load.spritesheet('bluefire', 'client/images/blue_fire.png', 128, 128)
+
+    game.load.spritesheet('monster1', 'client/images/monster-2.png', 128, 128)
+    game.load.spritesheet('monster2', 'client/images/monster-3.png', 128, 128)
+    game.load.spritesheet('monster3', 'client/images/monster-6-right.png', 128, 128)
+    game.load.spritesheet('heart', 'client/images/heart.png', 128, 128)
+
+
   },
 
   create: function () {
@@ -399,16 +572,6 @@ var mainState = {
     this.player = game.add.sprite(800, 600, 'playerStandLeftWearing')
     this.player.animations.add('right', [0, 1, 2, 3], 5, true)
     this.player.animations.play('right')
-
-    // this.villian = game.add.sprite(830, -150, 'villian-left')
-    // this.villian.animations.add('play', [0, 1, 2, 3], 5, true)
-    // this.villian.animations.play('play')
-    this.spawn = game.add.sprite(150, 200, 'spawn')
-    this.spawn.scale.setTo(2, 2)
-    this.spawn.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], 15, false)
-    this.spawn.animations.play('play')
-
-
 
   },
 
@@ -444,19 +607,539 @@ var mainState = {
       current_conver = 0
       stopState = 2
     } else if (stopState == 2) {
-      position_dialog_x = 500
-      position_dialog_y = 150
-      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
-      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
-        fontSize: '15px',
+      stopState = 3
+      sleep(1500).then(() => {
+        this.monster1 = game.add.sprite(230, 250, 'monster1')
+        this.monster1.scale.setTo(0.8, 0.8)
+        this.monster1.animations.add('play', [0, 1], 5, true)
+        this.monster1.animations.play('play')
+
+        position_dialog_x = 500
+        position_dialog_y = 150
+        this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+        this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_2[current_conver], {
+          fontSize: '15px',
+        })
+        this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+          fontSize: '15px',
+        })
+        this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+
       })
+
+    }
+
+    if (stopState == 20) {
+      this.spawn = game.add.sprite(150, 200, 'spawn')
+      this.spawn.scale.setTo(2, 2)
+      this.spawn.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], 15, false)
+      this.spawn.animations.play('play')
+      check_conver = 2
+      current_conver = 0
+      stopState = 21
+    } else if (stopState == 21) {
+      stopState = 22
+      sleep(1500).then(() => {
+        this.monster1 = game.add.sprite(230, 250, 'monster2')
+        this.monster1.scale.setTo(0.6, 0.6)
+        this.monster1.animations.add('play', [0, 1], 5, true)
+        this.monster1.animations.play('play')
+
+        closeDialog()
+        position_dialog_x = 500
+        position_dialog_y = 150
+        this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+        this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+        this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+          fontSize: '15px',
+        })
+        this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_3[current_conver], {
+          fontSize: '15px',
+        })
+
+      })
+
+    }
+
+    if (stopState == 30) {
+      this.spawn = game.add.sprite(150, 200, 'spawn')
+      this.spawn.scale.setTo(2, 2)
+      this.spawn.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], 15, false)
+      this.spawn.animations.play('play')
+      check_conver = 3
+      current_conver = 0
+      stopState = 31
+    } else if (stopState == 31) {
+      stopState = 32
+      sleep(1500).then(() => {
+        this.monster1 = game.add.sprite(230, 250, 'monster3')
+        this.monster1.scale.setTo(1.4, 1.4)
+        this.monster1.animations.add('play', [0, 1, 2, 3], 5, true)
+        this.monster1.animations.play('play')
+
+        closeDialog()
+        position_dialog_x = 500
+        position_dialog_y = 150
+        this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+        this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+        this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+        this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+          fontSize: '15px',
+        })
+        this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_4[current_conver], {
+          fontSize: '15px',
+        })
+
+      })
+
+    }
+
+
+    if (stopState == 40) {
+      this.villian = game.add.sprite(165, 100, 'villian-right')
+      this.villian.animations.add('play', [0, 1, 2, 3], 5, true)
+      this.villian.animations.play('play')
+      stopState = 41
+    } else if (stopState == 41) {
+      this.villian.y += speedCharacter
+      if (this.villian.y >= 250) {
+        stopState = 42
+        check_conver = 4
+        current_conver = 0
+      }
+    } else if (stopState == 42) {
+      // closeDialog()
+      position_dialog_x = 205
+      position_dialog_y = 150
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
       this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
         fontSize: '15px',
       })
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_5[current_conver], {
+        fontSize: '15px',
+      })
+
+      stopState = 43
+
+    }
+
+
+    if (stopState == 60) {
+      this.littlegirl = game.add.sprite(165, 100, 'lilgirl')
+      this.littlegirl.animations.add('play', [0, 1, 2, 3], 5, true)
+      this.littlegirl.animations.play('play')
+      stopState = 61
+    } else if (stopState == 61) {
+      this.littlegirl.y += speedCharacter
+      this.littlegirl.x -= speedCharacter / 2
+      if (this.littlegirl.y >= 250) {
+        stopState = 62
+        check_conver = 5
+        current_conver = 0
+      }
+    } else if (stopState == 62) {
+      closeDialog()
+      position_dialog_x = 120
+      position_dialog_y = 150
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
       this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
       this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
-      current_conver++
-      stopState = 3
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_6[current_conver], {
+        fontSize: '15px',
+      })
+
+      stopState = 66
+    }
+
+    if (stopState == 70) {
+      this.villian.x += speedCharacter
+      if (this.villian.x >= 350) {
+        stopState = 71
+        check_conver = 6
+        current_conver = 0
+      }
+    } else if (stopState == 71) {
+      closeDialog()
+      position_dialog_x = 60
+      position_dialog_y = 150
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_7[current_conver], {
+        fontSize: '15px',
+      })
+      stopState = 72
+    }
+
+    if (stopState == 80) {
+      this.heart_bar = game.add.image(515, 80, 'menu')
+      this.heart_bar.scale.setTo(2, 2)
+      this.heart1 = game.add.sprite(550, 95, 'heart')
+      this.heart1.scale.setTo(0.3, 0.3)
+      this.heart2 = game.add.sprite(600, 95, 'heart')
+      this.heart2.scale.setTo(0.3, 0.3)
+      this.heart3 = game.add.sprite(650, 95, 'heart')
+      this.heart3.scale.setTo(0.3, 0.3)
+      this.heart4 = game.add.sprite(700, 95, 'heart')
+      this.heart4.scale.setTo(0.3, 0.3)
+      closeDialog()
+      stopState = 81
+      check_conver = 7
+      current_conver = 0
+    } else if (stopState == 81) {
+      position_dialog_x = 500
+      position_dialog_y = 150
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_8[current_conver], {
+        fontSize: '15px',
+      })
+      press_back = 3
+      stopState = 82
+    }
+
+    // FIRE ATTACK
+    if (attackState == 10) {
+      count += 1
+      this.fireAttack = game.add.sprite(this.player.x - 80, this.player.y - 30, 'bigfire')
+      this.fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8], 5, true)
+      this.fireAttack.animations.play('play')
+      attackState = 12
+    } else if (attackState == 12) {
+      this.fireAttack.x -= 20
+      this.fireAttack.y += 0.3
+      press_back = 99
+      if (this.fireAttack.x <= this.monster1.x) {
+        attackState = 13
+      }
+    } else if (attackState == 13) {
+
+      this.fireAttack.destroy()
+
+      this.bomb = game.add.sprite(this.monster1.x - 10, this.monster1.y, 'bomb')
+      this.bomb.scale.setTo(2, 2)
+      this.bomb.animations.add('play', [0, 1, 2, 3], 8, true)
+      this.bomb.animations.play('play')
+
+      sleep(1000).then(() => {
+        closeDialog()
+        this.bomb.destroy()
+        this.monster1.destroy()
+        if (count == 1) {
+          stopState = 20
+        } else if (count == 2) {
+          stopState = 30
+        } else if (count == 3) {
+          stopState = 40
+        }
+
+      })
+      attackState = 14
+
+    }
+
+    // ICE ATTACK
+    if (attackState == 20) {
+      count += 1
+      this.iceAttack = game.add.sprite(this.player.x - 60, this.player.y, 'ice')
+      this.iceAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
+      this.iceAttack.animations.play('play')
+
+      attackState = 21
+    } else if (attackState == 21) {
+      this.iceAttack.x -= 5.5
+      this.iceAttack.y -= 0.3
+      press_back = 99
+      if (this.iceAttack.x <= this.monster1.x) {
+        attackState = 22
+      }
+    } else if (attackState == 22) {
+      this.iceAttack.destroy()
+
+      this.bomb = game.add.sprite(150, 120, 'bluefire')
+      this.bomb.scale.setTo(2, 2)
+      this.bomb.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 10, false)
+      this.bomb.animations.play('play')
+
+      sleep(1000).then(() => {
+        closeDialog()
+        this.bomb.destroy()
+        this.monster1.destroy()
+        if (count == 1) {
+          stopState = 20
+        } else if (count == 2) {
+          stopState = 30
+        } else if (count == 3) {
+          stopState = 40
+        }
+
+      })
+
+      attackState = 23
+    }
+
+    // MIX ATTACK
+    if (attackState == 30) {
+      count += 1
+      this.ice_fireAttack = game.add.sprite(this.player.x - 60, this.player.y, 'ice_fire')
+      this.ice_fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
+      this.ice_fireAttack.animations.play('play')
+
+      attackState = 31
+    } else if (attackState == 31) {
+      this.ice_fireAttack.x -= 5.5
+      this.ice_fireAttack.y -= 0.2
+      press_back = 99
+      if (this.ice_fireAttack.x <= this.monster1.x) {
+        attackState = 32
+      }
+    } else if (attackState == 32) {
+      this.ice_fireAttack.destroy()
+
+      this.bomb = game.add.sprite(155, 150, 'mixbomb')
+      this.bomb.scale.setTo(2, 2)
+      this.bomb.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], 10, false)
+      this.bomb.animations.play('play')
+
+      sleep(1500).then(() => {
+        closeDialog()
+        this.bomb.destroy()
+        this.monster1.destroy()
+        if (count == 1) {
+          stopState = 20
+        } else if (count == 2) {
+          stopState = 30
+        } else if (count == 3) {
+          stopState = 40
+        }
+
+      })
+
+      attackState = 33
+    }
+
+
+    // VILLIAN MIX ATTACK
+    if (skill == 10) {
+      this.ice_fireAttack = game.add.sprite(this.player.x - 60, this.player.y, 'ice_fire')
+      this.ice_fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
+      this.ice_fireAttack.animations.play('play')
+      skill = 11
+    } else if (skill == 11) {
+      this.ice_fireAttack.x -= 5.5
+      this.ice_fireAttack.y -= 0.2
+      if (this.ice_fireAttack.x <= this.villian.x) {
+        skill = 12
+      }
+    } else if (skill == 12) {
+      this.ice_fireAttack.destroy()
+
+      this.bomb = game.add.sprite(290, 150, 'mixbomb')
+      this.bomb.scale.setTo(2, 2)
+      this.bomb.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], 10, false)
+      this.bomb.animations.play('play')
+
+      sleep(1500).then(() => {
+        closeDialog()
+        this.bomb.destroy()
+        if (hp == 4) {
+          this.heart4.destroy()
+          this.heart3.destroy()
+        } else if (hp == 3) {
+          this.heart3.destroy()
+          this.heart2.destroy()
+        } else if (hp == 2) {
+          this.heart1.destroy()
+          this.heart2.destroy()
+        } else if (hp == 1) {
+          this.heart1.destroy()
+        }
+        hp -= 2
+      })
+
+
+      skill = 13
+    }
+
+    // VILLIAN MIX ATTACK DEFEND
+    if (skill == 100) {
+      this.ice_fireAttack = game.add.sprite(this.player.x - 60, this.player.y, 'ice_fire')
+      this.ice_fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
+      this.ice_fireAttack.animations.play('play')
+
+      this.defend = game.add.sprite(this.villian.x, this.villian.y - 10, 'defend')
+      this.defend.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], 15, true)
+      this.defend.animations.play('play')
+
+      skill = 110
+    } else if (skill == 110) {
+      this.ice_fireAttack.x -= 2
+      this.defend.x += 2
+      // press_back = 99
+      if (this.ice_fireAttack.x <= 550) {
+        skill = 120
+      }
+    } else if (skill == 120) {
+      this.ice_fireAttack.destroy()
+      this.defend.destroy()
+
+      sleep(1500).then(() => {
+        // closeDialog()
+        this.bomb.destroy()
+      })
+
+      skill = 130
+    }
+
+
+    // VILLIAN FIRE ATTACK
+    if (skill == 20) {
+      this.fireAttack = game.add.sprite(this.player.x - 80, this.player.y - 30, 'bigfire')
+      this.fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8], 5, true)
+      this.fireAttack.animations.play('play')
+      skill = 21
+    } else if (skill == 21) {
+      this.fireAttack.x -= 5.5
+      this.fireAttack.y -= 0.2
+      if (this.fireAttack.x <= this.villian.x) {
+        skill = 22
+      }
+    } else if (skill == 22) {
+      this.fireAttack.destroy()
+
+      this.bomb = game.add.sprite(this.monster1.x - 10, this.monster1.y, 'bomb')
+      this.bomb.scale.setTo(2, 2)
+      this.bomb.animations.add('play', [0, 1, 2, 3], 8, true)
+      this.bomb.animations.play('play')
+
+      sleep(1500).then(() => {
+        closeDialog()
+        this.bomb.destroy()
+        if (hp == 4) {
+          this.heart4.destroy()
+        } else if (hp == 3) {
+          this.heart3.destroy()
+        } else if (hp == 2) {
+          this.heart2.destroy()
+        } else if (hp == 1) {
+          this.heart1.destroy()
+        }
+        hp -= 1
+      })
+
+
+      skill = 23
+    }
+
+    // VILLIAN FIRE ATTACK DEFEND
+    if (skill == 200) {
+      this.fireAttack = game.add.sprite(this.player.x - 80, this.player.y - 30, 'bigfire')
+      this.fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8], 5, true)
+      this.fireAttack.animations.play('play')
+
+      this.defend = game.add.sprite(this.villian.x, this.villian.y - 10, 'defend')
+      this.defend.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], 15, true)
+      this.defend.animations.play('play')
+
+      skill = 210
+    } else if (skill == 210) {
+      this.fireAttack.x -= 2
+      this.defend.x += 2
+      // press_back = 99
+      if (this.fireAttack.x <= 550) {
+        skill = 220
+      }
+    } else if (skill == 220) {
+      this.fireAttack.destroy()
+      this.defend.destroy()
+
+      sleep(1500).then(() => {
+        this.bomb.destroy()
+      })
+
+      skill = 230
+    }
+
+    // VILLIAN ICE ATTACK
+    if (skill == 30) {
+      this.iceAttack = game.add.sprite(this.player.x - 60, this.player.y, 'ice')
+      this.iceAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
+      this.iceAttack.animations.play('play')
+      skill = 31
+    } else if (skill == 31) {
+      this.iceAttack.x -= 5.5
+      this.iceAttack.y -= 0.2
+      if (this.iceAttack.x <= this.villian.x) {
+        skill = 31
+      }
+    } else if (skill == 32) {
+      this.iceAttack.destroy()
+
+      this.bomb = game.add.sprite(150, 120, 'bluefire')
+      this.bomb.scale.setTo(2, 2)
+      this.bomb.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 10, false)
+      this.bomb.animations.play('play')
+
+      sleep(1500).then(() => {
+        closeDialog()
+        this.bomb.destroy()
+        if (hp == 4) {
+          this.heart4.destroy()
+        } else if (hp == 3) {
+          this.heart3.destroy()
+        } else if (hp == 2) {
+          this.heart2.destroy()
+        } else if (hp == 1) {
+          this.heart1.destroy()
+        }
+        hp -= 1
+      })
+
+
+      skill = 33
+    }
+
+    // VILLIAN ICE ATTACK DEFEND
+    if (skill == 200) {
+      this.iceAttack = game.add.sprite(this.player.x - 60, this.player.y, 'ice')
+      this.iceAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
+      this.iceAttack.animations.play('play')
+
+      this.defend = game.add.sprite(this.villian.x, this.villian.y - 10, 'defend')
+      this.defend.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], 15, true)
+      this.defend.animations.play('play')
+
+      skill = 210
+    } else if (skill == 210) {
+      this.fireAttack.x -= 2
+      this.defend.x += 2
+      // press_back = 99
+      if (this.fireAttack.x <= 550) {
+        skill = 220
+      }
+    } else if (skill == 220) {
+      this.fireAttack.destroy()
+      this.defend.destroy()
+
+      sleep(1500).then(() => {
+        this.bomb.destroy()
+      })
+
+      skill = 230
     }
 
     if (this.player.y <= -200) {
