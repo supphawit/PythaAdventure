@@ -1,8 +1,8 @@
 var count = 0
 
-var conver_1 = ["นั่นมันทางเข้าปราสาทของจอมมารนิ่ ",
-  "น้องสาวคนนั้นอยู่ที่นั่นสินะ",
-  "ไปช่วยเดี๋ยวนี้หล่ะ"
+var conver_1 = ["ปราสาทของจอมมาร\nน้องสาวของเธอคนนั้นต้องอยู่ในนั้นแน่ๆ ",
+  "คงต้องบุกเข้าไปชิงตัวกลับมาสินะ",
+  ""
 ]
 
 var conver_2 = ["ฮั่นแน่ !! ",
@@ -34,7 +34,6 @@ function resultCompile(responseTxt, originalCode) {
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
     if (press_back == 1 && originalCode.includes("def") && originalCode.includes("return") && originalCode.includes("for") && originalCode.includes("[") && originalCode.includes("]") && responseTxt.includes("FIRE") && responseTxt.includes("ICE")) {
-
 
       closeDialog()
       // alert("mix")
@@ -142,9 +141,9 @@ function actionOnClick() {
   console.log("actionOnClick current_conver:", current_conver)
   if (conver_1[current_conver] != undefined && check_conver == 0) {
     closeDialog()
-    position_dialog_x = 250
-    position_dialog_y = 250
-    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    position_dialog_x = 500
+    position_dialog_y = 150
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
     self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
     self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
@@ -176,8 +175,7 @@ function actionOnClick() {
     })
     current_conver++
     if (current_conver >= 2) {
-      check_conver = 2
-      current_conver = 0
+      stopState = 10
     }
 
   } else if (conver_3[current_conver] != undefined && check_conver == 2) {
@@ -242,8 +240,8 @@ function actionOnClick() {
       })
     }
 
-  } 
-  
+  }
+
 
 
 }
@@ -257,9 +255,9 @@ function backward() {
     switch (check_conver) {
       case 0:
         closeDialog()
-        position_dialog_x = 250
-        position_dialog_y = 250
-        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        position_dialog_x = 500
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
         self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver - 1], {
           fontSize: '15px',
         })
@@ -354,6 +352,7 @@ var mainState = {
     game.load.audio('music', 'client/images/audio/Windless Slopes.mp3')
 
     game.load.spritesheet('playerStandRightWearing', 'client/images/player-standing-right-wearing.png', 128, 128)
+    game.load.spritesheet('playerStandLeftWearing', 'client/images/player-standing-left-wearing.png', 128, 128)
     game.load.spritesheet('villian-left', 'client/images/villian-left.png', 128, 128)
     game.load.spritesheet('villian-right', 'client/images/villian-right.png', 128, 128)
     game.load.spritesheet('bluefire', 'client/images/blue_fire.png', 128, 128)
@@ -366,7 +365,7 @@ var mainState = {
     game.load.spritesheet('bigfire', 'client/images/bigfire.png', 100, 100)
     game.load.spritesheet('ice_fire', 'client/images/fire_ice.png', 128, 128)
     game.load.spritesheet('mixbomb', 'client/images/mix_bomb.png', 128, 126)
-
+    game.load.spritesheet('spawn', 'client/images/spawn.png', 128, 126)
     game.load.spritesheet('defend', 'client/images/defend.png', 192, 192)
   },
 
@@ -377,7 +376,7 @@ var mainState = {
     this.myWorld = game.add.group()
 
     this.bg = game.add.image(0, 0, 'background')
-    this.bg.scale.setTo(1.045, 0.84)
+    this.bg.scale.setTo(0.833, 0.835)
 
     this.menu = game.add.image(800, 10, 'menu')
     this.menu.scale.setTo(2, 2)
@@ -397,13 +396,17 @@ var mainState = {
     this.ice_fire_sym = game.add.button(905, 29, 'ice_fire_sym', ice_fireFunc, this)
     this.ice_fire_sym.scale.setTo(0.9, 0.9)
 
-    this.player = game.add.sprite(480, 600, 'playerStandRightWearing')
+    this.player = game.add.sprite(800, 600, 'playerStandLeftWearing')
     this.player.animations.add('right', [0, 1, 2, 3], 5, true)
     this.player.animations.play('right')
 
     // this.villian = game.add.sprite(830, -150, 'villian-left')
     // this.villian.animations.add('play', [0, 1, 2, 3], 5, true)
     // this.villian.animations.play('play')
+    this.spawn = game.add.sprite(150, 200, 'spawn')
+    this.spawn.scale.setTo(2, 2)
+    this.spawn.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], 15, false)
+    this.spawn.animations.play('play')
 
 
 
@@ -413,10 +416,48 @@ var mainState = {
 
     if (playerState == 0) {
       this.player.y -= speedCharacter
-      if (this.player.y <= 450) {
+      if (this.player.y <= 250) {
         playerState = 1
       }
-    } 
+    } else if (playerState == 1) {
+      position_dialog_x = 500
+      position_dialog_y = 150
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
+        fontSize: '15px',
+      })
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      current_conver++
+      playerState = 2
+    }
+
+    if (stopState == 1) {
+      this.spawn = game.add.sprite(150, 200, 'spawn')
+      this.spawn.scale.setTo(2, 2)
+      this.spawn.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], 15, false)
+      this.spawn.animations.play('play')
+      check_conver = 1
+      current_conver = 0
+      stopState = 2
+    } else if (stopState == 2) {
+      position_dialog_x = 500
+      position_dialog_y = 150
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_1[current_conver], {
+        fontSize: '15px',
+      })
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      current_conver++
+      stopState = 3
+    }
 
     if (this.player.y <= -200) {
       // console.log(this.player.x)
