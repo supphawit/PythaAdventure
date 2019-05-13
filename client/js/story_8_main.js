@@ -43,6 +43,17 @@ var conver_8 = ["โจมตีด้วยเวทมนต์ซักอย
   "โจมตีด้วยเวทมนต์ซักอย่าง !!"
 ]
 
+var conver_9 = ["ขอบคุณที่ช่วยหนูนะ ",
+  "ถ้าไม่ได้พี่ช่วยไว้หนูแย่แน่ๆเลย",
+  ""
+]
+
+var conver_10 = ["รีบกลับหมู่บ้านกันเถอะ ",
+  "พี่สาวของหนูรออยู่",
+  "เค้าเป็นห่วงหนูมากๆนะ",
+  ""
+]
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -56,7 +67,6 @@ function resultCompile(responseTxt, originalCode) {
     if (press_back == 1 && originalCode.includes("def") && originalCode.includes("return") && originalCode.includes("for") && originalCode.includes("[") && originalCode.includes("]") && responseTxt.includes("FIRE") && responseTxt.includes("ICE")) {
 
       closeDialog()
-      // alert("mix")
       position_dialog_x = 500
       position_dialog_y = 150
       self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
@@ -70,7 +80,6 @@ function resultCompile(responseTxt, originalCode) {
     } else if (press_back == 1 && originalCode.includes("def") && originalCode.includes("return") && (responseTxt.includes("FIRE") || responseTxt.includes("ICE"))) {
 
       if (responseTxt.trim() == "FIRE") {
-        // alert("FIRE")
         closeDialog()
         position_dialog_x = 500
         position_dialog_y = 150
@@ -82,7 +91,6 @@ function resultCompile(responseTxt, originalCode) {
         attackState = 10
       } else if (responseTxt.trim() == "ICE") {
         closeDialog()
-        // alert("ice")
         position_dialog_x = 500
         position_dialog_y = 150
         self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
@@ -94,7 +102,6 @@ function resultCompile(responseTxt, originalCode) {
       }
 
     } else if (press_back == 3) {
-      // alert("JKJSKDL:FK")
       if (originalCode.includes("def") && originalCode.includes("return") && originalCode.includes("for") && originalCode.includes("[") && originalCode.includes("]") && responseTxt.includes("FIRE") && responseTxt.includes("ICE")) {
 
         closeDialog()
@@ -110,7 +117,6 @@ function resultCompile(responseTxt, originalCode) {
           skill = 10
         } else {
           skill = 100
-          console.log("BSJKDFJKS")
         }
 
       } else if (originalCode.includes("def") && originalCode.includes("return") && (responseTxt.includes("FIRE") || responseTxt.includes("ICE"))) {
@@ -129,6 +135,7 @@ function resultCompile(responseTxt, originalCode) {
           } else {
             skill = 200
           }
+
         } else if (responseTxt.trim() == "ICE") {
           closeDialog()
           position_dialog_x = 500
@@ -385,6 +392,44 @@ function actionOnClick() {
       press_back = 3
     }
 
+  } else if (conver_9[current_conver] != undefined && check_conver == 8) {
+    closeDialog()
+    position_dialog_x = 120
+    position_dialog_y = 150
+    this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_9[current_conver], {
+      fontSize: '15px',
+    })
+    current_conver++
+    if (current_conver == 3) {
+      stopState = 100
+      closeDialog()
+    }
+
+  } else if (conver_10[current_conver] != undefined && check_conver == 9) {
+    closeDialog()
+    position_dialog_x = 500
+    position_dialog_y = 150
+    self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+    self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+    self.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+    self.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+      fontSize: '15px',
+    })
+    self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_10[current_conver], {
+      fontSize: '15px',
+    })
+    current_conver++
+    if (current_conver == 4) {
+      closeDialog()
+      stopState = 200
+    }
+
   }
 
 
@@ -477,6 +522,25 @@ function backward() {
         })
         break
 
+      case 8:
+        closeDialog()
+        position_dialog_x = 120
+        position_dialog_y = 150
+        this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_9[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
+
+      case 9:
+        closeDialog()
+        position_dialog_x = 500
+        position_dialog_y = 150
+        self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+        self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_10[current_conver - 1], {
+          fontSize: '15px',
+        })
+        break
     }
 
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
@@ -572,6 +636,9 @@ var mainState = {
     this.player = game.add.sprite(800, 600, 'playerStandLeftWearing')
     this.player.animations.add('right', [0, 1, 2, 3], 5, true)
     this.player.animations.play('right')
+
+
+
 
   },
 
@@ -820,7 +887,7 @@ var mainState = {
       this.fireAttack.animations.play('play')
       attackState = 12
     } else if (attackState == 12) {
-      this.fireAttack.x -= 20
+      this.fireAttack.x -= 5
       this.fireAttack.y += 0.3
       press_back = 99
       if (this.fireAttack.x <= this.monster1.x) {
@@ -939,6 +1006,7 @@ var mainState = {
       this.ice_fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
       this.ice_fireAttack.animations.play('play')
       skill = 11
+      press_back = 99
     } else if (skill == 11) {
       this.ice_fireAttack.x -= 5.5
       this.ice_fireAttack.y -= 0.2
@@ -971,12 +1039,15 @@ var mainState = {
         hp -= 2
       })
 
+      press_back = 3
 
       skill = 13
     }
 
     // VILLIAN MIX ATTACK DEFEND
     if (skill == 100) {
+      press_back = 99
+
       this.ice_fireAttack = game.add.sprite(this.player.x - 60, this.player.y, 'ice_fire')
       this.ice_fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
       this.ice_fireAttack.animations.play('play')
@@ -996,6 +1067,7 @@ var mainState = {
     } else if (skill == 120) {
       this.ice_fireAttack.destroy()
       this.defend.destroy()
+      press_back = 3
 
       sleep(1500).then(() => {
         // closeDialog()
@@ -1008,23 +1080,26 @@ var mainState = {
 
     // VILLIAN FIRE ATTACK
     if (skill == 20) {
-      this.fireAttack = game.add.sprite(this.player.x - 80, this.player.y - 30, 'bigfire')
+      this.fireAttack = game.add.sprite(this.player.x, this.player.y, 'bigfire')
       this.fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8], 5, true)
       this.fireAttack.animations.play('play')
       skill = 21
+      press_back = 99
+
     } else if (skill == 21) {
       this.fireAttack.x -= 5.5
-      this.fireAttack.y -= 0.2
+      // this.fireAttack.y -= 0.2
       if (this.fireAttack.x <= this.villian.x) {
         skill = 22
       }
     } else if (skill == 22) {
       this.fireAttack.destroy()
 
-      this.bomb = game.add.sprite(this.monster1.x - 10, this.monster1.y, 'bomb')
+      this.bomb = game.add.sprite(350, 260, 'bomb')
       this.bomb.scale.setTo(2, 2)
       this.bomb.animations.add('play', [0, 1, 2, 3], 8, true)
       this.bomb.animations.play('play')
+      press_back = 3
 
       sleep(1500).then(() => {
         closeDialog()
@@ -1047,13 +1122,14 @@ var mainState = {
 
     // VILLIAN FIRE ATTACK DEFEND
     if (skill == 200) {
-      this.fireAttack = game.add.sprite(this.player.x - 80, this.player.y - 30, 'bigfire')
+      this.fireAttack = game.add.sprite(this.player.x, this.player.y, 'bigfire')
       this.fireAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8], 5, true)
       this.fireAttack.animations.play('play')
 
       this.defend = game.add.sprite(this.villian.x, this.villian.y - 10, 'defend')
       this.defend.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], 15, true)
       this.defend.animations.play('play')
+      press_back = 99
 
       skill = 210
     } else if (skill == 210) {
@@ -1066,6 +1142,7 @@ var mainState = {
     } else if (skill == 220) {
       this.fireAttack.destroy()
       this.defend.destroy()
+      press_back = 3
 
       sleep(1500).then(() => {
         this.bomb.destroy()
@@ -1080,19 +1157,22 @@ var mainState = {
       this.iceAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
       this.iceAttack.animations.play('play')
       skill = 31
+      press_back = 99
+
     } else if (skill == 31) {
       this.iceAttack.x -= 5.5
       this.iceAttack.y -= 0.2
       if (this.iceAttack.x <= this.villian.x) {
-        skill = 31
+        skill = 32
       }
     } else if (skill == 32) {
       this.iceAttack.destroy()
 
-      this.bomb = game.add.sprite(150, 120, 'bluefire')
+      this.bomb = game.add.sprite(290, 120, 'bluefire')
       this.bomb.scale.setTo(2, 2)
       this.bomb.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 10, false)
       this.bomb.animations.play('play')
+      press_back = 3
 
       sleep(1500).then(() => {
         closeDialog()
@@ -1114,7 +1194,7 @@ var mainState = {
     }
 
     // VILLIAN ICE ATTACK DEFEND
-    if (skill == 200) {
+    if (skill == 300) {
       this.iceAttack = game.add.sprite(this.player.x - 60, this.player.y, 'ice')
       this.iceAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
       this.iceAttack.animations.play('play')
@@ -1122,27 +1202,124 @@ var mainState = {
       this.defend = game.add.sprite(this.villian.x, this.villian.y - 10, 'defend')
       this.defend.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], 15, true)
       this.defend.animations.play('play')
+      press_back = 99
 
-      skill = 210
-    } else if (skill == 210) {
-      this.fireAttack.x -= 2
+      skill = 310
+    } else if (skill == 310) {
+      this.iceAttack.x -= 2
       this.defend.x += 2
       // press_back = 99
-      if (this.fireAttack.x <= 550) {
-        skill = 220
+      if (this.iceAttack.x <= 550) {
+        skill = 320
       }
-    } else if (skill == 220) {
-      this.fireAttack.destroy()
+    } else if (skill == 320) {
+      this.iceAttack.destroy()
       this.defend.destroy()
+      press_back = 3
 
       sleep(1500).then(() => {
         this.bomb.destroy()
       })
 
-      skill = 230
+      skill = 330
     }
 
-    if (this.player.y <= -200) {
+    if (hp <= 0) {
+      this.heart_bar.destroy()
+      hp = 99
+      press_back = 99
+    }
+
+    if (hp == 99) {
+      this.bomb1 = game.add.sprite(290, 120, 'bluefire')
+      this.bomb1.scale.setTo(2, 2)
+      this.bomb1.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 10, false)
+      this.bomb1.animations.play('play')
+      this.bomb2 = game.add.sprite(350, 260, 'bomb')
+      this.bomb2.scale.setTo(2, 2)
+      this.bomb2.animations.add('play', [0, 1, 2, 3], 8, true)
+      this.bomb2.animations.play('play')
+      this.bomb3 = game.add.sprite(290, 150, 'mixbomb')
+      this.bomb3.scale.setTo(2, 2)
+      this.bomb3.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], 10, false)
+      this.bomb3.animations.play('play')
+      this.defend = game.add.sprite(330, 200, 'defend')
+      this.defend.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], 15, true)
+      this.defend.animations.play('play')
+
+      sleep(1500).then(() => {
+        this.bomb1.destroy()
+        this.bomb2.destroy()
+        this.bomb3.destroy()
+        this.defend.destroy()
+        this.villian.destroy()
+
+      })
+      hp = 100
+      check_conver = 8
+      current_conver = 0
+    }
+
+    if (hp == 100) {
+      closeDialog()
+      position_dialog_x = 120
+      position_dialog_y = 150
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_9[current_conver], {
+        fontSize: '15px',
+      })
+      hp = 101
+
+    }
+
+    if (stopState == 100) {
+      this.littlegirl.x += speedCharacter
+      if (this.littlegirl.x >= 650) {
+        stopState = 101
+        current_conver = 0
+        check_conver = 9
+      }
+    } else if (stopState == 101) {
+      position_dialog_x = 500
+      position_dialog_y = 150
+      this.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxRight')
+      this.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, conver_10[current_conver], {
+        fontSize: '15px',
+      })
+      this.current_text = game.add.text(position_dialog_x + 380, position_dialog_y + 10, current_conver + 1, {
+        fontSize: '15px',
+      })
+      this.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
+      this.back = game.add.button(position_dialog_x + 340, position_dialog_y + 30, 'back', backward, this)
+      stopState = 102
+    }
+
+    if (stopState == 200) {
+      closeDialog()
+      stopState = 201
+
+    } else if (stopState == 201) {
+      this.player.y += speedCharacter
+      this.littlegirl.x += speedCharacter
+      if (this.littlegirl.x >= 800) {
+        stopState = 202
+      }
+
+
+    } else if (stopState == 202) {
+      this.littlegirl.y += speedCharacter
+      this.player.y += speedCharacter
+      if (this.littlegirl.y >= 1400) {
+        stopState = 203
+      }
+    }
+
+    if (stopState == 203) {
       // console.log(this.player.x)
       $(document).ready(function () {
 
