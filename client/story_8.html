@@ -160,10 +160,10 @@
       $("#modalAll").load("client/modal.html");
 
       var editor = ace.edit("editor");
-      editor.setTheme("ace/theme/monokai");
+      editor.setTheme("ace/theme/Azure");
       editor.getSession().setMode("ace/mode/python");
       editor.setOptions({
-        fontSize: "100%",
+        fontSize: "130%",
         displayIndentGuides: true,
       })
 
@@ -196,7 +196,7 @@
         // No redirect
         e.preventDefault();
         var code = editor.getValue();
-        var namefile = 'story 7'
+        var namefile = 'story 8'
         if (code != '') {
 
           var write = $.ajax({

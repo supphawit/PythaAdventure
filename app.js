@@ -181,14 +181,27 @@ app.post('/updateByQuery', function (req, res) {
 app.post('/updateQuestionScore', function (req, res) {
 
   var preScore = req.body.score_pre_test
-  req.session.pre = preScore
-  console.log("from /updateDB: " + preScore)
-  console.log("update pre", req.session.pre)
-  var updateSCore = "UPDATE users SET pre_test_score=" + preScore + " WHERE email = '" + req.session.email + "'"
+  var postScore = req.body.score_post_test
+  if (preScore == 0) {
+    console.log("from /updateDB: " + preScore)
+    console.log("update post", req.session.pre)
+    var updateSCore = "UPDATE users SET post_test_score=" + postScore + " WHERE email = '" + req.session.email + "'"
 
-  con.query(updateSCore, function (err, row) {
-    if (err) throw err;
-  })
+    con.query(updateSCore, function (err, row) {
+      if (err) throw err;
+    })
+  }
+
+  if (postScore == 0) {
+    req.session.pre = preScore
+    console.log("from /updateDB: " + preScore)
+    console.log("update pre", req.session.pre)
+    var updateSCore = "UPDATE users SET pre_test_score=" + preScore + " WHERE email = '" + req.session.email + "'"
+
+    con.query(updateSCore, function (err, row) {
+      if (err) throw err;
+    })
+  }
 
 })
 app.get('/randomQuestion', function (req, res) {
@@ -265,6 +278,22 @@ app.get('/pre_test', function (req, res) {
 
 })
 
+app.get('/post_test', function (req, res) {
+  
+  var authUser = "SELECT * FROM users where email = '" + req.session.email + "'"
+
+  con.query(authUser, function (err, row) {
+    if (err) throw err;
+
+    if (row[0].pre_test_score > 0) {
+      res.sendFile(__dirname + '/client/post_test.html')
+    } else {
+      res.redirect('/pre_test')
+    }
+  })
+
+})
+
 app.get('/profile', function (req, res) {
   if (req.session.email) {
     res.sendFile(__dirname + '/client/profile.html')
@@ -274,13 +303,13 @@ app.get('/profile', function (req, res) {
 })
 
 app.get('/online_python_compiler', function (req, res) {
-    res.sendFile(__dirname + '/client/online_python_compiler.html')
+  res.sendFile(__dirname + '/client/online_python_compiler.html')
 })
 
 app.get('/lesson', function (req, res) {
   if (req.session.pre != 0 && req.session.pre != 'undefined') {
     res.sendFile(__dirname + '/client/lesson.html')
-  }else{
+  } else {
     res.redirect('/pre_test')
   }
 

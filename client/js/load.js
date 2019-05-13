@@ -1,7 +1,7 @@
 var current_conver = 0
 var self
 var check_conver = 0
-var speedCharacter = 10
+var speedCharacter = 5
 var playerState = 0
 var wizardState = 0
 var stopState = 0

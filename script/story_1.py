@@ -1,3 +1,4 @@
 # Write your code
-
-print ("hlelo")
+def fire():
+    return "FIRE"
+print (fire())
