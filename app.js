@@ -392,3 +392,19 @@ app.get('/story_8', function (req, res) {
     res.redirect('/')
   }
 })
+
+app.get('/congratulation', function (req, res) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
+    res.sendFile(__dirname + '/client/congratulation.html')
+  } else {
+    res.redirect('/')
+  }
+})
+
+app.get('/leader_board', function (req, res) {
+  if (req.session.email && req.session.pre != 0 && req.session.pre != 'undefined') {
+    res.sendFile(__dirname + '/client/leader_board.html')
+  } else {
+    res.redirect('/')
+  }
+})

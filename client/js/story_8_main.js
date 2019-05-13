@@ -1340,7 +1340,7 @@ var mainState = {
           }
         })
         // console.log("pass")
-        window.location.href = "/congrat"
+        window.location.href = "/contratulation"
       })
     }
 
