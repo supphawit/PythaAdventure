@@ -1,4 +1,5 @@
 # Write your code
 
-print ("name")
+age = 18 
 
+print (age)

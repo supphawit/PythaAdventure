@@ -902,7 +902,11 @@ var mainState = {
       this.player.x += speedCharacter
       console.log(this.player.x)
     }
-    if (this.player.x >= 1600) {
+    if (this.player.x == 1600) {
+      playerState = 60
+      this.player.x += 10
+    }
+    if (playerState == 60) {
       console.log(this.player.x)
       $(document).ready(function () {
 
@@ -924,6 +928,7 @@ var mainState = {
         // console.log("pass")
         window.location.href = "/story_4"
       })
+      playerState = 61
     }
 
   },

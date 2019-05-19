@@ -513,8 +513,12 @@ var mainState = {
       this.player.x += speedCharacter
     }
 
-    if (this.player.x >= 1600) {
-      // console.log(this.player.x)
+    if (this.player.x == 1600) {
+      playerState = 40
+      this.player.x += 10
+    }
+    if (playerState == 40) {
+      console.log(this.player.x)
       $(document).ready(function () {
 
         var userSession = $.ajax({
@@ -535,6 +539,7 @@ var mainState = {
         // console.log("pass")
         window.location.href = "/story_5"
       })
+      playerState = 41
     }
 
   },

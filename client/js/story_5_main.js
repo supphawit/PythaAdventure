@@ -389,7 +389,7 @@ var mainState = {
 
 
     if (attackState == 20) {
-      this.iceAttack = game.add.sprite(this.player.x + 60, this.player.y , 'ice')
+      this.iceAttack = game.add.sprite(this.player.x + 60, this.player.y, 'ice')
       this.iceAttack.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 8, false)
       this.iceAttack.animations.play('play')
 
@@ -444,8 +444,11 @@ var mainState = {
       this.player.x += speedCharacter
     }
 
-    if (this.player.x >= 1600) {
-      // console.log(this.player.x)
+    if (this.player.x == 1600) {
+      playerState = 40
+      this.player.x += 10
+    }
+    if (playerState == 40) {
       $(document).ready(function () {
 
         var userSession = $.ajax({
@@ -466,6 +469,7 @@ var mainState = {
         // console.log("pass")
         window.location.href = "/story_6"
       })
+      playerState = 41
     }
 
   },

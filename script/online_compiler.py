@@ -1,14 +1,10 @@
-# โจทย์คือให้หาคำตอบของทุกความเป็นไปได้ที่ทำให้วงเล็บเปิด-ปิดมีจำนวน n ทั้งเปิด-ปิด และต้องให้วงเล็บหันเข้าหากัน
-def parentheses(n,start,close,string):
-    if( n == close):
-        print (string)
-        return
-    
+def fibo_re(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
     else:
-        if (start > close):
-            parentheses(n,start,close+1,string+(")"))
-        if (start < n):
-            parentheses(n,start+1,close,string+("("))
+        return fibo_re(n-1) + fibo_re(n-2)
 
-# วงเล็บเปิด 3 ตัว ปิด 3 ตัว
-parentheses(4,0,0,'')
+# ผลลัพธ์ของ Fibonacci ที่ n = 10ค่า factorial ของเลขจำนวน
+print (fibo_re(10))

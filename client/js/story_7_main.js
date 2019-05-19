@@ -794,7 +794,11 @@ var mainState = {
     } else if (playerState == 52) {
       this.player.y -= speedCharacter
     }
-    if (this.player.y <= -200) {
+    if (this.player.y == -200) {
+      playerState = 60
+      this.player.y -= 10
+    }
+    if (playerState == 60) {
       // console.log(this.player.x)
       $(document).ready(function () {
 
@@ -816,6 +820,7 @@ var mainState = {
         // console.log("pass")
         window.location.href = "/story_8"
       })
+      playerState = 61
     }
 
   },
