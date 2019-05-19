@@ -622,7 +622,7 @@ var mainState = {
     this.sound = game.add.button(1000, 28, 'speaker', music, this)
     this.sound.scale.setTo(0.9, 0.9)
     this.music = game.add.audio('music')
-    // this.music.play()
+    this.music.play()
 
     this.fire_sym = game.add.button(825, 29, 'fire_sym', fireFunc, this)
     this.fire_sym.scale.setTo(0.9, 0.9)

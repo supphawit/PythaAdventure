@@ -467,7 +467,6 @@ var game = new Phaser.Game(1100, 600, Phaser.AUTO, 'gameLessonOne')
 var mainState = {
   preload: function () {
     game.load.image('background', 'client/images/map_story_1.png')
-    game.load.spritesheet('playerStandLeft', 'client/images/player-standing-left.png', 128, 128)
     game.load.spritesheet('playerStandRight', 'client/images/player-standing-right.png', 128, 128)
     game.load.spritesheet('playerStandRightWearing', 'client/images/player-standing-right-wearing.png', 128, 128)
     game.load.spritesheet('wizardLeft', 'client/images/npc-wizard-left.png', 128, 128)
@@ -516,7 +515,7 @@ var mainState = {
     this.sound = game.add.button(1000, 28, 'speaker', music, this)
     this.sound.scale.setTo(0.9, 0.9)
     this.music = game.add.audio('music')
-    // this.music.play()
+    this.music.play()
 
     this.player = game.add.sprite(-100, 150, 'playerStandRight')
     this.player.smoothed = false

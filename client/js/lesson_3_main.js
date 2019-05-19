@@ -224,8 +224,6 @@ var mainState = {
   preload: function () {
     game.load.image('background', 'client/images/map_lesson_3.png')
     game.load.spritesheet('playerWalkRight', 'client/images/player-walk-right.png', 128, 128)
-    game.load.spritesheet('playerWalkLeft', 'client/images/player-walk-left.png', 128, 128)
-    game.load.spritesheet('playerStandLeft', 'client/images/player-standing-left.png', 128, 128)
     game.load.spritesheet('playerStandRight', 'client/images/player-standing-right.png', 128, 128)
     game.load.spritesheet('playerWalkingDown', 'client/images/player-walk-down.png', 128, 128)
     game.load.spritesheet('wizardLeft', 'client/images/npc-wizard-left.png', 128, 128)
