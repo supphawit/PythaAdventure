@@ -4,13 +4,11 @@
   "description": "กด shift ค้างแล้วคลิกขวา เลือก Open command shell",
   "main": "app.js",
   "dependencies": {
-    "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "child_process": "^1.0.2",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "mysql": "^2.16.0",
-    "nodemon": "^1.18.6"
+    "mysql": "^2.16.0"
   },
   "devDependencies": {},
   "scripts": {

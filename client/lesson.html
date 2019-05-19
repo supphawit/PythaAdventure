@@ -101,7 +101,7 @@
           <div class="card-footer">
 
             <span id='lesson5'></span>
-            <a href="/lesson_5" class="btn btn-secondary " id='l5'>Learn</a>
+            <a href="/lesson_5" class="btn btn-secondary disabled" id='l5'>Learn</a>
             <span class="badge badge-secondary" id="s5">Unavailable</span>
             <span id='success5'></span>
 
@@ -127,7 +127,7 @@
           <div class="card-footer">
 
             <span id='lesson6'></span>
-            <a href="/story_1" class="btn btn-secondary " id='l6'>Learn</a>
+            <a href="/story_1" class="btn btn-secondary disabled" id='l6'>Learn</a>
             <span class="badge badge-secondary" id="s6">Unavailable</span>
             <span id='success6'></span>
 
@@ -198,7 +198,7 @@
           <div class="card-footer">
 
             <span id='lesson10'></span>
-            <a href="/story_5" class="btn btn-secondary " id='l10'>Learn</a>
+            <a href="/story_5" class="btn btn-secondary disabled" id='l10'>Learn</a>
             <span class="badge badge-secondary" id="s10">Unavailable</span>
             <span id='success10'></span>
 
@@ -208,9 +208,9 @@
         <div class="card">
           <img class="card-img-top border border-primary" src="/client/images/temp_story_6.png">
           <div class="card-body">
-            <h5 class="card-title">The Dragon</h5>
+            <h5 class="card-title">The Dinosaurs</h5>
             <p class="card-text">
-              เรียนรู้วิธีการรวบพลังแห่งธาตุทั้งสองเพื่อปราบเจ้ามังกรลงให้จงได้
+              เรียนรู้วิธีการรวบพลังแห่งธาตุทั้งสองเพื่อปราบเจ้าไดโนเสาร์ลงให้จงได้
             </p>
           </div>
           <div class="card-footer">
@@ -273,7 +273,7 @@
 
         data.forEach(element => {
           // console.log(element)
-          if (element >= 5) {
+          if (element > 5) {
             $('#lesson' + element).html(" <a href='/story_" + (element - 5) + "' class='btn btn-primary'>Learn</a>")
           } else {
             $('#lesson' + element).html(" <a href='/lesson_" + (element) + "' class='btn btn-primary'>Learn</a>")

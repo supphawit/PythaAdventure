@@ -179,7 +179,10 @@ function closeInventoryStory() {
 
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
-
+  if (typeof self.errorButton !== "undefined") {
+    deleteErrorButton()
+  }
+  
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
     if (press_back == 1) {
@@ -206,7 +209,7 @@ function resultCompile(responseTxt, originalCode) {
       position_dialog_y = 150
       self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
       self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
-      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "โจมตีด้วย " + responseTxt.toUpperCase() , {
+      self.textInBox = game.add.text(position_dialog_x + 30, position_dialog_y + 20, "โจมตีด้วย " + responseTxt.toUpperCase(), {
         fontSize: '15px',
       })
       playerState = 8

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const mysql = require('mysql')
 const session = require("express-session");
 
-const PORT = process.env.PORT || 5000
+const PORT = 8080
 
 app.use('/client', express.static(__dirname + '/client'))
 

@@ -1340,7 +1340,7 @@ var mainState = {
           }
         })
         // console.log("pass")
-        window.location.href = "/contratulation"
+        window.location.href = "/congratulation"
       })
     }
 

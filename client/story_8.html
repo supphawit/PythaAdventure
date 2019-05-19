@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>Pytha's Adventure</title>
+  <title>Pytha's Adventure Story</title>
   <meta charset="utf-8">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
@@ -31,7 +31,7 @@
 
   <div class="container-fluid">
     <div style="text-align:center">
-      <h1 style="color:aliceblue"> Story: First Kill</h1>
+      <h1 style="color:aliceblue"> Story: The Confrontation</h1>
     </div>
   </div>
 
@@ -56,8 +56,7 @@
             </a>
             <a href="#" id="hint1" data-toggle="modal" data-target="#story8-hint-1"><span class="badge badge-info">คำใบ้
                 1</span></a>
-            <a href="#" id="hint2"><span class="badge badge-secondary">คำใบ้ 2</span></a>
-          </div>
+</div>
 
         </div>
 
@@ -70,40 +69,10 @@
   </div>
 
 
+
+
   <!-- Modal Hint 1 -->
   <div class="modal fade" id="story8-hint-1" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title"> <strong>How to play</strong></h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div id="story8-hint-1-Carousel" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#story8-hint-1-Carousel" data-slide-to="0" class="active"></li>
-            </ol>
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <FONT SIZE="5">ประกาศและเรียกใช้ Function ไฟวิเศษดังหมายเลข 1 และ 2 ดังภาพ</FONT>
-                <img src="client/images/story8hint1_1.png" class="d-block w-100" alt="...">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" id="answer01" data-dismiss="modal">Answer FIRE</button>
-          <button type="button" class="btn btn-primary" id="answer02" data-dismiss="modal">Answer ICE</button>
-          <button type="button" class="btn btn-dark" id="answer03" data-dismiss="modal">Answer ICE & FIRE</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End Modal -->
-
-  <!-- Modal Hint 2 -->
-  <div class="modal fade" id="story8-hint-2" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -121,15 +90,15 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <FONT SIZE="5">ประกาศ Function ไฟวิเศษดังภาพ</FONT>
-                <img src="client/images/story8hint2_1.png" class="d-block w-100" alt="...">
+                <img src="client/images/story7hint1_1.png" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
                 <FONT SIZE="5">ประกาศ List ขึ้นมาพร้อมกับนำ Function ไฟใส่ให้ครบ 5 ตัวตามโจทย์กำหนด</FONT>
-                <img src="client/images/story8hint2_2.png" class="d-block w-100" alt="...">
+                <img src="client/images/story7hint1_2.png" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
                 <FONT SIZE="5">ใช้ For Loop แสดงผลค่าภายใน List ให้ครบทุกตัว</FONT>
-                <img src="client/images/story8hint2_3.png" class="d-block w-100" alt="...">
+                <img src="client/images/story7hint1_3.png" class="d-block w-100" alt="...">
               </div>
             </div>
             <a class="carousel-control-prev" href="#story8-hint-2-Carousel" role="button" data-slide="prev">
@@ -145,7 +114,9 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info" id="answer03" data-dismiss="modal">Answer</button>
+          <button type="button" class="btn btn-danger" id="answer01" data-dismiss="modal">Answer FIRE</button>
+          <button type="button" class="btn btn-primary" id="answer02" data-dismiss="modal">Answer ICE</button>
+          <button type="button" class="btn btn-dark" id="answer03" data-dismiss="modal">Answer ICE & FIRE</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>

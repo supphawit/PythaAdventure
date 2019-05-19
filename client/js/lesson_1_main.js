@@ -28,7 +28,10 @@ var conver_3 = ["เอาล่ะ พอจะเข้าใจบ้าง�
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
   console.log("original", originalCode)
-
+  if (typeof self.errorButton !== "undefined") {
+    deleteErrorButton()
+  }
+  
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
     if (press_back == 1) {
