@@ -227,11 +227,14 @@ app.get('/run', (req, res) => {
   if (process) {
     process.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`)
+      process.unref()
       res.send(data.toString())
+      // process.stdout.end();
     })
 
     process.stderr.on('data', (data) => {
       console.log(`stderr: ${data}`)
+      process.unref()
       res.send(data.toString())
     })
 
@@ -279,7 +282,7 @@ app.get('/pre_test', function (req, res) {
 })
 
 app.get('/post_test', function (req, res) {
-  
+
   var authUser = "SELECT * FROM users where email = '" + req.session.email + "'"
 
   con.query(authUser, function (err, row) {
