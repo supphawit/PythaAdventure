@@ -63,3 +63,7 @@
   display: block;
   margin: 20px;
 }
+
+.gist .blob-code-inner{ 
+  font-size:25px !important;
+ }
