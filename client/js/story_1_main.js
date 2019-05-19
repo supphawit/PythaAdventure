@@ -178,6 +178,7 @@ function closeInventoryStory() {
 
 
 function resultCompile(responseTxt, originalCode) {
+  deleteErrorButton()
   tmpResponse = responseTxt
   if (typeof self.errorButton !== "undefined") {
     deleteErrorButton()

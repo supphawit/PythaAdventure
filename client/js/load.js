@@ -207,13 +207,32 @@ function closeDialog() {
 }
 
 function deleteErrorButton() {
-  self.errorButton.destroy()
-  self.errorTextDialog.destroy()
-  self.textErrorInBox.destroy()
-  self.textViewMore.destroy()
-  self.more.destroy()
-  self.showErrModal.destroy()
+
+  if (typeof self.errorButton !== "undefined") {
+    self.errorButton.destroy()
+  }
+
+  if (typeof self.errorTextDialog !== "undefined") {
+    self.errorTextDialog.destroy()
+  }
+
+  if (typeof self.textErrorInBox !== "undefined") {
+    self.textErrorInBox.destroy()
+  }
+
+  if (typeof self.textViewMore !== "undefined") {
+    self.textViewMore.destroy()
+  }
+
+  if (typeof self.more !== "undefined") {
+    self.more.destroy()
+  }
+
+  if (typeof self.showErrModal !== "undefined") {
+    self.showErrModal.destroy()
+  }
 }
+
 
 function viewMore(errCode) {
   self.textErrorInBox.destroy()

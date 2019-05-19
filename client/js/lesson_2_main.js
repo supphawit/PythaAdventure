@@ -23,6 +23,7 @@ var conver_3 = ["ฮ่าๆ เจ้าพอจะเข้าใจแล�
 ]
 
 function resultCompile(responseTxt, originalCode) {
+  deleteErrorButton()
   tmpResponse = responseTxt
 
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {

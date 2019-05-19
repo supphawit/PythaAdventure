@@ -29,7 +29,7 @@ var conver_4 = ["ได้สกิลมาเพิ่มทำให้เร
 
 function resultCompile(responseTxt, originalCode, output) {
   tmpResponse = responseTxt
-
+  deleteErrorButton()
   console.log(output)
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 

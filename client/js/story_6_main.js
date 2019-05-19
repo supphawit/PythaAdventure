@@ -21,7 +21,7 @@ var conver_4 = ["สำเร็จ !!\nเวทมนต์ใหม่ใช�
 
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
-
+  deleteErrorButton()
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
     if (press_back == 1 && originalCode.includes("def") && originalCode.includes("return") && (responseTxt.includes("FIRE") || responseTxt.includes("ICE"))) {

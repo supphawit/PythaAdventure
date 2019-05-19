@@ -22,6 +22,7 @@ var conver_3 = ["สามารถดูในกระเป๋า เพื�
 ]
 
 function resultCompile(responseTxt, n, originalCode, realCode) {
+  deleteErrorButton()
   finish_buy = n
 
   tmpResponse = responseTxt

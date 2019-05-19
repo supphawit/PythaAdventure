@@ -38,6 +38,7 @@ var conver_10 = ["ถูกต้อง !!",
 
 
 function resultCompile(responseTxt, originalCode) {
+  deleteErrorButton()
   tmpResponse = responseTxt
 
   console.log(responseTxt.trim())

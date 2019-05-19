@@ -20,7 +20,7 @@ var conver_4 = ["เวทมนต์น้ำแข็งนี่\nมัน�
 
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
-
+  deleteErrorButton()
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
     if (press_back == 1 && originalCode.includes("def") && originalCode.includes("return") && responseTxt.includes("FIRE")) {

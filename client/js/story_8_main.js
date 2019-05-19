@@ -60,7 +60,7 @@ function getRandomInt(max) {
 
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
-
+  deleteErrorButton()
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
 

@@ -60,7 +60,7 @@ var conver_12 = ["ต้องกำจัดจอมมาร\n",
 
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
-
+  deleteErrorButton()
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
     if (press_back == 1 && originalCode.includes("def") && originalCode.includes("return") && responseTxt.includes("FIRE")) {

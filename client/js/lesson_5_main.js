@@ -50,6 +50,7 @@ var conver_6 = ["ตอนนี้อุปกรณ์เจ้าพร้อ
 ]
 
 function resultCompile(responseTxt, originalCode) {
+  deleteErrorButton()
   tmpResponse = responseTxt
 
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {

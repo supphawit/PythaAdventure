@@ -42,7 +42,7 @@ var conver_8 = ["เห้ย อย่าหนีสิ",
 
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
-
+  deleteErrorButton()
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
     if (press_back == 1 && originalCode.includes("def") && originalCode.includes("return") && originalCode.includes("for") && originalCode.includes("[") && originalCode.includes("]") && responseTxt.includes("FIRE") && responseTxt.includes("ICE")) {

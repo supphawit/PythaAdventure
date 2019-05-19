@@ -34,7 +34,7 @@ var conver_5 = ["จากนี้ต้องเดินทางคนเด
 
 function resultCompile(responseTxt, originalCode) {
   tmpResponse = responseTxt
-
+  deleteErrorButton()
   if (!(responseTxt.includes("script")) && !(responseTxt.includes("File"))) {
 
     if (press_back == 0 && originalCode.includes("def") && originalCode.includes("return") && responseTxt.includes("FIRE")) {
