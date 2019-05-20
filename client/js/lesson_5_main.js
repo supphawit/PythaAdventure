@@ -786,7 +786,11 @@ var mainState = {
 
     }
     if (this.player.x == 1200) {
-      this.player.x += 10
+      wizardState = 10
+      this.player.x = 1210
+    }
+    if (wizardState == 10) {
+      
       $(document).ready(function () {
 
         var userSession = $.ajax({
@@ -835,7 +839,7 @@ var mainState = {
             query: "INSERT INTO inventory ( email_user, item_name, amount) SELECT * FROM (SELECT '" + userJson.email + "', 'boots' , 1) AS tmp WHERE NOT EXISTS (SELECT item_name,email_user FROM inventory WHERE item_name = 'boots' AND email_user ='" + userJson.email + "') LIMIT 1",
           }
         })
-
+        wizardState = 99
         console.log("pass")
         window.location.href = "/story_1"
       })
