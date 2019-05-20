@@ -1342,6 +1342,7 @@ var mainState = {
         // console.log("pass")
         window.location.href = "/congratulation"
       })
+      stopState = 204
     }
 
   },

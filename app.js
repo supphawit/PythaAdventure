@@ -218,42 +218,24 @@ app.get('/randomQuestion', function (req, res) {
 })
 
 app.get('/run', (req, res) => {
-  const {
-    spawn
-  } = require('child_process')
 
-  const process = spawn('python', ["./script/" + req.query.file + ".py"])
-
-  if (process) {
-    process.stdout.on('data', (data) => {
-      console.log(`stdout: ${data}`)
-      process.unref()
-      res.send(data.toString())
-      // process.stdout.end();
-    })
-
-    process.stderr.on('data', (data) => {
-      console.log(`stderr: ${data}`)
-      process.unref()
-      res.send(data.toString())
-    })
-
-    process.on('close', (code) => {
-      if (code != 0) {
-        console.log(`child process exited with code ${code}`)
-
-      }
-    })
-  } else {
-    res.send("error")
-  }
+  var exec = require("child_process").exec
+  exec(`python ./script/${req.query.file}.py`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      res.send(error.toString())
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+    res.send(stdout.toString())
+  });
 
 
 })
 
 app.post('/write-post', function (req, res) {
   var fs = require('fs')
-  console.log(req.body.python)
+  // console.log(req.body.python)
 
   fs.writeFile("./script/" + req.body.namefile + ".py", req.body.python, function (err) {
     if (err) {
