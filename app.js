@@ -220,7 +220,8 @@ app.get('/randomQuestion', function (req, res) {
 app.get('/run', (req, res) => {
 
   var exec = require("child_process").exec
-  exec(`python ./script/${req.query.file}.py`, (error, stdout, stderr) => {
+  var subprocess = exec(`python ./script/${req.query.file}.py`, (error, stdout, stderr) => {
+    subprocess.unref()
     if (error) {
       console.error(`exec error: ${error}`);
       res.send(error.toString())
@@ -241,7 +242,7 @@ app.post('/write-post', function (req, res) {
     if (err) {
       return console.log(err)
     }
-    res.redirect("/run?file=" + req.body.namefile)
+    // res.redirect("/run?file=" + req.body.namefile)
   })
   // res.end(JSON.stringify(res.body))
 })

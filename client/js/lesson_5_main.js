@@ -65,12 +65,12 @@ function resultCompile(responseTxt, originalCode) {
           res = res.filter(function (str) {
             return /\S/.test(str);
           });
-          console.log("res", res)
+          // console.log("res", res)
           var all = ['helmet', 'armor', 'weapon', 'boots']
           for (var i = 0; i <= 3; i++) {
-            console.log("i", res[i])
+            // console.log("i", res[i])
             for (var j = 0; j <= 3; j++) {
-              console.log("j", all[j])
+              // console.log("j", all[j])
               if (res[i].trim() == all[j].trim()) {
                 count += 1
               }
@@ -786,7 +786,7 @@ var mainState = {
 
     }
     if (this.player.x == 1200) {
-
+      this.player.x += 10
       $(document).ready(function () {
 
         var userSession = $.ajax({

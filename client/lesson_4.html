@@ -277,13 +277,6 @@
           }
           var nextTmp
 
-          var userSession = $.ajax({
-            url: '/getUser',
-            type: "GET",
-            async: false,
-          }).responseText
-          var userJson = JSON.parse(userSession);
-
           if (code.includes("print")) {
             var output_result = $.ajax({
               url: '/run?file=' + namefile,
@@ -297,12 +290,12 @@
             if (compile == 1) {
               var Range = require("ace/range").Range
               var row = editor.selection.lead.row
-              var newText = "def arrguments(x,y): \n"
+              var newText = "\n"
               editor.session.replace(new Range(1, 0, 10, Number.MAX_VALUE), newText)
             } else if (compile == 2) {
               var Range = require("ace/range").Range
               var row = editor.selection.lead.row
-              var newText = "def go(): \n"
+              var newText = "\n"
               editor.session.replace(new Range(1, 0, 10, Number.MAX_VALUE), newText)
             }
           } else {
