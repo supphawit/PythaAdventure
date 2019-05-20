@@ -166,7 +166,7 @@ function resultCompile(responseTxt, originalCode) {
 }
 
 function actionOnClick() {
-
+  deleteErrorButton()
   console.log("actionOnClick current_conver:", current_conver)
   if (conver_1[current_conver] != undefined && check_conver == 0) {
     closeDialog()
@@ -424,7 +424,8 @@ function backward() {
   if (current_conver > 1) {
     current_conver--
     closeDialog()
-
+    deleteErrorButton()
+    
     switch (check_conver) {
       case 0:
         closeDialog()

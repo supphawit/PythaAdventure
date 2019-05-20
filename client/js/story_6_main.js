@@ -219,7 +219,8 @@ function backward() {
   if (current_conver > 1) {
     current_conver--
     closeDialog()
-
+    deleteErrorButton()
+    
     switch (check_conver) {
       case 0:
         closeDialog()

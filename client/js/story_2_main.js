@@ -125,7 +125,7 @@ function resultCompile(responseTxt, originalCode) {
 }
 
 function actionOnClick() {
-
+  deleteErrorButton()
   console.log(current_conver)
   if (conver_1[current_conver] != undefined && check_conver == 0) {
     closeDialog()
@@ -201,6 +201,7 @@ function backward() {
   if (current_conver > 1) {
     current_conver--
     closeDialog()
+    deleteErrorButton()
 
     self.dialogBox = game.add.image(position_dialog_x, position_dialog_y, 'dialogBoxLeft')
     self.button = game.add.button(position_dialog_x + 360, position_dialog_y + 30, 'button', actionOnClick, this)
