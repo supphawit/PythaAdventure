@@ -234,15 +234,33 @@ function deleteErrorButton() {
 }
 
 
-function viewMore(errCode) {
-  self.textErrorInBox.destroy()
-  self.textViewMore.destroy()
-  self.more.destroy()
-  self.textErrorInBox = game.add.text(280, 80, tmpResponse, {
-    fontSize: '15px',
+function viewMore() {
+
+  deleteErrorButton()
+
+  self.errorTextDialog = game.add.image(250, 50, 'errorText')
+  self.errorTextDialog.scale.setTo(5, 5)
+
+  if (tmpResponse.includes("indent")) {
+    messageErr = "ผิดพลาด!!\nบล็อคหรือระยะห่างของคำสั่งถูกต้องหรือเปล่า?"
+    self.showErrModal = game.add.button(705, 160, 'information', indent, this)
+  } else if (tmpResponse.includes("Missing parentheses") || tmpResponse.includes("unexpected EOF while parsing")) {
+    messageErr = "ผิดพลาด!!\nลืมใส่วงเล็บในตรงไหนหรือเปล่า?"
+    self.showErrModal = game.add.button(705, 160, 'information', parentheses, this)
+  } else if (tmpResponse.includes("EOL while scanning string literal")) {
+    messageErr = "ผิดพลาด!!\nสัญลักษณ์ \" (double quote) หายไปหรือเปล่า?"
+    self.showErrModal = game.add.button(705, 160, 'information', EOL, this)
+  } else {
+    self.showErrModal = game.add.button(705, 160, 'information', otherError, this)
+    messageErr = "ผิดพลาด!!\nความผิดพลาดนี้อยู่นอกเหนือความคาดหมาย\nกด View Code Error เพื่อดู?"
+  }
+
+  self.textErrorInBox = game.add.text(280, 80, messageErr, {
+    fontSize: '20px',
   })
+
   self.errorButton = game.add.button(750, 160, 'xSign', deleteErrorButton, this)
-  self.showErrModal.destroy()
+
 }
 
 function fireFunc() {
@@ -350,4 +368,7 @@ function EOL() {
 
 function otherError() {
   console.log("read error message")
+  var lastLine = tmpResponse.split("\n")
+  var link = 'https://stackoverflow.com/search?tab=votes&q=' + lastLine[lastLine.length - 2]
+  window.open(link, '_blank');
 }

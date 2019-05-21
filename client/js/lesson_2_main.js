@@ -66,7 +66,6 @@ function resultCompile(responseTxt, originalCode) {
 
   } else {
 
-
     if (typeof self.errorTextDialog !== "undefined") {
       deleteErrorButton()
     }
@@ -74,32 +73,15 @@ function resultCompile(responseTxt, originalCode) {
     self.errorTextDialog = game.add.image(250, 50, 'errorText')
     self.errorTextDialog.scale.setTo(5, 5)
 
-    if (tmpResponse.includes("indent")) {
-      messageErr = "ผิดพลาด!!\nบล็อคหรือระยะห่างของคำสั่งถูกต้องหรือเปล่า?"
-      self.showErrModal = game.add.button(690, 165, 'information', indent, this)
-      self.showErrModal.scale.setTo(0.7, 0.7)
-    } else if (tmpResponse.includes("Missing parentheses") || tmpResponse.includes("unexpected EOF while parsing")) {
-      messageErr = "ผิดพลาด!!\nลืมใส่วงเล็บในตรงไหนหรือเปล่า?"
-      self.showErrModal = game.add.button(690, 165, 'information', parentheses, this)
-      self.showErrModal.scale.setTo(0.7, 0.7)
-    } else if (tmpResponse.includes("EOL while scanning string literal")) {
-      messageErr = "ผิดพลาด!!\nสัญลักษณ์ \" (double quote) หายไปหรือเปล่า?"
-      self.showErrModal = game.add.button(690, 165, 'information', EOL, this)
-      self.showErrModal.scale.setTo(0.7, 0.7)
-    } else {
-      self.showErrModal = game.add.button(690, 165, 'information', otherError, this)
-      self.showErrModal.scale.setTo(0.7, 0.7)
-      messageErr = "ผิดพลาด!!\nความผิดพลาดนี้อยู่นอกเหนือความคาดหมาย\nกด View Code Error เพื่อดู?"
-    }
-
-    self.textErrorInBox = game.add.text(280, 80, messageErr, {
-      fontSize: '20px',
+    self.textErrorInBox = game.add.text(280, 80, tmpResponse, {
+      fontSize: '15px',
     })
-    self.textViewMore = game.add.text(725, 180, "View Code Error", {
+
+    self.textViewMore = game.add.text(745, 140, "Suggest", {
       fontSize: '10px',
     })
-    self.more = game.add.button(750, 160, 'more', viewMore, this)
-
+    self.more = game.add.button(750, 120, 'more', viewMore, this)
+    self.errorButton = game.add.button(750, 160, 'xSign', deleteErrorButton, this)
 
   }
 }

@@ -85,7 +85,6 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <FONT SIZE="5">พิมพ์ชื่อของคุณลงในเครื่องหมาย</FONT>
-                <!-- <img src="client/images/lesson1hint1_1.png" class="d-block w-100" alt="..."> -->
                 <script src="https://gist.github.com/supphawit/25b7a4e9fecf2d61790a68c2a061b922.js"></script>
               </div>
 
@@ -120,11 +119,11 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <FONT SIZE="5">integer เป็นการเก็บข้อมูลแบบจำนวนเต็ม</FONT>
-                <img src="client/images/lesson1hint2_1.png" class="d-block w-100" alt="...">
+                <script src="https://gist.github.com/supphawit/25b7a4e9fecf2d61790a68c2a061b922.js"></script>
               </div>
               <div class="carousel-item">
                 <FONT SIZE="5">หลังจากประกาศตัวแปร Int ตามบรรทัดที่ 2 แล้ว ให้ Print ตามบรรทัดที่ 3</FONT>
-                <img src="client/images/lesson1hint2_2.png" class="d-block w-100" alt="...">
+                <script src="https://gist.github.com/supphawit/25b7a4e9fecf2d61790a68c2a061b922.js"></script>
               </div>
             </div>
             <a class="carousel-control-prev" href="#lesson-1-hint-2-Carousel" role="button" data-slide="prev">
@@ -183,7 +182,7 @@
         e.preventDefault();
         var code = editor.getValue();
         if (code != '') {
-          var write = $.ajax({
+          $.ajax({
             type: "POST",
             url: '/write-post',
             data: {
