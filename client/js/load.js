@@ -80,7 +80,7 @@ function showInventory() {
 
 
 function closeInventory() {
-  
+
   if (typeof self.item_apple !== "undefined") {
     self.item_apple.destroy()
   }
@@ -208,11 +208,27 @@ function closeInventoryStory() {
 
 
 function closeDialog() {
-  self.textInBox.destroy()
-  self.dialogBox.destroy()
-  self.button.destroy()
-  self.back.destroy()
-  self.current_text.destroy()
+
+  if (typeof self.textInBox !== "undefined") {
+    self.textInBox.destroy()
+  }
+
+  if (typeof self.dialogBox !== "undefined") {
+    self.dialogBox.destroy()
+  }
+
+  if (typeof self.button !== "undefined") {
+    self.button.destroy()
+  }
+
+  if (typeof self.back !== "undefined") {
+    self.back.destroy()
+  }
+
+  if (typeof self.current_text !== "undefined") {
+    self.current_text.destroy()
+  }
+
 }
 
 function deleteErrorButton() {
