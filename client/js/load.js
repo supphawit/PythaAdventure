@@ -80,14 +80,23 @@ function showInventory() {
 
 
 function closeInventory() {
+  
   if (typeof self.item_apple !== "undefined") {
     self.item_apple.destroy()
+  }
+
+  if (typeof self.text_apple !== "undefined") {
     self.text_apple.destroy()
   }
-  self.item_apple.destroy()
-  self.text_apple.destroy()
-  self.inventory.destroy()
-  self.xSign.destroy()
+
+  if (typeof self.inventory !== "undefined") {
+    self.inventory.destroy()
+  }
+
+  if (typeof self.xSign !== "undefined") {
+    self.xSign.destroy()
+  }
+
 }
 
 function showInventoryStory() {
