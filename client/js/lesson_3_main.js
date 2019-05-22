@@ -228,6 +228,8 @@ var mainState = {
     game.load.image('xSign', 'client/images/xSign.png')
     game.load.audio('music', 'client/images/audio/Windless Slopes.mp3')
 
+    game.load.spritesheet('flower', 'client/images/flower.png', 100, 100)
+
   },
 
   create: function () {
@@ -262,6 +264,11 @@ var mainState = {
     this.dealer.animations.play('walk')
     this.player.animations.play('walk')
     this.wizard.animations.play('walk')
+
+    this.flower1 = game.add.sprite(100, 20, 'flower')
+    this.flower1.scale.setTo(0.8, 0.8)
+    this.flower1.animations.add('play', [0, 1], 2, true)
+    this.flower1.animations.play('play')
 
   },
 

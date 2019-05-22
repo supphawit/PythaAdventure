@@ -227,6 +227,7 @@ var mainState = {
     game.load.spritesheet('more', 'client/images/more.png')
     game.load.audio('music', 'client/images/audio/Windless Slopes.mp3')
 
+    game.load.spritesheet('flower', 'client/images/flower.png', 100, 100)
   },
 
   create: function () {
@@ -259,6 +260,21 @@ var mainState = {
     // this.player.body.velocity.x = 80
     this.player.animations.play('walk')
     this.wizard.animations.play('walk')
+
+    this.flower1 = game.add.sprite(980, 170, 'flower')
+    this.flower1.scale.setTo(0.8, 0.8)
+    this.flower1.animations.add('play', [0, 1], 2, true)
+    this.flower1.animations.play('play')
+
+    this.flower2 = game.add.sprite(800, 430, 'flower')
+    this.flower2.scale.setTo(0.8, 0.8)
+    this.flower2.animations.add('play', [0, 1], 2, true)
+    this.flower2.animations.play('play')
+
+    this.flower3 = game.add.sprite(200, 370, 'flower')
+    this.flower3.scale.setTo(0.8, 0.8)
+    this.flower3.animations.add('play', [0, 1], 2, true)
+    this.flower3.animations.play('play')
 
   },
 

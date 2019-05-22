@@ -1307,7 +1307,7 @@ var mainState = {
     if (stopState == 203) {
       // console.log(this.player.x)
       $(document).ready(function () {
-
+        stopState = 204
         var userSession = $.ajax({
           url: '/getUser',
           type: "GET",
@@ -1327,7 +1327,7 @@ var mainState = {
         // console.log("pass")
         window.location.href = "/congratulation"
       })
-      stopState = 204
+      
     }
 
   },

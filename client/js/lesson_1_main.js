@@ -226,6 +226,8 @@ var mainState = {
     game.load.spritesheet('errorButton', 'client/images/error-button.png')
     game.load.spritesheet('more', 'client/images/more.png')
     game.load.audio('music', 'client/images/audio/Windless Slopes.mp3')
+
+    game.load.spritesheet('lilmons', 'client/images/lil_monster-left.png', 120, 120)
   },
 
   create: function () {
@@ -259,6 +261,10 @@ var mainState = {
     this.player.animations.play('right')
     this.wizard.animations.play('left')
 
+    this.lilmons1 = game.add.sprite(680, 480, 'lilmons')
+    this.lilmons1.scale.setTo(0.5, 0.5)
+    this.lilmons1.animations.add('play', [0, 1], 2, true)
+    this.lilmons1.animations.play('play')
 
   },
 
