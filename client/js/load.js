@@ -58,13 +58,6 @@ function showInventory() {
           break
       }
     })
-    // item_inventory.push([data[0].item_name, data[0].amount])
-    // // console.log(item_inventory[0][0])
-    // self.item_apple = game.add.image(405, 300, 'item_' + item_inventory[0][0]);
-    // self.item_apple.scale.setTo(0.1, 0.1)
-    // self.text_apple = game.add.text(440, 320, item_inventory[0][1], {
-    //   fontSize: '15px',
-    // })
 
   })
 

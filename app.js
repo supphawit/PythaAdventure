@@ -37,15 +37,15 @@ app.get('/', function (req, res) {
   } else {
     res.sendFile(__dirname + '/index.html')
   }
-
+ 
 })
-
+ 
 app.get('/getUser', function (req, res) {
 
   var data = {
     email: req.session.email,
     name: req.session.name,
-    imgURL: req.session.imgURL,
+    // imgURL: req.session.imgURL,
     pre: req.session.pre,
     post: req.session.post,
   }
@@ -63,7 +63,7 @@ app.get('/refreshUser', function (req, res) {
     data = {
       email: row[0].email,
       name: row[0].name,
-      imgURL: row[0].imgURL,
+      // imgURL: row[0].imgURL,
       pre: row[0].pre_test_score,
       post: row[0].post_test_score,
     }
@@ -71,7 +71,7 @@ app.get('/refreshUser', function (req, res) {
 
   })
 })
-
+ 
 app.get('/getLesson', function (req, res) {
 
   var lesson = "SELECT * FROM lesson where email_user = '" + req.session.email + "'"
@@ -115,59 +115,79 @@ app.get('/signout', function (req, res) {
 })
 
 
-app.post('/googleSign', function (req, res) {
-
+app.post('/sign_up', function (req, res) {
+  // console.log("SIGN UP")
+ 
   var getUser = "SELECT * FROM users where email = '" + req.body.email + "'"
 
   con.query(getUser, function (err, row) {
-    // console.log("found: " + row)
+    // console.log("found: " + row[0].name)
     if (err) throw err;
-
+ 
     if (row && row.length) {
-
-      req.session.name = row[0].name
-      req.session.email = row[0].email
-      req.session.imgURL = row[0].imgURL
-      req.session.pre = row[0].pre_test_score
-      req.session.post = row[0].post_test_score
-      res.end('done')
-
+      res.send("already")
     } else {
-
-      var sql = "INSERT INTO users (email, name, imgURL, pre_test_score, post_test_score) VALUES ?"
+ 
+      var sql = "INSERT INTO users (email, name, password, pre_test_score, post_test_score) VALUES ?"
       var values = [
         [
           req.body.email,
           req.body.name,
-          req.body.imgURL,
+          req.body.password,
           0,
-          0,
-        ]
+          0, 
+        ] 
       ]
       con.query(sql, [values], function (err, row) {
         if (err) throw err
       })
 
-      getUser = "SELECT * FROM users where email = '" + req.body.email + "'"
       con.query(getUser, function (err, row) {
         if (err) throw err;
 
         req.session.name = row[0].name
         req.session.email = row[0].email
-        req.session.imgURL = row[0].imgURL
+        // req.session.imgURL = row[0].imgURL
         // req.session.pre = row[0].pre_test_score
-        req.session.post = row[0].post_test_score
-        res.end('done')
+        // req.session.post = row[0].post_test_score
+        res.send("OK")
 
-
+        console.log(req.session.email, "enter")
       })
     }
 
-    console.log(req.session.email, "enter")
   })
-
 })
 
+app.post('/sign_in', function (req, res) {
+
+  var getUser = "SELECT * FROM users where email = '" + req.body.email + "'"
+
+  con.query(getUser, function (err, row) {
+    // console.log("found: " + row[0].name)
+    if (err) throw err;
+ 
+    if (row && row.length) { 
+ 
+      if (req.body.password == row[0].password) {
+        req.session.name = row[0].name
+        req.session.email = row[0].email
+
+        if (row[0].pre_test_score != 0){
+          req.session.pre = row[0].pre_test_score
+        }
+        req.session.post = row[0].post_test_score
+        res.send("success") 
+        console.log(req.session.email, "enter")
+        // res.end('done') 
+      } else {
+        res.send("wrong")
+      }
+    }else {
+      res.send("fail")
+    }
+  }) 
+})
 
 app.post('/updateByQuery', function (req, res) {
 
@@ -179,12 +199,13 @@ app.post('/updateByQuery', function (req, res) {
 })
 
 app.post('/updateQuestionScore', function (req, res) {
-
   var preScore = req.body.score_pre_test
   var postScore = req.body.score_post_test
+
   if (preScore == 0) {
-    console.log("from /updateDB: " + preScore)
-    console.log("update post", req.session.pre)
+    // req.session.post = postScore
+    console.log("from pre = 0: " + postScore)
+    console.log("update post", postScore)
     var updateSCore = "UPDATE users SET post_test_score=" + postScore + " WHERE email = '" + req.session.email + "'"
 
     con.query(updateSCore, function (err, row) {
@@ -194,14 +215,15 @@ app.post('/updateQuestionScore', function (req, res) {
 
   if (postScore == 0) {
     req.session.pre = preScore
-    console.log("from /updateDB: " + preScore)
-    console.log("update pre", req.session.pre)
+    console.log("from post = 0: " + preScore)
+    console.log("update pre", preScore)
     var updateSCore = "UPDATE users SET pre_test_score=" + preScore + " WHERE email = '" + req.session.email + "'"
 
     con.query(updateSCore, function (err, row) {
       if (err) throw err;
     })
   }
+
 
 })
 app.get('/randomQuestion', function (req, res) {

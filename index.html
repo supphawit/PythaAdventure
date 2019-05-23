@@ -13,9 +13,9 @@
   <link rel="stylesheet" type="text/css" href="client/css/style.css">
 
 
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <!-- <script src="https://apis.google.com/js/platform.js" async defer></script>
   <meta name="google-signin-client_id"
-    content="157998624916-u3jgpk9413c2vf0h6seht5foqutacg6k.apps.googleusercontent.com">
+    content="157998624916-u3jgpk9413c2vf0h6seht5foqutacg6k.apps.googleusercontent.com"> -->
 
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
   <!-- <script src="/client/js/login_google.js"></script> -->
@@ -41,16 +41,14 @@
         <h5 class="card-title">Sign up and Sign in </h5>
 
         <div class="row">
-          <div id="loginButton" class="col-2">
-            <span class="badge badge-Danger"  style="padding:10px">
-              <span id="LoginGoogle" class="g-signin2" data-onsuccess="onSignIn"></span>
-            </span>
+          <div id="loginButton" class="col-1">
+            <span><button id="signup" type="button" class="btn btn-danger" data-toggle="modal"
+                data-target="#modalRegisterForm">Sign up</button> </span>
+
           </div>
           <div class="col">
-            <span style="display: none;padding:10px;justify-content: center;" id="checkLogin" class="align-middle">
-              <a href="/pre_test"><button type="button" class="btn btn-danger btn-lg">Play Game</button></a>
-              
-            </span>
+            <span><button id="signin" type="button" class="btn btn-danger" data-toggle="modal"
+                data-target="#modalSigninForm">Sign in</button></span>
           </div>
         </div>
 
@@ -96,52 +94,183 @@
     </div>
   </div>
 
+  <!-- Modal Sign up -->
+  <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title font-weight-bold">Sign up</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+          <span id="errSignupName" style="color: red"></span>
+          <div class="input-group flex-nowrap">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><img src="client/images/user.png" height="24px"></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Your Name" id="name" required>
+          </div>
+
+          <br>
+          <span id="errSignupEmail" style="color: red"></span>
+          <div class="input-group flex-nowrap">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><img src="client/images/mail.png"></span>
+            </div>
+            <input type="email" class="form-control" placeholder="Your Email" id="mail" required>
+          </div>
+
+          <br>
+          <span id="errSignupPassword" style="color: red"></span>
+          <div class="input-group flex-nowrap">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><img src="client/images/key.png"></span>
+            </div>
+            <input type="password" class="form-control" placeholder="Your Password" id="password" required>
+          </div>
+
+
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button id="signupButton" class="btn btn-info">Sign up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal  -->
+
+  <!-- Modal Sign in -->
+  <div class="modal fade" id="modalSigninForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title font-weight-bold">Sign in</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+          <span id="errSigninEmail" style="color: red"></span>
+          <div class="input-group flex-nowrap">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><img src="client/images/mail.png"></span>
+            </div>
+            <input type="email" class="form-control" placeholder="Your Email" id="mail_signin">
+          </div>
+
+          <br>
+          <span id="errSigninPassword" style="color: red"></span>
+          <div class="input-group flex-nowrap">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><img src="client/images/key.png"></span>
+            </div>
+            <input type="password" class="form-control" placeholder="Your Password" id="password_signin">
+          </div>
+
+
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button id="signinButton" class="btn btn-info">Sign in</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal  -->
 
   <script>
 
     var userObj
     var loginFuncion = null;
 
+    function isEmail(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    }
+
     $(document).ready(function () {
       $("#navBar").load("client/navbar.html")
 
-      createUserFunction = function () {
-        var create_newUser = $.ajax({
-          type: "POST",
-          url: '/googleSign',
-          data: {
-            name: userObj.name,
-            email: userObj.email,
-            imgURL: userObj.imgURL,
-          }
-        })
-      }
+      $("#signupButton").click(async (e) => {
+
+        // console.log("sign up button")
+        var name = $("#name").val()
+        var mail = $("#mail").val()
+        var password = $("#password").val()
+
+        if (name.length == 0) {
+          $("#errSignupName").text("กรุณากรอกชื่อ")
+        } else if (name.length > 0) {
+          $("#errSignupName").text("")
+        }
+
+        if (!isEmail(mail)) {
+          $("#errSignupEmail").text("กรอกอีเมล์ให้ถูกต้อง")
+        } else if (isEmail(mail)) {
+          $("#errSignupEmail").text("")
+        }
+
+        if (password.length < 8) {
+          $("#errSignupPassword").text("รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักขระ")
+        } else if (password.length >= 8) {
+          $("#errSignupPassword").text("")
+        }
+
+        if (name.length > 0 && isEmail(mail) && password.length >= 8) {
+          var create_newUser = $.ajax({
+            type: "POST",
+            url: '/sign_up',
+            data: {
+              name: name,
+              email: mail,
+              password: password,
+            },
+            complete: function (r) {
+              if (r.responseText == "OK") {
+                // console.log("OK")
+                window.location.href = "/pre_test"
+              } else {
+                alert("อีเมล์นี้ถูกใช้งานแล้ว")
+                // console.log("FAIL")
+              }
+            }
+          })
+        }
+
+      })
+
+      $("#signinButton").click(async (e) => {
+        var mail = $("#mail_signin").val()
+        var password = $("#password_signin").val()
+
+        if (!isEmail(mail)) {
+          $("#errSigninEmail").text("กรอกอีเมล์ให้ถูกต้อง")
+        } else if (isEmail(mail)) {
+          $("#errSigninEmail").text("")
+          var sign_in = $.ajax({
+            type: "POST",
+            url: '/sign_in',
+            data: {
+              email: mail,
+              password: password,
+            },
+            complete: function (r) {
+              if (r.responseText == "success") {
+                // console.log("OK")
+                window.location.href = "/pre_test"
+              } else {
+                alert("อีเมล์หรือรหัสผ่านผิด")
+              }
+            }
+          })
+        }
+
+      })
 
     })
-
-
-    function signOut() {
-      var auth2 = gapi.auth2.getAuthInstance()
-      auth2.signOut().then(function () {
-        console.log("log out")
-        alert("log out")
-        window.location.href = "/logout"
-      })
-    }
-
-    function onSignIn(googleUser) {
-      var profile = googleUser.getBasicProfile()
-      userObj = {
-        id: profile.getId(),
-        name: profile.getName(),
-        email: profile.getEmail(),
-        imgURL: profile.getImageUrl(),
-      }
-      createUserFunction()
-      document.getElementById("checkLogin").style = "display: visible"
-      document.getElementById("loginButton").style = "display: none"
-      
-    }
 
   </script>
 
