@@ -272,7 +272,7 @@ print (fibo_re(10))
         var namefile = 'online_compiler'
         if (code != '') {
 
-          var write = $.ajax({
+           $.ajax({
             type: "POST",
             url: '/write-post',
             data: {
